@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#f29b8f" />
+  <title>不登校とは｜ささエール</title>
+
+  <!-- === 共通の芯 ========================================= -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js"   defer></script>
+  <script src="/js/store.js" defer></script>
+  <!-- ===================================================== -->
+
+  <!-- ★ PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+      });
+    }
+  </script>
+
+  <!-- ★ ページ専用スタイル（全文） -->
+  <style>
+    /* ラッパー：スマホ幅センター寄せ＋背景コーラル */
+    .kp-wrapper{
+      background:#f29b8f;
+      padding:1.5rem 1rem 2.5rem;
+      max-width:430px;
+      margin:auto;
+      border-radius:4px;
+    }
+
+    /* 見出しラベル */
+    .kp-heading{
+      background:#ffe6e6;
+      color:#333;
+      display:inline-block;
+      padding:.4rem 1.8rem;
+      border-radius:20px;
+      margin-bottom:1rem;
+    }
+
+    /* リード枠（カード風） */
+    .kp-lead{
+      background:#fff3e0;
+      padding:1rem;
+      line-height:1.6;
+      text-align:left;
+      border-radius:6px;
+      margin-bottom:1.4rem;
+      font-size:.92rem;
+    }
+
+    /* 図（サムネイル） */
+    .diagram{
+      background:#fff;
+      border:2px solid #ddd;
+      border-radius:8px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      height:220px;
+      margin:.8rem 0;
+      position:relative;
+    }
+    .diagram img{
+      max-width:100%;
+      max-height:100%;
+      object-fit:contain;
+      cursor:zoom-in;
+      display:block;
+    }
+    .diagram .hint{
+      position:absolute;
+      right:.5rem;
+      bottom:.4rem;
+      font-size:.8rem;
+      color:#666;
+      background:#fff;
+      padding:.1rem .4rem;
+      border-radius:6px;
+    }
+    .diagram--dark{background:#2b2b2b;border-color:#444;}
+    .diagram--dark .hint{background:rgba(255,255,255,.92);color:#111;}
+
+    /* 全画面ズーム用ダイアログ */
+    .zoom-dialog{border:0;padding:0;width:100vw;height:100vh;max-width:none;background:transparent}
+    .zoom-dialog::backdrop{background:rgba(0,0,0,.6)}
+    .zoom-wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:16px}
+    .zoom-pane{background:#111;border-radius:8px;max-width:100vw;max-height:90vh;overflow:auto;display:flex;align-items:center;justify-content:center}
+    .zoom-img{max-width:100%;max-height:100%;display:block;cursor:zoom-out}
+    .zoom-close{
+      position:fixed;top:12px;right:12px;
+      background:#fff;border:0;border-radius:999px;
+      width:40px;height:40px;font-size:20px;line-height:40px;
+      cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25)
+    }
+
+    /* フッターのナビ */
+    .page-nav{
+      display:flex;
+      justify-content:space-between;
+      margin-top:2rem;
+    }
+    .nav-btn{
+      color:#7e57c2;
+      text-decoration:none;
+      font-weight:700;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="kp-wrapper">
+    <!-- 見出し -->
+    <h2 class="kp-heading">🍀 不登校とは</h2>
+
+    <!-- 上の枠（定義〜SOSまで） -->
+    <section class="kp-lead">
+      <p>「不登校」とは、子どもが学校に行けない・行かない状態のことをいいます。文部科学省では、病気や経済的な理由を除き、年間30日以上登校していない場合を「不登校」と定義しています。<br>
+      この言葉を聞くと、「特別なケース」や「一部の子どもの問題」と思われがちですが、実はそうではありません。不登校は、どの子どもにも起こりうることです。文部科学省も明言しています。<br>
+      子どもが不登校になる理由はさまざまです。友達関係のトラブル、授業についていけない不安、先生との相性、家庭内の変化、体調や睡眠の問題…。はっきりした原因が分からないことも少なくありません。</p>
+    </section>
+
+    <!-- ▼ 図：タップで拡大 ▼ -->
+    <figure class="diagram diagram--dark">
+      <img
+        src="https://lh3.googleusercontent.com/d/1FGRDNdoqI8Fr5NjRDOMbdgSYRMYfT4F6"
+        alt="（図の説明）"
+        loading="lazy">
+      <small class="hint">タップで拡大</small>
+    </figure>
+
+    <!-- 下の枠 -->
+    <section class="kp-lead">
+      <p>しかし、共通して言えるのは、子どもが自分なりに「がんばったけれど、もう限界だ」と感じていることです。心のエネルギーが消耗し、「学校に行きたくても体が動かない」「朝になるとつらくなる」という状態になることもあります。これは甘えではなく、心が発するSOSです。</p>
+      <p>そんなとき、必要なのは「なんで行けないの？」と問い詰めることではなく、まずはがんばった子どもの心にそっと寄り添うことです。「行きたくないんだね」「あなたの味方だよ」と伝えることで、子どもは少しずつ安心を取り戻していきます。</p>
+    </section>
+
+    <!-- ▼ 画像ズーム用ダイアログ（自動生成） -->
+    <script>
+      (function(){
+        let dialog = document.getElementById('zoomDialog');
+        if(!dialog){
+          dialog = document.createElement('dialog');
+          dialog.id = 'zoomDialog';
+          dialog.className = 'zoom-dialog';
+          dialog.setAttribute('aria-label', '図の拡大表示');
+          dialog.innerHTML = `
+            <div class="zoom-wrap">
+              <div class="zoom-pane">
+                <img id="zoomImg" class="zoom-img" alt="">
+              </div>
+              <button id="zoomClose" class="zoom-close" aria-label="閉じる">×</button>
+            </div>`;
+          document.body.appendChild(dialog);
+        }
+        const zoomImg = dialog.querySelector('#zoomImg');
+        const btnClose = dialog.querySelector('#zoomClose');
+
+        document.querySelectorAll('.diagram img').forEach(img=>{
+          img.addEventListener('click', ()=>{
+            zoomImg.src = img.currentSrc || img.src;
+            zoomImg.alt = img.alt || '';
+            dialog.showModal();
+          });
+        });
+
+        btnClose.addEventListener('click', ()=> dialog.close());
+        dialog.addEventListener('click', (e)=>{ if(e.target === dialog) dialog.close(); });
+        document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && dialog.open) dialog.close(); });
+      })();
+    </script>
+
+    <!-- ▽ 共通フッターリンク ▽ -->
+    <nav class="page-nav">
+      <a href="?page=kodomo"  class="nav-btn prev">＜ 子どもの心理</a>
+      <a href="?page=kodomo3" class="nav-btn next">進む ＞</a>
+    </nav>
+  </main>
+</body>
+</html>

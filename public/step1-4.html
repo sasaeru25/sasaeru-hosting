@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f29b8f">
+  <title>子どもの心理｜ステップ1-4</title>
+
+  <!-- ★ PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+      });
+    }
+  </script>
+
+  <!-- ★ コア / 共通芯 -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js"   defer></script>
+  <script src="/js/store.js" defer></script>
+  <script src="/js/common.js" defer></script>
+
+  <style>
+    body{
+      margin:0;background:#f29b8f;
+      font-family:"Noto Sans JP",system-ui,sans-serif;color:#333;
+    }
+    .container{
+      max-width:480px;margin:auto;padding:1rem;
+      display:flex;flex-direction:column;gap:1rem;
+    }
+
+    .banner{
+      background:#fff;padding:.8rem 1rem;border-radius:2rem;
+      text-align:center;font-size:1.4rem;font-weight:700;
+      color:#333;margin-top:1rem;
+    }
+
+    .content-box{
+      background:#fef0cf;padding:1.5rem;border-radius:4px;line-height:2;position:relative;
+    }
+    .content-box::after{content:"";display:block;clear:both;}
+
+    .content-box img{
+      float:right;width:140px;height:auto;margin:0 0 1rem 1rem;
+      shape-outside:margin-box;
+    }
+    @media(max-width:430px){
+      .content-box img{width:min(45vw,150px);}
+    }
+
+    .page-nav{
+      display:flex;justify-content:space-between;font-weight:700;font-size:1rem;
+    }
+    .nav-btn{color:#4d2bb6;text-decoration:none;}
+    .nav-btn:visited{color:#4d2bb6;}
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="banner">子どもの心理</div>
+
+    <div class="content-box">
+      <p>子どもは、一日の多くの時間を学校で過ごしています。そこで苦しいことがあったらどうでしょう。ストレスや我慢を繰り返しながら過ごしていると…。</p>
+
+      <p>行きたくない、と思っても「行かなくてはならない」という思いもあり、葛藤しているかもしれません。</p>
+
+      <p>嫌なことがあっても、言葉には出せないことが多いのかもしれません。うまくいかない自分を本人が一番受け入れられず、助けを求められない。本当に困っていても、心配をかけたくなくて言えない。どう助けを求めたらいいのかわからない…。</p>
+
+      <img src="https://lh3.googleusercontent.com/d/1sCi77VCPk8ADoNZ3tsgOln8KgP5M6wkw" alt="ランドセルと子ども">
+
+      <p>ずっと我慢をしていると、心がそのことに集中してしまい、言葉にも出せなくなってしまうこともあるかもしれません。そんな中での我慢の限界や変化が表出されてきているのかもしれません。</p>
+    </div>
+
+    <nav class="page-nav">
+      <a href="?page=step1-3" class="nav-btn prev">＜ 戻る</a>
+      <a href="?page=step1-5" class="nav-btn next">進む ＞</a>
+    </nav>
+
+  </div>
+</body>
+</html>

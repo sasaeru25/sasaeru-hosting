@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>学びの場</title>
+  <meta name="theme-color" content="#c9f7dc">
+
+  <!-- ===== 芯（共通・必須）===== -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script defer src="/js/lib.js"></script>
+  <script defer src="/js/store.js"></script>
+
+  <style>
+    :root{
+      --bg:#c9f7dc;
+      --shadow:0 4px 9px rgba(0,0,0,.12);
+    }
+    body{
+      margin:0;background:var(--bg);
+      font-family:"Noto Sans JP",system-ui,sans-serif;color:#222;
+    }
+    main{
+      min-height:100vh;display:flex;justify-content:center;
+      padding:calc(20px + env(safe-area-inset-top)) 16px
+              calc(60px + env(safe-area-inset-bottom));
+    }
+    .card{width:100%;max-width:480px;text-align:left;}
+
+    .badge{
+      display:inline-block;padding:.5rem 1.6rem;margin:0 0 22px;
+      border-radius:999px;background:linear-gradient(#fff,#f1f2f6);
+      font:800 clamp(18px,4.8vw,24px)/1.1 "Noto Sans JP";
+      box-shadow:var(--shadow);
+    }
+    .badge img{width:1.4em;vertical-align:-.2em;margin-right:.2em}
+
+    .pills{
+      list-style:none;margin:0 0 24px;padding-left:116px;padding-bottom:20px;
+      position:relative;
+    }
+    .pills::before{
+      content:"";position:absolute;left:78px;top:-26px;bottom:60px;
+      width:10px;background:#fff;border-radius:7px;
+    }
+    .pill{
+      display:flex;align-items:center;gap:.55rem;
+      min-height:48px;margin:0 0 14px;padding:.55rem .95rem;
+      border-radius:20px;background:linear-gradient(#fff,#f3f4f8);
+      box-shadow:var(--shadow);
+      font:700 clamp(14px,4.3vw,20px)/1.25 "Noto Sans JP";
+      color:#111;text-decoration:none;position:relative;
+    }
+    .pill::before{
+      content:"";position:absolute;left:-30px;top:50%;
+      transform:translateY(-50%);
+      width:48px;height:8px;background:#fff;border-radius:4px;
+    }
+
+    .note{
+      background:#fdf4e0;border-radius:10px;
+      padding:1rem;font-size:clamp(14px,4vw,17px);line-height:1.8;
+      box-shadow:0 4px 8px rgba(0,0,0,.12);
+    }
+
+    .page-nav{
+      position:sticky;bottom:0;left:0;right:0;
+      display:flex;justify-content:space-between;gap:1rem;
+      padding:1rem;background:var(--bg);box-shadow:0 -2px 6px rgba(0,0,0,.06);
+    }
+    .nav-btn{color:#4d2bb6;text-decoration:none;font-weight:700;font-size:1rem;}
+    @media(max-width:430px){.nav-btn{font-size:.95rem;}}
+  </style>
+</head>
+
+<body>
+<main>
+  <section class="card">
+
+    <div class="clip-name" data-clip="⭐ 学びの場"></div>
+
+    <h1 class="badge">
+      <img src="https://twemoji.maxcdn.com/v/latest/svg/1f34a.svg" alt="">学びの場
+    </h1>
+
+    <ul class="pills">
+      <li><a class="pill" href="?page=manabi-school">🍎 学校での工夫</a></li>
+      <li><a class="pill" href="?page=center">🍊 教育支援センター</a></li>
+      <li><a class="pill" href="?page=freeschool">🍇 フリースクール等</a></li>
+    </ul>
+
+    <div class="note">
+      学校でも短時間登校や居場所の工夫などの支援が、必要に応じて調整される場合があります。
+    </div>
+
+  </section>
+</main>
+
+<nav class="page-nav" aria-label="ページナビ">
+  <a href="?page=home" class="nav-btn prev">＜ 戻る</a>
+  <a href="?page=manabi-school" class="nav-btn next">進む ＞</a>
+</nav>
+
+</body>
+</html>

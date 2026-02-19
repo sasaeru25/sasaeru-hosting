@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffe6e6">
+  <title>心のエネルギーとは｜ささエール</title>
+
+  <!-- ★ PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+      });
+    }
+  </script>
+
+<!-- ★ コア / 共通芯 -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+  <style>
+    body{margin:0;font-family:"Noto Sans JP",system-ui,sans-serif;background:#ffe6e6;color:#333;}
+    .kp-wrapper{
+      background:#f29b8f;padding:1.2rem 1rem 2rem;
+      max-width:430px;margin:auto;line-height:1.8;
+    }
+    .kp-heading{
+      background:#fff;color:#333;display:inline-block;
+      padding:.5rem 1.2rem;border-radius:12px;font-weight:700;
+      margin:0 0 .8rem;box-shadow:0 2px 6px rgba(0,0,0,.08);
+    }
+    .block-cream{
+      background:#fff3e0;border:2px solid #e7c8b2;border-radius:10px;
+      padding:1rem;box-shadow:0 6px 14px rgba(0,0,0,.08);margin-bottom:.8rem;
+    }
+    .block-white{
+      background:#fff;border:2px solid #e7c8b2;border-radius:10px;
+      padding:1rem;margin:.8rem 0 0;
+    }
+    .block-yellow{
+      background:#fff7c5;border:1px solid #eadc9d;border-radius:8px;
+      padding:.8rem 1rem;margin:.6rem 0 0;
+    }
+    .note-red{color:#e60039;font-weight:700;text-align:left;}
+    .note-yellow{color:#6b5b53;}
+
+    /* 図（サムネイル） */
+    .diagram{
+      background:#fff;border:2px solid #ddd;border-radius:10px;
+      display:flex;align-items:center;justify-content:center;
+      overflow:hidden;height:220px;margin:.2rem 0 .8rem;position:relative;
+      box-shadow:0 4px 10px rgba(0,0,0,.06);
+    }
+    .diagram img{
+      max-width:100%;max-height:100%;object-fit:contain;
+      cursor:zoom-in;display:block;
+    }
+    .diagram .hint{
+      position:absolute;right:.5rem;bottom:.4rem;
+      font-size:.8rem;color:#666;background:#fff;
+      padding:.1rem .4rem;border-radius:6px;
+    }
+
+    /* 拡大オーバーレイ */
+    .zoom-overlay[hidden]{display:none!important;}
+    .zoom-overlay{position:fixed;inset:0;z-index:99999;background:#fff;}
+    .zoom-top{
+      position:sticky;top:0;display:flex;justify-content:flex-end;
+      padding:12px;padding-top:max(12px,env(safe-area-inset-top));
+      border-bottom:1px solid #eee;background:#fff;
+    }
+    .zoom-close{
+      border:0;background:#111;color:#fff;width:44px;height:44px;
+      border-radius:999px;font-size:22px;cursor:pointer;
+    }
+    .zoom-body{
+      height:calc(100vh - 70px);overflow:auto;-webkit-overflow-scrolling:touch;
+      padding:12px 12px max(18px,env(safe-area-inset-bottom));
+      display:flex;justify-content:center;
+    }
+    .zoom-img{width:min(980px,100%);height:auto;display:block;}
+
+    /* フッターナビ */
+    .page-nav{
+      display:flex;justify-content:center;gap:2rem;
+      padding:1.6rem 0 .6rem;
+    }
+    .nav-btn{font-weight:700;color:#4d2bb6;text-decoration:none;}
+  </style>
+</head>
+
+<body>
+<main class="kp-wrapper">
+  <h2 class="kp-heading">🍀 心のエネルギーとは</h2>
+
+  <section class="block-cream">
+    <p>不登校の子どもたちは、「行きたくない」のではなく、「行けない」状態にあります。</p>
+  </section>
+
+  <!-- サムネイル -->
+  <figure class="diagram">
+    <img id="diagramThumb"
+         src="https://lh3.googleusercontent.com/d/1q0xLnt-_OvjhL67QOH3iq8SBuWdu3D6K"
+         alt="心のエネルギー">
+    <small class="hint">タップで拡大</small>
+  </figure>
+
+  <section class="block-cream">
+    <p><strong>■ 再び走り出すために</strong></p>
+  </section>
+
+  <section class="block-white">
+    <p class="note-red">
+      児童生徒によっては、不登校の時期が休養や自分を見つめ直す等の
+      積極的な意味を持つことがある。
+    </p>
+  </section>
+
+  <section class="block-yellow">
+    <p class="note-yellow">
+      平成28年「不登校児童生徒への支援の在り方について」:contentReference[oaicite:1]{index=1}
+    </p>
+  </section>
+
+  <!-- フッターナビ -->
+  <nav class="page-nav">
+  <a href="?page=kodomo"  class="nav-btn">＜ 子どもの心理</a>
+  <a href="?page=kodomo5" class="nav-btn">進む ＞</a>
+</nav>
+
+</main>
+
+<!-- 拡大表示オーバーレイ -->
+<div id="zoomOverlay" class="zoom-overlay" hidden>
+  <div class="zoom-top">
+    <button class="zoom-close" id="zoomClose">×</button>
+  </div>
+  <div class="zoom-body">
+    <img id="zoomImg" class="zoom-img" alt="">
+  </div>
+</div>
+
+<script>
+(function(){
+  const thumb = document.getElementById('diagramThumb');
+  const ov    = document.getElementById('zoomOverlay');
+  const img   = document.getElementById('zoomImg');
+  const close = document.getElementById('zoomClose');
+
+  if(!thumb || !ov || !img || !close) return;
+
+  thumb.addEventListener('click', () => {
+    img.src = thumb.currentSrc || thumb.src;
+    img.alt = thumb.alt || '';
+    ov.hidden = false;
+  });
+
+  close.addEventListener('click', () => { ov.hidden = true; });
+  ov.addEventListener('click', e => { if(e.target === ov) ov.hidden = true; });
+})();
+</script>
+</body>
+</html>

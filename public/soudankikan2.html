@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#caf4d6">
+  <title>相談支援機関</title>
+
+  <!-- ===== 芯（共通・必須）===== -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script defer src="/js/lib.js"></script>
+  <script defer src="/js/store.js"></script>
+
+  <style>
+    :root{
+      --mint:#caf4d6;
+      --paper:#f9f0e6;
+      --ink:#222;
+      --green-deep:#1e8b5b;
+      --shadow:0 6px 12px rgba(0,0,0,.15);
+    }
+    *,*::before,*::after{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;background:var(--mint);color:var(--ink);
+      font-family:"Noto Sans JP",system-ui,-apple-system,"Segoe UI",Roboto;
+    }
+
+    .wrapper{
+      width:100%;max-width:clamp(360px,92vw,430px);margin:0 auto;padding:1rem;
+      padding-left:calc(1rem + env(safe-area-inset-left));
+      padding-right:calc(1rem + env(safe-area-inset-right));
+    }
+    @media(min-width:768px){.wrapper{max-width:720px;}}
+
+    .badge{
+      display:inline-flex;align-items:center;gap:.5rem;
+      padding:.6rem 1.4rem;margin:0 0 16px;
+      border-radius:999px;background:linear-gradient(#fff,#f3f4f8);
+      font-weight:700;font-size:clamp(18px,4.5vw,26px);
+      box-shadow:var(--shadow);
+    }
+    .badge img{width:1.35em;height:1.35em;}
+
+    .list{display:grid;gap:14px;}
+    .card-body{
+      background:var(--paper);border-radius:14px;padding:14px 12px;
+      font-size:clamp(15px,3.8vw,17px);line-height:1.8;
+      box-shadow:0 2px 6px rgba(0,0,0,.06);
+    }
+
+    .title-chip{
+      display:inline-flex;align-items:center;gap:.45em;
+      padding:.42rem .78rem;margin:2px 0 .6rem;
+      border:3px solid var(--green-deep);border-radius:12px;background:#fff;
+      color:#163f2f;font-weight:700;font-size:clamp(15px,4vw,18px);
+    }
+
+    .cta-wrap{display:flex;justify-content:flex-end;margin-top:.6rem;}
+    .cta-blue{
+      display:inline-flex;align-items:center;justify-content:center;
+      min-height:44px;min-width:9.5em;padding:.6rem 1rem;border-radius:.65rem;
+      font-weight:700;color:#fff;text-decoration:none;
+      background:linear-gradient(#4d8eda,#2b6bb5);
+      box-shadow:0 3px 0 #235a95,0 6px 12px rgba(0,0,0,.15);
+    }
+
+    .page-nav{
+      position:sticky;bottom:0;left:0;right:0;
+      display:flex;justify-content:space-between;gap:.8rem;
+      padding:.8rem 1rem;
+      padding-left:calc(1rem + env(safe-area-inset-left));
+      padding-right:calc(1rem + env(safe-area-inset-right));
+      background:var(--mint);box-shadow:0 -2px 6px rgba(0,0,0,.06);
+      margin-top:1rem;
+    }
+    .nav-btn{font-weight:700;color:#4d2bb6;text-decoration:none;font-size:clamp(15px,3.8vw,17px);}
+  </style>
+</head>
+
+<body>
+<main class="wrapper">
+  <div class="clip-name" data-clip="⭐ 相談支援機関"></div>
+
+  <h1 class="badge">
+    <img src="https://twemoji.maxcdn.com/v/latest/svg/1f4ac.svg" alt="">相談支援機関
+  </h1>
+
+  <section class="list">
+
+    <!-- 学校の相談窓口 -->
+    <article class="card">
+      <div class="card-body">
+        <span class="title-chip">💛 学校の相談窓口</span>
+        <p>学校では担任の先生だけでなく、保健室の先生や教頭・校長、SC・SSW などが相談を受ける場合があります。</p>
+      </div>
+    </article>
+
+    <!-- 教育支援センター -->
+    <article class="card">
+      <div class="card-body">
+        <span class="title-chip">💛 教育支援センター</span>
+        <p>市町村が運営する公的機関で、登校練習や学習支援などを実施しています。</p>
+        <div class="cta-wrap">
+          <a class="cta-blue" href="?page=center2">CLICK HERE</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- つなぐん -->
+    <article class="card">
+      <div class="card-body">
+        <span class="title-chip">💛 相談支援窓口 つなぐん</span>
+        <p>群馬県の総合相談窓口です。電話・来所・メールなど幅広い相談が可能です。</p>
+        <div class="cta-wrap">
+          <a class="cta-blue"
+             href="https://sites.google.com/edu-g.gsn.ed.jp/tsunagun/"
+             target="_blank" rel="noopener"
+             data-external="true"
+             data-preconnect="https://sites.google.com">
+            CLICK HERE
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 心療内科 -->
+    <article class="card">
+      <div class="card-body">
+        <span class="title-chip">💛 心療内科・医療機関</span>
+        <p>専門的な診断や治療が必要な場合に利用される機関です。状況に応じて併用できます。</p>
+      </div>
+    </article>
+
+    <!-- フリースクール等 -->
+    <article class="card">
+      <div class="card-body">
+        <span class="title-chip">💛 フリースクール等</span>
+        <p>学びの場の提供に加え、保護者支援や親の会を実施している場合もあります。</p>
+        <div class="cta-wrap">
+          <a class="cta-blue" href="?page=freeschool2">CLICK HERE</a>
+        </div>
+      </div>
+    </article>
+
+  </section>
+</main>
+
+<nav class="page-nav">
+  <a href="?page=home" class="nav-btn">メニュー ＞</a>
+</nav>
+
+<script>
+/* 低速回線警告 */
+(function(){
+  const isSlow=()=>{
+    const c=navigator.connection||{};const t=(c.effectiveType||'').toLowerCase();
+    return c.saveData||t.includes('2g')||t.includes('3g')||t.includes('slow');
+  };
+  document.addEventListener('click',e=>{
+    const a=e.target.closest('a[data-external="true"]');if(!a)return;
+    if(isSlow()&&!confirm('外部サイトを開きます。通信量が多くなる場合があります。続けますか？')){
+      e.preventDefault();
+    }
+  },{passive:false});
+})();
+/* 事前プリコネクト */
+(function(){
+  function preconnect(host){
+    if(!host||document.querySelector(`link[data-preconnect="${host}"]`))return;
+    const l1=document.createElement('link');l1.rel='preconnect';l1.href=host;l1.crossOrigin='';
+    const l2=document.createElement('link');l2.rel='dns-prefetch';l2.href=host;
+    l1.dataset.preconnect=host;document.head.append(l1,l2);
+  }
+  ['mouseenter','touchstart','focus'].forEach(evt=>{
+    document.addEventListener(evt,e=>{
+      const a=e.target.closest('a[data-preconnect]');if(a)preconnect(a.dataset.preconnect);
+    },{passive:true,capture:true});
+  });
+})();
+</script>
+</body>
+</html>

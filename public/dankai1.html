@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f3a9a0">
+  <title>前兆期｜ささエール</title>
+
+  <!-- ★ PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator)
+      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+  </script>
+
+  <!-- === 共通の芯 === -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+
+  <style>
+    html,body{height:100%}
+    *,*::before,*::after{box-sizing:border-box}
+
+    body{
+      margin:0;
+      background:#f3a9a0;
+      color:#333;
+      font-family:"Noto Sans JP",system-ui,-apple-system,BlinkMacSystemFont,
+                   "Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+      font-size:16px;
+      line-height:1.8;
+    }
+
+    .kp-wrapper{
+      min-height:100%;
+      padding:16px;
+      padding-top:max(16px,env(safe-area-inset-top));
+      padding-right:max(8px,env(safe-area-inset-right));
+      padding-bottom:max(16px,env(safe-area-inset-bottom));
+      padding-left:max(8px,env(safe-area-inset-left));
+    }
+
+    .kp-card{
+      width:100%;
+      max-width:430px;
+      margin:0 auto;
+      padding:16px 8px 18px;
+      text-align:left;
+    }
+
+    .phase-heading{
+      display:block;
+      margin:4px auto 12px;
+      width:max-content;
+      background:#fffcc0;
+      border:2px dashed #ddb;
+      border-radius:30px;
+      padding:.6rem 1.8rem;
+      font-weight:700;
+      font-size:1.6rem;
+      line-height:1.2;
+      text-align:center;
+    }
+
+    .label-yellow{
+      display:block;
+      width:max-content;
+      background:#ffd34d;
+      color:#333;
+      border-radius:18px;
+      padding:.35rem .8rem;
+      font-weight:700;
+      margin:.4rem 0 .5rem;
+    }
+
+    /* ▼ ここ調整：イラストを大きく */
+    .cream-panel{
+      background:#fff3d6;
+      border-radius:12px;
+      padding:12px;
+      margin-bottom:.4rem;
+      display:grid;
+      grid-template-columns:1fr minmax(140px,36%);
+      gap:14px;
+      align-items:start;
+    }
+
+    .panel-text{margin:0}
+
+    .panel-illu{
+      width:100%;
+      max-width:none;
+      height:auto;
+      border-radius:10px;
+      justify-self:end;
+      align-self:start;
+    }
+
+    @media(max-width:430px){
+      .cream-panel{grid-template-columns:1fr}
+      .panel-illu{
+        width:72%;
+        justify-self:center;
+        margin-top:6px;
+      }
+    }
+
+    /* ▼ 吹き出し */
+    .bubble-think{margin:.2rem 0 .4rem}
+    .think-svg{display:block;width:100%;height:auto}
+    .think-svg .line{stroke-width:2;vector-effect:non-scaling-stroke}
+
+    .info-box{
+      border-radius:10px;
+      padding:10px 12px;
+      margin:.6rem 0;
+      line-height:1.8;
+    }
+    .info-box.mint{background:#c9f1ee}
+    .info-box.white{background:#ffffff}
+
+    .phase-row{
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:10px;
+      margin-top:.9rem;
+    }
+
+    .phase-btn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:1rem 0;
+      border-radius:22px;
+      background:#fff7b2;
+      border:2px dashed #f1d662;
+      color:#333;
+      text-decoration:none;
+      box-shadow:0 2px 4px rgba(0,0,0,.12);
+      font-weight:700;
+      writing-mode:vertical-rl;
+      text-orientation:upright;
+      font-size:clamp(.9rem,3.2vw,1.05rem);
+    }
+
+    .page-nav{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      margin-top:1rem;
+    }
+    .nav-btn{
+      color:#7e57c2;
+      text-decoration:none;
+      font-weight:700;
+      padding:.7rem 0;
+    }
+  </style>
+</head>
+
+<body>
+<main class="kp-wrapper">
+
+  <div class="clip-name" data-clip="⭐ 前兆期"></div>
+
+  <article class="kp-card">
+
+    <h1 class="phase-heading">前兆期</h1>
+
+    <span class="label-yellow">子どもの様子</span>
+    <section class="cream-panel">
+      <p class="panel-text">
+        ・朝起きづらくなる<br>
+        ・学校の話題にネガティブな反応<br>
+        ・忘れ物、遅刻、体調不良が増える
+      </p>
+      <img class="panel-illu"
+           src="https://lh3.googleusercontent.com/d/1jFNcKeNdXOvhQ0rWkVUDbxhlAMpCl1j5"
+           alt="段階①">
+    </section>
+
+    <!-- ▼ 思考バルーン（文字位置調整済） -->
+    <section class="bubble-think">
+      <svg xmlns="http://www.w3.org/2000/svg"
+           viewBox="0 60 360 180"
+           class="think-svg"
+           role="img"
+           aria-label="思考バルーン">
+        <defs>
+          <filter id="tshadow1" x="-25%" y="-30%" width="150%" height="160%">
+            <feDropShadow dx="0" dy="2" stdDeviation="1.9" flood-opacity=".18"/>
+          </filter>
+          <path id="mokuPathDef" class="line"
+            d="M74,208 C52,204,40,188,44,170
+               C24,164,16,144,28,130
+               C24,108,44,92,66,96
+               C74,76,98,68,118,76
+               C132,58,160,54,180,66
+               C200,54,230,60,242,80
+               C264,78,286,92,286,114
+               C304,120,312,140,300,156
+               C306,176,292,194,272,198
+               C260,212,232,214,216,206
+               C192,218,156,218,138,204
+               C120,212,92,214,74,208 Z"
+            fill="#fff" stroke="#333"/>
+          <clipPath id="clipMoku">
+            <use href="#mokuPathDef"/>
+          </clipPath>
+        </defs>
+
+        <use href="#mokuPathDef" fill="#fff" stroke="#333" filter="url(#tshadow1)"/>
+
+        <g clip-path="url(#clipMoku)">
+          <text x="52" y="98"
+                font-size="16"
+                font-family="Noto Sans JP, sans-serif"
+                fill="#333">
+            <tspan x="52" dy="20">「なんか行くのがしんどいな…」</tspan>
+            <tspan x="52" dy="26">「行きたくないな…」</tspan>
+          </text>
+        </g>
+
+        <circle cx="270" cy="106" r="13" fill="#fff" stroke="#333" class="line"/>
+        <circle cx="295" cy="88"  r="9"  fill="#fff" stroke="#333" class="line"/>
+        <circle cx="312" cy="74"  r="6"  fill="#fff" stroke="#333" class="line"/>
+      </svg>
+    </section>
+
+    <span class="label-yellow">どんな状態？</span>
+    <section class="info-box mint">
+      <p>
+        この時期、子どもは無意識のうちにストレスを感じており、それが態度や言動に表れはじめます。
+        …
+      </p>
+    </section>
+
+    <span class="label-yellow">関わり方のヒント</span>
+    <section class="info-box white">
+      <p>
+        このころの子どもは、うまく自分の困り感を伝えられないことが多くあります。
+        …
+      </p>
+    </section>
+
+    <div class="phase-row">
+      <a class="phase-btn" href="?page=dankai1"><span>前兆期</span></a>
+      <a class="phase-btn" href="?page=dankai2"><span>初期</span></a>
+      <a class="phase-btn" href="?page=dankai3"><span>中期</span></a>
+      <a class="phase-btn" href="?page=dankai4"><span>後期</span></a>
+      <a class="phase-btn" href="?page=dankai5"><span>回復期</span></a>
+    </div>
+
+    <nav class="page-nav">
+      <a href="?page=kodomo" class="nav-btn">＜ 子どもの心理</a>
+    </nav>
+
+  </article>
+</main>
+</body>
+</html>

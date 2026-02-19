@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#f29b8f" />
+  <title>ホーム｜ささエール</title>
+
+  <!-- ★ PWA（Manifest & Service-Worker） -->
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator)
+      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+  </script>
+
+  <!-- === 共通の芯 ========================================= -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js"   defer></script>
+  <script src="/js/store.js" defer></script>
+  <!-- ===================================================== -->
+
+  <!-- ===== ページ固有 CSS ===== -->
+  <style>
+  :root{
+    --pink:#f29b8f; --cream:#fff5ce; --mint:#e9ffd9; --text:#444;
+  }
+  *{box-sizing:border-box} body{margin:0;background:var(--pink);
+    font-family:"Noto Sans JP",system-ui,-apple-system,"Segoe UI",Roboto,
+    "Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;}
+
+  .home{min-height:100vh;display:flex;align-items:center;justify-content:center;
+    padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right))
+            max(24px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));}
+  .card{width:100%;max-width:430px;position:relative;}
+
+  .orn{width:72%;max-width:320px;margin:16px auto;display:block;
+    filter:drop-shadow(0 1px 0 rgba(0,0,0,.05));}
+
+  .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 16px;padding:10px 8px 18px;}
+  .menu-btn{position:relative;display:flex;align-items:center;justify-content:center;
+    text-align:center;text-decoration:none;color:var(--text);font-weight:700;
+    line-height:1.25;padding:10px;border-radius:50%;aspect-ratio:1/1;
+    box-shadow:0 6px 12px rgba(0,0,0,.10),inset 0 0 0 2px rgba(255,255,255,.6);
+    font-size:clamp(14px,3.6vw,18px);-webkit-tap-highlight-color:transparent;
+    transition:transform .12s cubic-bezier(.2,.8,.2,1);}
+  .menu-btn.cream{background:var(--cream)} .menu-btn.mint{background:var(--mint)}
+  .menu-btn:active{transform:scale(.94)}
+  .menu-btn::after{content:"";position:absolute;inset:0;border-radius:50%;
+    background:radial-gradient(closest-side,rgba(0,0,0,.12),rgba(0,0,0,0) 70%);
+    opacity:0;transform:scale(.8);transition:opacity .18s,transform .18s;}
+  .menu-btn:active::after{opacity:.18;transform:scale(1.08)}
+  .menu-btn:focus-visible{outline:3px solid #6b2e95;outline-offset:3px}
+  @media(max-width:340px){.menu-grid{grid-template-columns:1fr;gap:14px}}
+  @media(prefers-reduced-motion:reduce){.menu-btn,.menu-btn::after{transition:none}}
+
+  .floating-book-btn{position:absolute;right:8px;bottom:110px;width:40px;height:40px;
+    border-radius:50%;background:#fff5ce;box-shadow:0 4px 12px rgba(0,0,0,.25);
+    display:flex;align-items:center;justify-content:center;text-decoration:none;}
+  .floating-book-btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.28)}
+  .floating-book-btn svg{width:26px;height:26px}
+  .floating-book-btn svg path{stroke:#e48c80;fill:#fff}
+  </style>
+</head>
+
+<body>
+  <main class="home">
+    <section class="card" aria-label="メニュー">
+      <img class="orn"
+           src="https://lh3.googleusercontent.com/d/1Vhy7GHKRD70SGECpolpntqvIu__tb5B7=w1080-h0"
+           alt="" loading="lazy">
+
+      <div class="menu-grid">
+        <!-- 1段目 -->
+        <a class="menu-btn cream" href="?page=kodomo"><span>子どもの<br>心理</span></a>
+        <a class="menu-btn mint"  href="?page=step1"><span>「行きたくない」が<br>気になる保護者へ</span></a>
+
+        <!-- 2段目 -->
+        <a class="menu-btn cream" href="?page=kuni"><span>今の時代の<br>不登校との<br>向き合い方</span></a>
+        <a class="menu-btn mint"  href="?page=step2"><span>休みがちな子を前に<br>困っている方へ</span></a>
+
+        <!-- 3段目 -->
+        <a class="menu-btn cream" href="?page=message"><span>どこに<br>相談したら<br>いいの？</span></a>
+        <a class="menu-btn mint"  href="?page=step3"><span>不登校に寄り添う<br>保護者の方へ</span></a>
+      </div>
+
+      <!-- 参考資料ページへの浮動ボタン -->
+      <a href="?page=sankou" class="floating-book-btn" aria-label="参考資料ページへ">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 4.5h9.5c1.1 0 2 .9 2 2v11
+                   M5 4.5v11c0 .8.7 1.5 1.5 1.5H17
+                   M8 4.5v11
+                   M11 4.5v11"
+                stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      <img class="orn"
+           src="https://lh3.googleusercontent.com/d/1qdziWZvvnf_lTJp7wdSRuHf51p7h246w=w1080-h0"
+           alt="" loading="lazy">
+    </section>
+  </main>
+</body>
+</html>

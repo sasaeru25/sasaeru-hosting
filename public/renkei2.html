@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>学校との連携①</title>
+
+  <!--–– PWA を使う場合だけ必要 ––-->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#f29b8f">
+
+  <!-- ★ コア / 共通芯（ほとんどのページで使う方針なら入れる） -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+  <script src="/js/common.js" defer></script>
+
+  <style>
+    :root{
+      --pink:#f29b8f;          /* 背景ピンク（無地） */
+      --paper:#ffffff;         /* 白いカード */
+      --note:#fff0da;          /* 下段のクリーム紙 */
+      --ink:#222;              /* 文字色 */
+      --shadow:0 8px 18px rgba(0,0,0,.12);
+      --purple:#4d2bb6;        /* フッターの紫リンク */
+    }
+
+    /* ベース */
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:var(--pink);
+      color:var(--ink);
+      font-family:"Noto Sans JP",system-ui,sans-serif;
+      line-height:1.9;
+    }
+    .wrap{
+      max-width:430px;
+      margin:0 auto;
+      padding:20px 14px 28px;
+      padding-top:calc(20px + env(safe-area-inset-top));
+      padding-right:calc(14px + env(safe-area-inset-right));
+      padding-bottom:calc(28px + env(safe-area-inset-bottom));
+      padding-left:calc(14px + env(safe-area-inset-left));
+    }
+
+    /* バナー画像 */
+    .banner-img{
+      display:block;
+      width:100%;
+      height:auto;
+      margin:6px 0 16px;
+      border-radius:12px;
+      box-shadow:var(--shadow);
+    }
+
+    /* 上段カード */
+    .card{
+      background:var(--paper);
+      border-radius:10px;
+      box-shadow:0 6px 14px rgba(0,0,0,.10);
+      padding:16px 14px;
+      margin-bottom:20px;
+      text-align:left;
+      font-size:clamp(15px,4.4vw,17px);
+    }
+
+    /* 下段メモ */
+    .note{
+      background:var(--note);
+      border-radius:10px;
+      box-shadow:0 6px 14px rgba(0,0,0,.10);
+      padding:14px 14px 16px;
+      text-align:left;
+    }
+    .note-head{
+      display:flex; align-items:center; gap:.6rem;
+      margin:.1rem 0 .6rem;
+      font-weight:800;
+      font-size:clamp(16px,4.8vw,18px);
+    }
+    .note-head .bubble{
+      position:relative;
+      width:46px; height:28px;
+      background:#87d1db;
+      border-radius:18px;
+      flex:0 0 46px;
+      margin-left:-10px;
+      box-shadow:inset 0 -3px 0 rgba(255,255,255,.35);
+    }
+    .note-head .bubble::after{
+      content:"";
+      position:absolute;
+      left:12px;
+      bottom:-8px;
+      width:0; height:0;
+      border-style:solid;
+      border-width:8px 7px 0 7px;
+      border-color:#87d1db transparent transparent transparent;
+    }
+    .note ul{margin:.2rem 0 0;padding-left:1.2em;}
+    .note li{margin:.35rem 0;}
+
+    /* フッター */
+    .page-nav{
+      display:flex;
+      justify-content:space-between;
+      gap:1rem;
+      padding:16px 6px 8px;
+      margin-top:22px;
+    }
+    .nav-btn{
+      color:var(--purple);
+      font-weight:700;
+      text-decoration:none;
+      font-size:1rem;
+    }
+    .nav-btn:visited{color:var(--purple);}
+
+    @media (min-width:480px){
+      .wrap{padding-bottom:36px;}
+    }
+  </style>
+</head>
+
+<body>
+<main class="wrap">
+  <!-- バナー画像 -->
+  <img class="banner-img"
+       src="https://lh3.googleusercontent.com/d/1jsXm5ovj3XxipaUZcZDSi85SxxFVQlYX"
+       alt="学校との連携">
+
+  <!-- 本文 -->
+  <section class="card">
+    <p>
+      お子さんの様子が揺れやすい時期は、保護者の不安も大きくなりがちです。
+      ひとりで抱え込まず、スクールカウンセラー（SC）や保健室の先生など、
+      まずは保護者だけで話してみる方法もあります。話を聞いてもらい、声かけの言い換えや
+      距離の取り方を一緒に整えることで、不安がやわらぎ、家の空気が少し軽くなります。
+      相談は「解決を急ぐため」だけではなく、安心して見守れる土台づくりのためにある——
+      そう考えて大丈夫です。
+    </p>
+    <p>
+      学校との連携には良さがありますが、毎朝の欠席連絡が負担になることもあります。
+      つらいときは、「登校できた日に電話する」「週◯回にまとめる」など、
+      続けられる方法への変更をお願いしてみましょう。
+      反対に、学校側から定期的に連絡をもらう形にして、受けた後のお子さんの反応
+      （落ち着いた／疲れた・少し笑顔が出た など）を短く伝えると、関わりの強さや頻度を
+      一緒に“加減”できます。無理のないやり方で連携をとることが、この時期のいちばんの力になります。
+    </p>
+  </section>
+
+  <!-- そのまま使えるひと言 -->
+  <section class="note">
+    <div class="note-head">
+      <span class="bubble" aria-hidden="true"></span>
+      そのまま使えるひと言
+    </div>
+    <ul>
+      <li>「毎朝の連絡が負担になっています。登校できる日のみや週◯回のまとめに変えられますか？」</li>
+      <li>「SCを保護者だけで利用したいです。予約方法と空いている日を教えてください。」</li>
+      <li>「連絡後の様子は私から短く報告します。次の関わりの強さを一緒に調整してください。」</li>
+    </ul>
+  </section>
+
+  <!-- フッター：内部遷移は ?page= に統一 -->
+  <nav class="page-nav">
+    <a class="nav-btn" href="?page=home" target="_top">＜ メニューへ</a>
+  </nav>
+</main>
+</body>
+</html>

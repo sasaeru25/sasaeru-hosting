@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffe6e6">
+  <title>回復への道のり｜ささエール</title>
+
+  <!-- ★ PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+      });
+    }
+  </script>
+<!-- ★ コア / 共通芯 -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+
+  <!-- ★ ページ専用スタイル（省略なし） -->
+  <style>
+    /* ===== ベース ===== */
+    body{margin:0;background:#f29b8f;font-family:"Noto Sans JP",system-ui,sans-serif;color:#333;}
+    .kp-wrapper{
+      max-width:430px;margin:auto;
+      padding:1rem 1rem 2rem;
+      padding-top:calc(1rem + env(safe-area-inset-top));
+      padding-right:calc(1rem + env(safe-area-inset-right));
+      padding-bottom:calc(2rem + env(safe-area-inset-bottom));
+      padding-left:calc(1rem + env(safe-area-inset-left));
+    }
+    .kp-heading{display:inline-block;background:#fff;color:#333;padding:.5rem 1.2rem;border-radius:12px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,.08);margin:0 0 .8rem}
+    .kp-lead{background:#fff3e0;border-radius:8px;padding:1rem;margin:.2rem 0 1rem;line-height:1.7}
+
+    /* ===== 図（サムネイル） ===== */
+    .diagram{
+      background:#fff;border:2px solid #ddd;border-radius:8px;
+      display:flex;align-items:center;justify-content:center;
+      overflow:hidden;height:220px;margin-bottom:1rem;position:relative;
+    }
+    .diagram img{max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;display:block}
+    .diagram .hint{position:absolute;right:.5rem;bottom:.4rem;font-size:.8rem;color:#666;background:#fff;padding:.1rem .4rem;border-radius:6px}
+
+    /* ===== 横帯 ===== */
+    .phase-bar{background:linear-gradient(90deg,#c58dff,#8ec5ff);color:#fff;padding:.3rem .5rem;font-size:.85rem;border-radius:6px}
+    .phase-bar .l{float:left}.phase-bar .r{float:right}
+    .phase-bar .c{text-align:center;font-weight:bold;margin-top:.2rem;clear:both}
+
+    /* ===== フェーズ行 ===== */
+    .phase-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:.8rem}
+
+    /* ===== フェーズボタン（縦書き） ===== */
+    .phase-btn{
+      display:flex;align-items:center;justify-content:center;
+      width:16%;min-width:52px;padding:1rem 0;
+      border-radius:22px;background:#fff7b2;border:2px dashed #f1d662;
+      color:#333;text-decoration:none;box-shadow:0 2px 4px rgba(0,0,0,.12);
+      font-weight:bold;
+      writing-mode:vertical-rl;text-orientation:upright;
+      line-height:1.1;font-size:clamp(.9rem,3.2vw,1.05rem);
+    }
+    @media(max-width:375px){.phase-btn{width:15%;min-width:48px;padding:.9rem 0}}
+    @media(max-width:340px){
+      .phase-row{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:.25rem;}
+      .phase-btn{flex:0 0 56px;width:auto;}
+    }
+    .phase-btn span{display:block;line-height:1.1}
+
+    /* ===== フッター ===== */
+    .page-nav{display:flex;justify-content:center;gap:2rem;padding:1.6rem 0 .6rem}
+    .nav-btn{text-decoration:none;color:#4d2bb6;font-weight:700}
+
+    /* ===== 図の拡大（オーバーレイ） ===== */
+    .zoom-overlay[hidden]{display:none!important;}
+    .zoom-overlay{position:fixed;inset:0;z-index:99999;background:#fff;}
+    .zoom-top{
+      position:sticky;top:0;z-index:1;display:flex;justify-content:flex-end;
+      padding:12px;padding-top:max(12px,env(safe-area-inset-top));
+      background:#fff;border-bottom:1px solid #eee;
+    }
+    .zoom-close{
+      border:0;background:#111;color:#fff;width:44px;height:44px;
+      border-radius:999px;font-size:22px;cursor:pointer;
+    }
+    .zoom-body{
+      height:calc(100vh - 70px);overflow:auto;-webkit-overflow-scrolling:touch;
+      padding:12px 12px max(18px,env(safe-area-inset-bottom)) 12px;
+      display:flex;align-items:flex-start;justify-content:center;
+    }
+    .zoom-img{display:block;width:min(980px,100%);height:auto;}
+  </style>
+</head>
+
+<body>
+<main class="kp-wrapper">
+  <h2 class="kp-heading">🍀 回復への道のり</h2>
+
+  <p class="kp-lead">
+    エネルギーが切れてしまった状態から、心と体を休め、再び外に向かっていくには、
+    一般的に段階があると言われています。子どもたちの心がどう変化して
+    回復に向かうのかを紹介します。
+  </p>
+
+  <!-- 図（サムネイル） -->
+  <figure class="diagram">
+    <img id="diagramThumb"
+         src="https://lh3.googleusercontent.com/d/1AkjpfRLEKrBzpQq-3THLcsMdqBE5-xVr"
+         alt="回復への道のり">
+    <small class="hint">タップで拡大</small>
+  </figure>
+
+  <!-- 横帯 -->
+  <div class="phase-bar">
+    <span class="l">混乱期</span>
+    <span class="r">回復期</span>
+    <div class="c">← 低迷期 →</div>
+  </div>
+
+    <div class="phase-row">
+    <a class="phase-btn" href="?page=dankai1"><span>前兆期</span></a>
+    <a class="phase-btn" href="?page=dankai2"><span>初期</span></a>
+    <a class="phase-btn" href="?page=dankai3"><span>中期</span></a>
+    <a class="phase-btn" href="?page=dankai4"><span>後期</span></a>
+    <a class="phase-btn" href="?page=dankai5"><span>回復期</span></a>
+  </div>
+
+
+  <p>各段階の説明もご覧ください</p>
+
+  <!-- フッター -->
+    <nav class="page-nav">
+    <a href="?page=kodomo"  class="nav-btn prev">＜ 子どもの心理</a>
+    <a href="?page=kodomo6" class="nav-btn next">進む ＞</a>
+  </nav>
+
+</main>
+
+<!-- 拡大オーバーレイ -->
+<div id="zoomOverlay" class="zoom-overlay" hidden aria-label="図の拡大表示">
+  <div class="zoom-top">
+    <button type="button" class="zoom-close" id="zoomClose" aria-label="閉じる">×</button>
+  </div>
+  <div class="zoom-body" id="zoomBody">
+    <img id="zoomImg" class="zoom-img" alt="">
+  </div>
+</div>
+
+<script>
+(function(){
+  const thumb   = document.getElementById('diagramThumb');
+  const ov      = document.getElementById('zoomOverlay');
+  const zoomImg = document.getElementById('zoomImg');
+  const closeBt = document.getElementById('zoomClose');
+
+  if(!thumb || !ov || !zoomImg || !closeBt) return;
+
+  function openZoom(){
+    zoomImg.src = thumb.currentSrc || thumb.src;
+    zoomImg.alt = thumb.alt || '';
+    ov.hidden = false;
+    try{ document.getElementById('zoomBody').scrollTo(0,0);}catch(e){}
+  }
+  function closeZoom(){ ov.hidden = true; }
+
+  thumb.addEventListener('click', openZoom);
+  closeBt.addEventListener('click', closeZoom);
+  ov.addEventListener('click', e => { if(e.target === ov) closeZoom(); });
+  document.addEventListener('keydown', e => {
+    if(!ov.hidden && (e.key === 'Escape' || e.key === 'Esc')) closeZoom();
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>フリースクール等</title>
+
+<style>
+/* ===== ベース ===== */
+:root{
+  --mint:#caf4d6;
+  --row-mint:#eaf8f1;
+  --shadow:0 6px 12px rgba(0,0,0,.15);
+}
+body{margin:0;background:var(--mint);font-family:"Noto Sans JP",system-ui,sans-serif;color:#222;}
+.wrapper{max-width:430px;margin:0 auto;padding:1rem;}
+@media (min-width:768px){.wrapper{max-width:960px;}}
+
+/* ===== 見出し ===== */
+.badge{
+  display:inline-block;padding:.65rem 2rem;margin:0 0 22px;
+  border-radius:999px;background:linear-gradient(#fff,#f3f4f8);
+  font:700 clamp(18px,5vw,26px) "Noto Sans JP";
+  box-shadow:var(--shadow);
+}
+.badge img{width:1.4em;vertical-align:-.2em;margin-right:.2em}
+
+/* ===== 説明文 ===== */
+.desc{
+  background:#fff;padding:1.4rem .9rem;line-height:1.7;
+  font-size:clamp(14px,4.2vw,17px);box-shadow:0 3px 6px rgba(0,0,0,.1);
+  margin:0 0 1.8rem;text-align:left;
+}
+
+/* ===== フィルタ ===== */
+#filterWrap{font-size:1rem;margin-bottom:1rem;}
+#selRegion{font-size:1rem;padding:.35rem .6rem;}
+
+/* ===== 表 ===== */
+#tblWrap{overflow:visible;}
+.table-wrap{overflow-x:auto;}
+
+table{
+  border-collapse:collapse;min-width:320px;width:100%;table-layout:fixed;
+  font-size:.9rem;background:#fff;
+}
+th,td{
+  border:1px solid #ccc;padding:.45rem .6rem;text-align:left;
+  white-space:normal;word-break:break-word;
+}
+
+/* 交互行色・stickyヘッダ */
+table.resp tbody tr:nth-child(even) td{background:var(--row-mint);}
+table.resp thead th{position:sticky;top:0;z-index:2;background:#f7f9ff;}
+
+/* リンク装飾 */
+a.fac-link{color:#0b63c9;font-weight:700;text-decoration:underline;}
+a.fac-link::after{content:"↗";font-size:.85em;margin-left:.25em;}
+
+/* スマホ：カード表示 */
+@media(max-width:640px){
+  table.resp thead{display:none;}
+  table.resp,table.resp tbody,table.resp tr,table.resp td{display:block;border:none;width:100%;}
+  table.resp tbody tr{
+    background:#fff;margin:.65rem 0;border-radius:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,.06);
+  }
+  table.resp td{
+    display:grid;grid-template-columns:minmax(5.5em,32vw) 1fr;
+    gap:.6rem;border-bottom:1px dashed #eee;
+  }
+  table.resp td:last-child{border-bottom:none;}
+  table.resp td::before{
+    content:attr(data-label);color:#666;font-weight:600;white-space:nowrap;
+  }
+  table.resp td[data-key="name"] a.fac-link{font-size:1.05rem;}
+}
+
+/* ===== フッター ===== */
+.page-nav{
+  position:sticky;bottom:0;left:0;right:0;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:1rem;padding:1rem;background:var(--mint);
+  box-shadow:0 -2px 6px rgba(0,0,0,.06);margin-top:1.2rem;
+}
+.nav-btn{font-weight:700;color:#4d2bb6;text-decoration:none;font-size:1rem;}
+@media(max-width:430px){.nav-btn{font-size:.95rem;}}
+</style>
+</head>
+
+<body>
+<main class="wrapper">
+  <div class="clip-name" data-clip="⭐ フリースクール等"></div>
+
+  <h1 class="badge">
+    <img src="https://twemoji.maxcdn.com/v/latest/svg/1f347.svg" alt="">フリースクール等
+  </h1>
+
+  <div class="desc">
+    民間施設等でも、学習支援や体験活動などを行っています。<br>
+    施設によって活動内容・時間・費用などは異なります。<br>
+    下の表は群馬県内のフリースクール等をまとめたものです。
+    お住まいの<strong>市町村</strong>を選択して近隣の施設だけを見ることもできます。
+  </div>
+
+  <!-- フィルタ -->
+  <div id="filterWrap">
+    市町村：
+    <select id="selRegion"><option value="ALL">すべて</option></select>
+  </div>
+
+  <!-- 表 -->
+  <div id="tblWrap">読み込み中…</div>
+</main>
+
+<nav class="page-nav" aria-label="ページナビ">
+  <button type="button" class="nav-btn prev" onclick="go('soudankikan')">＜ 戻る</button>
+  <button type="button" class="nav-btn next" onclick="go('home')">メニュー ＞</button>
+</nav>
+
+<script>
+/* ===== 設定 ===== */
+const CFG = { sheetName:'フリースクール等', filterCol:2 };
+
+/* ===== util ===== */
+const escapeHtml = s =>
+  String(s ?? '').replace(/[&<>"']/g, m => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[m]));
+
+const normURL = v => {
+  if(!v) return '';
+  let u = String(v).trim();
+  if(!/^https?:\/\//i.test(u)){
+    if(/^[\w-]+(\.[\w-]+)+/.test(u)) u = 'https://' + u;
+    else return '';
+  }
+  return u;
+};
+
+const showError = (where, err) => {
+  console.error(where, err);
+  document.getElementById('tblWrap').innerHTML =
+    `<div style="padding:.8rem;background:#fff;border:1px solid #ddd;border-radius:8px;">
+       データ取得でエラーが発生しました。<br><small>${escapeHtml(where)}</small>
+     </div>`;
+};
+
+/* ===== プルダウン ===== */
+function loadRegions(){
+  google.script.run
+    .withSuccessHandler(initRegions)
+    .withFailureHandler(err => showError('地域一覧取得に失敗', err))
+    .getRegionsDynamic(CFG.sheetName, CFG.filterCol);
+}
+
+function initRegions(list){
+  const sel = document.getElementById('selRegion');
+  sel.insertAdjacentHTML(
+    'beforeend',
+    (list || []).map(r => `<option>${escapeHtml(r)}</option>`).join('')
+  );
+  sel.addEventListener('change', () => loadTable(sel.value));
+  loadTable('ALL');
+}
+
+/* ===== 表データ ===== */
+function loadTable(region){
+  document.getElementById('tblWrap').textContent = '読み込み中…';
+  google.script.run
+    .withSuccessHandler(drawTable)
+    .withFailureHandler(err => showError('表データ取得に失敗', err))
+    .getTableDynamic(CFG.sheetName, CFG.filterCol, region);
+}
+
+function drawTable({ head = [], rows = [] } = {}){
+  const wrap = document.getElementById('tblWrap');
+  if(!rows.length){
+    wrap.innerHTML = '<div class="table-wrap">該当データがありません</div>';
+    return;
+  }
+
+  const norm = s => String(s ?? '').trim();
+  const nameIdx = head.findIndex(h => /名称|施設名|名前/i.test(norm(h))) || 0;
+  const urlIdx  = head.findIndex(h => /(url|ホームページ|hp|サイト|リンク)/i.test(norm(h)));
+  const prIdx   = head.findIndex(h => /(pr|紹介|内容|特徴|備考|コメント)/i.test(norm(h)));
+  const visIdx  = head.map((_, i) => i).filter(i => i !== urlIdx);
+
+  const colgroup = '<colgroup>' + visIdx.map(i =>
+      i === prIdx   ? '<col style="min-width:28ch;width:36ch;">'
+    : i === nameIdx ? '<col style="min-width:16ch;">'
+    :                '<col style="min-width:8ch;">'
+  ).join('') + '</colgroup>';
+
+  const thead = '<thead><tr>' +
+    visIdx.map(i => `<th>${escapeHtml(head[i])}</th>`).join('') +
+    '</tr></thead>';
+
+  const tbody = '<tbody>' + rows.map(r =>
+    '<tr>' + visIdx.map(i => {
+      let cell = escapeHtml(r[i]);
+      if(i === nameIdx && urlIdx >= 0){
+        const link = normURL(r[urlIdx]);
+        if(link) cell = `<a class="fac-link" href="${link}" target="_blank" rel="noopener">${cell}</a>`;
+      }
+      const keyAttr = (i === nameIdx) ? ' data-key="name"' : '';
+      return `<td${keyAttr} data-label="${escapeHtml(head[i])}">${cell.replace(/\n/g,'<br>')}</td>`;
+    }).join('') + '</tr>'
+  ).join('') + '</tbody>';
+
+  wrap.innerHTML = `<div class="table-wrap"><table class="resp">${colgroup}${thead}${tbody}</table></div>`;
+}
+
+/* ===== 起動 ===== */
+loadRegions();
+</script>
+</body>
+</html>

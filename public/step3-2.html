@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f29b8f">
+  <title>ステップ3-2｜ささエール</title>
+
+  <!-- ★ PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+      });
+    }
+  </script>
+
+  <!-- ★ コア / 共通芯（クリップ対応） -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js"   defer></script>
+  <script src="/js/store.js" defer></script>
+  <script src="/js/common.js" defer></script>
+
+  <style>
+    /* ===== ベース ===== */
+    body{margin:0;background:#f29b8f;font-family:"Noto Sans JP",system-ui,sans-serif;color:#333;}
+    .container{
+      max-width:480px;margin:auto;padding:1rem;
+      display:flex;flex-direction:column;gap:2rem;
+    }
+
+    /* ── 上段 ── */
+    .top-box{
+      background:#fef0cf;padding:1.2rem;border-radius:8px;
+      font-size:1rem;line-height:1.85;overflow:hidden;box-sizing:border-box;
+    }
+    .top-box img{
+      float:right;width:120px;height:auto;margin:0 0 0 1rem;border-radius:8px;
+      shape-outside:margin-box;
+    }
+
+    /* ── 中段 ── */
+    .middle-box{
+      background:url("https://lh3.googleusercontent.com/d/1GhxIo1goauswQZWV0wLyg11aUFn6ytJs")
+        center/100% 100% no-repeat;
+      padding:4rem 1.5rem;font-size:.95rem;line-height:1.8;
+      border-radius:8px;box-sizing:border-box;
+    }
+
+    /* ── フッター nav ── */
+    .page-nav{
+      display:flex;justify-content:center;gap:2.2rem;
+      padding:2rem 0 1rem;font-weight:700;font-size:1rem;
+    }
+    .nav-btn{color:#4d2bb6;text-decoration:none;}
+    .nav-btn:visited{color:#4d2bb6;}
+
+    /* ── モバイル調整 ── */
+    @media(max-width:360px){
+      .top-box{font-size:.95rem;}
+      .top-box img{width:95px;}
+      .middle-box{font-size:.9rem;padding:3.5rem 1rem;}
+      .nav-btn{font-size:.9rem;}
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+
+    <!-- 上段 -->
+    <div class="top-box">
+      <img src="https://lh3.googleusercontent.com/d/135E9nToIDvdSmxdTWl_XNbwRQJGnnykO" alt="悩む女性">
+      不登校に悩んでいます…。学校に行けず、家にいるのですが、昼夜逆転して生活リズムも崩れています。家族との会話も減って、へやにこもってばかり…。<br>
+      イライラして家族に当たり散らすこともあります。このままずっと続くのか、どうしたらいいのか、相談できる人もいなく、本当に困っています…。
+    </div>
+
+    <!-- 中段 -->
+    <div class="middle-box">
+      ・完全に学校に行かなくなる<br>
+      ・昼夜逆転など、生活リズムが著しく乱れる。<br>
+      ・食事や入浴など、身の回りのことにも無関心になることがある。<br>
+      ・外出を嫌がる、部屋に閉じこもるなど、ひきこもり傾向がみられる。<br>
+      ・家族以外との交流を避けるようになる。<br>
+      ・無気力になり、好きなことにも興味を示さなくなる。<br>
+      ・心身の不調（過食・拒食、不眠、イライラ、うつ症状など）が続くことがある。<br><br>
+      子どもの状況もマイナスに見える面が増えてきて、先の見通しも立たず、つらい時期だと思います。子どもを見守り支えながら、保護者の皆さんのメンタルケアも大切にしてください。ぜひ相談機関を利用して、今のこと、今後のことを相談してみましょう。
+    </div>
+
+    <!-- フッター -->
+    <nav class="page-nav">
+      <a href="?page=step3"   class="nav-btn prev">＜ 戻る</a>
+      <a href="?page=step3-3" class="nav-btn next">進む ＞</a>
+    </nav>
+
+  </main>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>学校との連携①</title>
+
+  <!-- ==== PWA ひな形（不要なら削除） ======================== -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#f29b8f">
+  
+  <!-- ======================================================= -->
+<!-- ★ コア / 共通芯 -->
+<link rel="stylesheet" href="/css/common.css">
+<script src="/js/lib.js"   defer></script>
+<script src="/js/store.js" defer></script>
+<script src="/js/common.js" defer></script>
+
+  <style>
+    :root{
+      --pink:#f29b8f;          /* 背景ピンク（無地） */
+      --paper:#ffffff;         /* 白いカード */
+      --note:#fff0da;          /* 下段のクリーム紙 */
+      --ink:#222;              /* 文字色 */
+      --shadow:0 8px 18px rgba(0,0,0,.12);
+      --purple:#4d2bb6;        /* フッターの紫リンク */
+    }
+
+    /* ベース */
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:var(--pink);
+      color:var(--ink);
+      font-family:"Noto Sans JP",system-ui,sans-serif;
+      line-height:1.9;
+    }
+    .wrap{
+      max-width:430px;
+      margin:0 auto;
+      padding:20px 14px 28px;
+    }
+
+    /* バナー画像 */
+    .banner-img{
+      display:block;
+      width:100%;
+      height:auto;
+      margin:6px 0 16px;
+      border-radius:12px;
+      box-shadow:var(--shadow);
+    }
+
+    /* 上段カード */
+    .card{
+      background:var(--paper);
+      border-radius:10px;
+      box-shadow:0 6px 14px rgba(0,0,0,.10);
+      padding:16px 14px;
+      margin-bottom:20px;
+      text-align:left;
+      font-size:clamp(15px,4.4vw,17px);
+    }
+    .lead{
+      font-weight:800;
+      margin:0 0 .6rem;
+    }
+
+    /* 下段メモ */
+    .note{
+      background:var(--note);
+      border-radius:10px;
+      box-shadow:0 6px 14px rgba(0,0,0,.10);
+      padding:14px 14px 16px;
+      text-align:left;
+    }
+    .note-head{
+      display:flex; align-items:center; gap:.6rem;
+      margin:.1rem 0 .6rem;
+      font-weight:800;
+      font-size:clamp(16px,4.8vw,18px);
+    }
+
+    /* 水色の吹き出し飾り */
+    .note-head .bubble{
+      position:relative;
+      width:46px; height:28px;
+      background:#87d1db;
+      border-radius:18px;
+      flex:0 0 46px;
+      margin-left:-10px;
+      box-shadow:inset 0 -3px 0 rgba(255,255,255,.35);
+    }
+    .note-head .bubble::after{
+      content:"";
+      position:absolute;
+      left:12px;
+      bottom:-8px;
+      width:0; height:0;
+      border-style:solid;
+      border-width:8px 7px 0 7px;
+      border-color:#87d1db transparent transparent transparent;
+    }
+
+    .note ul{
+      margin:.2rem 0 0;
+      padding-left:1.2em;
+    }
+    .note li{ margin:.35rem 0; }
+
+    /* フッター */
+    .page-nav{
+      display:flex;
+      justify-content:space-between;
+      gap:1rem;
+      padding:16px 6px 8px;
+      margin-top:22px;
+    }
+    .nav-btn{
+      color:var(--purple);
+      font-weight:700;
+      text-decoration:none;
+      font-size:1rem;
+    }
+    .nav-btn:visited{ color:var(--purple); }
+
+    @media (min-width:480px){
+      .wrap{ padding-bottom:36px; }
+    }
+  </style>
+</head>
+
+<body>
+<main class="wrap">
+
+  <!-- バナー画像 -->
+  <img class="banner-img"
+       src="https://lh3.googleusercontent.com/d/1jsXm5ovj3XxipaUZcZDSi85SxxFVQlYX"
+       alt="学校との連携">
+
+  <!-- 本文（連携①） -->
+  <section class="card">
+    <p class="lead">〜いま大切なのは、原因探しより“安心づくり”〜</p>
+    <p>
+      まずは担任や保健室の先生に、最近の様子をそっと共有してみましょう。学校の中で気になっていること（席・提出物・友だち関係・体育など）が見えてくると、周りの支えと後押しで、朝の“引っかかり”が軽くなることがあります。
+    </p>
+    <p>
+      保護者だけでスクールカウンセラー（SC）に相談するのも良い一歩です。学校への伝え方を一緒に整えてくれます。
+    </p>
+    <p>
+      「すぐ休ませる」以外にも、見守りと伴走で頑張れるケースも多くあります。子どもの気持ちに寄り添いつつ、「味方がいるよ」と支えてあげましょう。
+    </p>
+  </section>
+
+  <!-- そのまま使えるひと言 -->
+  <section class="note">
+    <div class="note-head">
+      <span class="bubble" aria-hidden="true"></span>
+      そのまま使えるひと言
+    </div>
+    <ul>
+      <li>「“行きたくない”が増えています。学校での様子や、周りで支えられる工夫があれば教えてください。」</li>
+      <li>「朝が不安なようです。保健室や先生の付き添いなど、そっと後押しできる方法はありますか？」</li>
+      <li>「SCに保護者だけで相談したいです。予約方法を教えてください。」</li>
+    </ul>
+  </section>
+
+  <!-- フッター -->
+  <nav class="page-nav">
+    <a class="nav-btn" href="?page=home" target="_top">＜ メニューへ</a>
+  </nav>
+
+</main>
+
+</body>
+</html>

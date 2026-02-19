@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f29b8f">
+  <title>保護者の対応｜ステップ2-4</title>
+
+  <!-- ★ PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+      });
+    }
+  </script>
+
+  <!-- ★ コア / 共通芯（クリップ対応） -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js"   defer></script>
+  <script src="/js/store.js" defer></script>
+  <script src="/js/common.js" defer></script>
+
+  <style>
+    /* ── ベース ── */
+    body{margin:0;background:#f29b8f;font-family:"Noto Sans JP",system-ui,sans-serif;color:#333;}
+    .container{max-width:480px;margin:auto;padding:1rem;display:flex;flex-direction:column;gap:1rem;}
+
+    /* バナー */
+    .banner{
+      background:#fff;border-radius:2rem;padding:.8rem 1rem;
+      text-align:center;font-size:1.4rem;font-weight:700;line-height:1.2;
+    }
+
+    /* 本文枠 */
+    .content-area{
+      background:#fff;border-radius:4px;padding:1.6rem 1.2rem;
+      line-height:1.9;font-size:1rem;text-align:left;
+    }
+    .section{margin-bottom:2rem;overflow:hidden;}
+
+    /* 画像（既定右寄せ） */
+    .section img{
+      float:right;shape-outside:margin-box;width:120px;max-width:45%;height:auto;
+      margin-left:1rem;margin-bottom:.5rem;border-radius:8px;
+    }
+    .left-img{float:left;margin-right:1rem;margin-left:0;}
+
+    /* フッター */
+    .page-nav{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:2rem 0 1rem;font-weight:700;font-size:1rem;
+    }
+    .nav-btn{color:#4d2bb6;text-decoration:none;}
+    .nav-btn:visited{color:#4d2bb6;}
+
+    /* モバイル調整 */
+    @media(max-width:430px){
+      .content-area{font-size:.95rem;}
+      .section img{width:95px;}
+      .nav-btn{font-size:.92rem;}
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <h2 class="banner">保護者の対応</h2>
+
+    <div class="content-area">
+
+      <div class="section">
+        <img src="https://lh3.googleusercontent.com/d/1vNASDqh9n-UQei-YjxZyLQRi79Z_pk-C" alt="語る親子１">
+        ・寄り添って話を聞いてあげましょう。どんなことでも、「これまでずっと我慢をしてきた」という事実があります。<br>
+        そこを受け止めて、「つらかったね」「しんどいんだね」と受け止めてあげましょう。
+      </div>
+
+      <div class="section">
+        <img src="https://lh3.googleusercontent.com/d/18EqhL49F-_1xAnABexgaJp27TbRzTvjr" alt="電話" class="left-img">
+        ・保護者としても、聞きづらいこともあるかもしれませんが、学校の先生に状況を説明しながら情報共有をしましょう。<br>
+        子どもの苦しさが見えてくる面もあるかもしれませんし、先生の支援で苦しさが軽減できる面もあるかもしれません。
+      </div>
+
+      <div class="section">
+        <img src="https://lh3.googleusercontent.com/d/1coZ7lj84O_OI2_zzmtUMht4TNCPiki-Q" alt="語る親子４">
+        ・さて、登校をどうするかですが、状況によってさまざまなパターンがあります。<br><br>
+        保護者に思いのたけを打ち明けてわかってもらうことでエネルギーを得て、頑張れる子もいます。その場合は、家を安全基地として休める環境を確保しながら寄り添ってエネルギーを与えてあげましょう。<br><br>
+        また、わかってもらって安心をし、数日休むと頑張る元気が湧く子もいます。どうしてもだめそうであれば、「少し体も心も休ませよう」と、どのくらい休みたいかを相談し、その間ゆっくり休ませてあげる方法もあります。<br>
+        その際は<strong>「味方だよ」「見守っているよ」</strong>と愛情を伝える時間を忘れずに。自己肯定感の低下が大きい今、「あなたは大切な存在だ」と感じられる時間が子どものエネルギーに変わります。
+      </div>
+
+      <div class="section">
+        <img src="https://lh3.googleusercontent.com/d/1vvrpy6yVHnZJqKGNe4L68WcgKfn3oZiG" alt="学校相談">
+        ・休みが長くなりそうなときは、担任の先生だけでなく、学校スクールカウンセラーや教育相談室など相談機関を利用する方法もあります。<br>
+        状況を話してアドバイスをもらうことは、子どものためだけでなく、頑張っている保護者の支えにもなります。<br>
+        子どもの心配は保護者にとって大きなストレスですから、<strong>ご自身のメンタルケア</strong>も忘れずに。保護者が一人で抱えて頑張りすぎず、いろいろな立場から子どもを支えていきましょう。
+      </div>
+
+      <div class="section">
+        <img src="https://lh3.googleusercontent.com/d/1AC0ja20BEZUqipV3XBASCGLDpTaiEnVo" alt="温かい手">
+        ・国の方針でも、不登校そのものを「問題」とは捉えていません。懸念されるのは、学業の遅れや心理的負担など子どもが被る<strong>「不利益」</strong>です。<br><br>
+        休みが長引きそうなときはそこを念頭に入れて支援を考えましょう。ただし急ぎは禁物。子どもが次の行動に移れるのは<strong>十分なエネルギー</strong>が戻ってからです。<br>
+        「子どもの心理」内の<em>回復への道のり</em>を参考に、相談機関と連携しながら今後を一緒に考えてみましょう。
+      </div>
+
+    </div>
+
+    <nav class="page-nav">
+      <a href="?page=step2"   class="nav-btn prev">＜ 戻る</a>
+      <a href="?page=renkei2" class="nav-btn next">進む ＞</a>
+    </nav>
+
+  </main>
+</body>
+</html>

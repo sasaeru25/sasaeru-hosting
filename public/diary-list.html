@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ステップ 3-3</title>
+
+  <!-- ★ PWA ------------------------------------------ -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#FFF9F2">
+  <!-- 共通 CSS（なければ削除可）-->
+  <link rel="stylesheet" href="/css/common.css">
+  <!-- ------------------------------------------------- -->
+
+  <style>
+    /* ……………（ここから下は そのまま・中略なし）…………… */
+    :root{
+      --bg:#FFF9F2; --card:#ffffff; --accent:#FFDC65; --border:#e6e6e6;
+      --ink:#333; --muted:#666; --purple:#6a1b9a; --safe-bottom:env(safe-area-inset-bottom);
+    }
+    body{background:var(--bg);}
+
+    .diary-list-page{
+      box-sizing:border-box;max-width:560px;margin:0 auto;
+      padding:18px 16px 28px;color:var(--ink);
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans JP",sans-serif;
+    }
+
+    .page-head{display:flex;justify-content:center;margin-bottom:12px;text-align:center;}
+    .page-head h2{
+      margin:0;display:inline-flex;align-items:center;gap:10px;
+      padding:10px 22px;border-radius:999px;background:#fff;border:1px solid var(--border);
+      font-weight:900;font-size:1.05rem;
+    }
+
+    .bar{display:flex;gap:10px;justify-content:center;align-items:center;margin:12px 0 10px;flex-wrap:wrap;}
+    .btn-link{
+      display:inline-flex;align-items:center;justify-content:center;
+      min-height:52px;padding:12px 16px;border-radius:16px;background:#fff;border:1px solid #ddd;
+      text-decoration:none;color:var(--purple);font-weight:900;box-shadow:0 10px 16px rgba(0,0,0,.08);
+    }
+
+    .search-row{margin:10px 0 14px;}
+    .search-row input{
+      width:100%;box-sizing:border-box;padding:12px;border-radius:12px;border:1px solid #ddd;
+      background:#fff;font-size:1rem;
+    }
+
+    .list{display:flex;flex-direction:column;gap:10px;}
+
+    .card{
+      background:var(--card);border:1px solid #eee;border-radius:12px;
+      padding:12px;box-shadow:0 3px 10px rgba(0,0,0,.06);
+      display:flex;gap:10px;align-items:flex-start;justify-content:space-between;
+    }
+
+    .meta{flex:1;min-width:0;cursor:pointer;}
+    .chip{
+      display:inline-block;background:var(--accent);border-radius:999px;
+      padding:4px 10px;font-weight:900;font-size:.95rem;margin-bottom:6px;
+    }
+    .snippet{
+      margin:0;color:var(--muted);line-height:1.65;white-space:pre-wrap;overflow:hidden;
+      display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;
+    }
+
+    .actions{display:flex;flex-direction:column;gap:8px;flex:0 0 auto;}
+    .sbtn{
+      appearance:none;border:none;cursor:pointer;border-radius:12px;
+      padding:10px 12px;font-weight:900;background:#fff;border:1px solid #ddd;color:#111;
+    }
+    .sbtn-open{background:var(--accent);border:none;}
+    .sbtn-del{border:1px solid #ef4444;color:#ef4444;}
+
+    .empty{
+      margin-top:18px;text-align:center;color:var(--muted);line-height:1.9;
+      background:#fff;border:1px solid #eee;border-radius:12px;padding:14px;
+    }
+
+    main{padding-bottom:calc(28px + var(--safe-bottom));}
+
+    /* モーダル */
+    .modal[hidden]{display:none!important;}
+    .modal{
+      position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.45);
+      display:flex;align-items:flex-end;justify-content:center;padding:14px;
+    }
+    .sheet{
+      width:min(640px,100%);max-height:85vh;background:#fff;border-radius:18px;
+      box-shadow:0 20px 60px rgba(0,0,0,.25);overflow:hidden;display:flex;flex-direction:column;
+    }
+    .sheet-head{
+      padding:12px 14px;border-bottom:1px solid #eee;
+      display:flex;justify-content:space-between;align-items:center;gap:10px;
+    }
+    .m-chip{
+      background:var(--accent);border-radius:999px;padding:6px 12px;font-weight:900;
+    }
+    .m-close{
+      appearance:none;border:none;cursor:pointer;background:#fff;border:1px solid #ddd;
+      border-radius:12px;padding:8px 12px;font-weight:900;color:#111;
+    }
+    .sheet-body{padding:14px;overflow:auto;}
+    .fulltext{white-space:pre-wrap;line-height:1.75;font-size:1rem;color:#333;}
+    .sheet-actions{
+      border-top:1px solid #eee;padding:12px 14px;display:flex;justify-content:flex-end;
+    }
+    .mbtn{
+      padding:10px 16px;border-radius:12px;border:1px solid #ef4444;
+      background:#fff;color:#ef4444;font-weight:900;cursor:pointer;
+    }
+  </style>
+</head>
+
+<body>
+<main class="diary-list-page">
+  <div class="page-head"><h2>📚 一覧</h2></div>
+
+  <div class="bar">
+    <a class="btn-link" href="?page=diary">← 記録トップへ</a>
+    <a class="btn-link" href="?page=diary-new">＋ 新規作成</a>
+  </div>
+
+  <div class="search-row">
+    <input id="q" type="search" placeholder="キーワードで絞り込み（例：学校）">
+  </div>
+
+  <div class="list" id="list" aria-live="polite"></div>
+  <div class="empty" id="empty" hidden>
+    記録がありません。<br>「＋ 新規作成」から始めましょう。
+  </div>
+</main>
+
+<!-- モーダル -->
+<div class="modal" id="modal" hidden>
+  <div class="sheet">
+    <div class="sheet-head">
+      <span class="m-chip" id="m-date"></span>
+      <button class="m-close" id="m-close" type="button">閉じる</button>
+    </div>
+    <div class="sheet-body">
+      <div class="fulltext" id="m-body"></div>
+    </div>
+    <div class="sheet-actions">
+      <button class="mbtn" id="m-del" type="button">削除</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+(async () => {
+  const { loadRecords, saveRecords } = window;
+  if (!loadRecords || !saveRecords) return;
+
+  const $q     = document.getElementById('q');
+  const $list  = document.getElementById('list');
+  const $empty = document.getElementById('empty');
+
+  /* モーダル */
+  const $modal  = document.getElementById('modal');
+  const $mDate  = document.getElementById('m-date');
+  const $mBody  = document.getElementById('m-body');
+  const $mClose = document.getElementById('m-close');
+  const $mDel   = document.getElementById('m-del');
+
+  let current = null;
+
+  const norm  = s=>String(s??'').toLowerCase().trim();
+  const label = ts=>{const d=new Date(ts);return`${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;};
+  const snippet = (t,n=80)=>{const s=String(t??'').trim();return s.length<=n?s:s.slice(0,n)+'…';};
+
+  /* モーダル開閉 */
+  const openModal = r =>{
+    current=r;
+    $mDate.textContent = r.dateText || label(r.recordDate??r.createdAt);
+    $mBody.textContent = r.content  || '';
+    $modal.hidden=false;
+  };
+  const closeModal = ()=>{ $modal.hidden=true; current=null; };
+  $mClose.onclick = closeModal;
+  $modal.onclick  = e=>{ if(e.target=== $modal) closeModal(); };
+
+  /* 削除（共通関数） */
+  async function deleteRecord(rec){
+    if(!rec) return;
+    if(!confirm('削除しますか？')) return;
+    const all = await loadRecords();
+    await saveRecords(all.filter(r=>r.id!==rec.id));
+    // current が同じなら閉じる
+    if(current && current.id===rec.id) closeModal();
+    await refresh(); draw();
+  }
+
+  $mDel.onclick = async()=>{ await deleteRecord(current); };
+
+  /* データ読み込み */
+  let master=[];
+  async function refresh(){
+    master = (await loadRecords()).slice()
+      .sort((a,b)=>(b.recordDate??b.createdAt)-(a.recordDate??a.createdAt));
+  }
+
+  /* 描画 */
+  function match(r,key){
+    if(!key) return true;
+    const target = norm(r.content)+' '+norm(r.dateText);
+    return target.includes(key);
+  }
+  function draw(){
+    const key   = norm($q.value);
+    const items = master.filter(r=>match(r,key));
+
+    $list.innerHTML='';
+    if(!items.length){$empty.hidden=false;return;}
+    $empty.hidden=true;
+
+    items.slice(0,200).forEach(r=>{
+      const card=document.createElement('div');card.className='card';
+
+      const meta=document.createElement('div');meta.className='meta';
+      meta.onclick=()=>openModal(r);
+
+      const chip=document.createElement('div');chip.className='chip';
+      chip.textContent=r.dateText||label(r.recordDate??r.createdAt);
+
+      const p=document.createElement('p');p.className='snippet';
+      p.textContent=snippet(r.content,120);
+
+      meta.append(chip,p);
+
+      const act = document.createElement('div');act.className='actions';
+
+      const bOpen=document.createElement('button');
+      bOpen.className='sbtn sbtn-open';
+      bOpen.type='button';
+      bOpen.textContent='開く';
+      bOpen.onclick=()=>openModal(r);
+
+      const bDel=document.createElement('button');
+      bDel.className='sbtn sbtn-del';
+      bDel.type='button';
+      bDel.textContent='削除';
+      bDel.onclick=async()=>{ await deleteRecord(r); };
+
+      act.append(bOpen,bDel);
+      card.append(meta,act);
+      $list.appendChild(card);
+    });
+  }
+
+  $q.addEventListener('input',(()=>{let t;return()=>{clearTimeout(t);t=setTimeout(draw,120);};})());
+
+  await refresh(); draw();
+})();
+</script>
+
+<!-- ★ 共通 JS（Service Worker 登録など） ------------------- -->
+<script src="/js/common.js" defer></script>
+</body>
+</html>

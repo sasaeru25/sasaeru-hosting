@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f29b8f">
+  <title>SOSのサイン｜ささエール</title>
+
+  <!-- ★ PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+      });
+    }
+  </script>
+<!-- ★ コア / 共通芯 -->
+<link rel="stylesheet" href="/css/common.css">
+<script src="/js/lib.js"   defer></script>
+<script src="/js/store.js" defer></script>
+
+
+  <!-- ★ ページ専用スタイル（全文） -->
+  <style>
+    /* ===== ベース ===== */
+    body{
+      margin:0;
+      font-family:"Noto Sans JP",sans-serif;
+      line-height:1.6;
+      padding:1rem;
+      background:#f29b8f;
+    }
+    .kp-wrapper{max-width:430px;margin:auto;}
+    .kp-heading,
+    .kp-lead{text-align:left;}
+
+    /* ===== 白い枠 ===== */
+    .sos-box{
+      background:#fff;border:2px solid #eee;border-radius:8px;
+      padding:1rem;margin-bottom:2rem;overflow:hidden;
+    }
+
+    /* ===== 画像レイアウト ===== */
+    .float-img{
+      float:right;width:150px;height:auto;margin:0 0 1rem 1rem;
+    }
+
+    /* ===== チェックリスト ===== */
+    .txt-col{list-style-type:"✔︎ ";padding-left:1.4em;margin:0;text-align:left;}
+    .txt-col li{text-align:left;}
+
+    /* ===== フッターリンク ===== */
+    .page-nav{display:flex;justify-content:space-between;}
+    .nav-btn{
+      padding:.6rem 1.4rem;background:#f29b8f;color:#6b2e95;
+      text-decoration:none;border-radius:4px;font-weight:600;
+    }
+
+    @media(max-width:420px){
+      .float-img{
+        float:none;display:block;width:min(70%,220px);margin:0 auto 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<main class="kp-wrapper">
+  <h2 class="kp-heading">🍀 SOSのサイン</h2>
+
+  <p class="kp-lead">
+    「学校に行けない！」となる前に、子どもたちのつらさの現れとして、様々なSOSのサインが出ることがあります。それぞれが、子どもの不安や緊張が高まるとよく見られる行動です。身体に現れるものや、不安やつらさから心の面に現れるものもあります。
+  </p>
+
+  <!-- 白い枠で囲んだブロック -->
+  <section class="sos-box">
+    <img src="https://lh3.googleusercontent.com/d/1iX8_RcFGSwoRNlBLdGw1gQnIEXar1yFq"
+         alt="腹痛" class="float-img">
+
+    <ul class="txt-col">
+      <li>腹痛</li><li>頭痛</li><li>発熱</li><li>不眠</li><li>食欲不振</li>
+      <li>情緒不安定 <small>(イライラ、過度に甘える、すぐ泣く)</small></li>
+      <li>自分の部屋から出てこない</li><li>宿題ができなくなる</li>
+      <li>提出物を出さなくなる</li><li>忘れ物が多くなる</li>
+      <li>成績が急に下がる</li><li>集中力がなくなる</li>
+    </ul>
+
+    <p style="text-align:left;margin-top:1rem;">
+      <img src="https://lh3.googleusercontent.com/d/1ISm_fGaFzPrnfpQGVCtnW8ffdIYm6Chr=w600-h0"
+           alt="書類" width="200">
+    </p>
+  </section>
+
+  <!-- フッターリンク -->
+  <nav class="page-nav">
+    <a href="/kodomo.html"  class="nav-btn prev">＜ 子どもの心理</a>
+    <a href="/kodomo4.html" class="nav-btn next">進む ＞</a>
+  </nav>
+</main>
+</body>
+</html>

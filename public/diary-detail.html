@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>記録の詳細</title>
+
+  <!-- 芯（共通・必須） -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script defer src="/js/lib.js"></script>
+  <script defer src="/js/store.js"></script>
+
+  <meta name="theme-color" content="#FFF9F2">
+
+  <style>
+    :root{--bg:#FFF9F2;--accent:#FFDC65;--purple:#6a1b9a;--border:#e6e6e6;
+          --safe-bottom:env(safe-area-inset-bottom);}
+    body{background:var(--bg);}
+
+    .detail-page{box-sizing:border-box;max-width:560px;margin:0 auto;
+      padding:18px 16px 28px;color:#333;
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans JP",sans-serif;}
+
+    .page-head{display:flex;gap:.6rem;align-items:center;justify-content:center;margin-bottom:12px;}
+    .page-head h2{margin:0;font-size:1.05rem;padding:.35rem .9rem;background:#fff;
+      border:1px solid var(--border);border-radius:999px;}
+
+    .card{background:#fff;border:1px solid #eee;border-radius:12px;padding:14px;
+      box-shadow:0 3px 10px rgba(0,0,0,.06);text-align:left;}
+
+    .meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:10px;}
+    .badge{display:inline-block;padding:6px 10px;border-radius:999px;
+      background:var(--accent);font-weight:800;font-size:.92rem;}
+    .sub{color:#666;font-size:.85rem;}
+
+    .ttl{margin:10px 0 12px;font-size:1.1rem;font-weight:800;line-height:1.35;}
+    .body{white-space:pre-wrap;line-height:1.75;font-size:1rem;}
+
+    .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap;}
+    .btn-primary,.btn-secondary,.btn-danger{
+      min-height:44px;padding:10px 16px;border-radius:12px;cursor:pointer;font-size:1rem;
+      border:1px solid #d9d9d9;background:#fff;}
+    .btn-primary{background:var(--accent);border:none;font-weight:800;
+      box-shadow:0 3px 6px rgba(0,0,0,.15);}
+    .btn-danger{border:1px solid #ef4444;color:#ef4444;font-weight:800;}
+
+    .bottom-links{margin-top:16px;text-align:center;display:flex;justify-content:center;
+      gap:18px;flex-wrap:wrap;}
+    .purple{color:var(--purple);text-decoration:none;font-weight:800;}
+
+    @media(max-width:430px){
+      .detail-page{padding:16px 14px 24px;}
+      .page-head h2{font-size:1rem;}
+      .ttl{font-size:1.05rem;}
+    }
+
+    main{padding-bottom:calc(28px + var(--safe-bottom));}
+  </style>
+</head>
+
+<body>
+<main class="detail-page" aria-labelledby="detail-title">
+  <div class="page-head"><h2 id="detail-title">🐤 記録の詳細 🐤</h2></div>
+
+  <!-- 詳細カード -->
+  <section class="card" id="card" hidden>
+    <div class="meta">
+      <span class="badge" id="dateText">日付</span>
+      <span class="sub"   id="timeText"></span>
+    </div>
+
+    <div class="ttl"  id="titleText"></div>
+    <div class="body" id="bodyText"></div>
+
+    <div class="actions">
+      <button type="button" class="btn-secondary" id="btn-back">戻る</button>
+      <button type="button" class="btn-primary"  id="btn-edit">編集</button>
+      <button type="button" class="btn-danger"   id="btn-del">削除</button>
+    </div>
+  </section>
+
+  <!-- 404 相当 -->
+  <section class="card" id="notfound" hidden>
+    <div style="font-weight:800;margin-bottom:8px;">記録が見つかりません</div>
+    <div style="color:#666;line-height:1.7;">記録が削除されたか、URL の指定が正しくありません。</div>
+    <div class="actions" style="justify-content:center;margin-top:14px;">
+      <button class="btn-primary" id="nf-top" type="button">一覧へ</button>
+    </div>
+  </section>
+
+  <nav class="bottom-links" aria-label="リンク">
+    <a href="?page=diary"      class="purple" id="lnk-top">← 記録トップ</a>
+    <a href="?page=diary-list" class="purple" id="lnk-list">一覧表示</a>
+  </nav>
+</main>
+
+<script>
+(async () => {
+  // 芯（store.js）が用意する想定
+  const loadRecords = window.loadRecords;
+  const saveRecords = window.saveRecords;
+
+  const params = new URL(location.href).searchParams;
+  const id = params.get('id');
+
+  const $card      = document.getElementById('card');
+  const $nf        = document.getElementById('notfound');
+  const $dateText  = document.getElementById('dateText');
+  const $timeText  = document.getElementById('timeText');
+  const $titleText = document.getElementById('titleText');
+  const $bodyText  = document.getElementById('bodyText');
+
+  // go() があれば統一、なければ location.href でフォールバック
+  const nav = (page, qs='') => {
+    if (typeof window.go === 'function') return window.go(page, qs);
+    location.href = `?page=${encodeURIComponent(page)}${qs ? `&${qs}` : ''}`;
+  };
+
+  document.getElementById('lnk-top').addEventListener('click', (e)=>{ e.preventDefault(); nav('diary'); });
+  document.getElementById('lnk-list').addEventListener('click',(e)=>{ e.preventDefault(); nav('diary-list'); });
+  document.getElementById('nf-top').onclick = ()=> nav('diary-list');
+
+  // ストア未準備なら「見つからない」扱いにしない（事故防止）
+  if (!loadRecords || !saveRecords){
+    $nf.hidden = false;
+    $nf.querySelector('div:nth-child(2)').textContent =
+      '読み込み準備中です。少し待ってから戻ってください（store.js が読み込めていない可能性があります）。';
+    return;
+  }
+
+  if (!id){
+    $nf.hidden = false;
+    return;
+  }
+
+  const all = await loadRecords();
+  const rec = all.find(r => String(r.id) === String(id));
+
+  if (!rec){
+    $nf.hidden = false;
+    return;
+  }
+
+  const ts  = rec.recordDate ?? rec.createdAt;
+  const d   = new Date(ts);
+  const pad = n => String(n).padStart(2,'0');
+  const ymd = `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
+  const hm  = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+
+  $dateText.textContent  = rec.dateText || ymd;
+  $timeText.textContent  = `${ymd} ${hm}`;
+  $titleText.textContent = (rec.title && rec.title.trim()) ? rec.title.trim() : '（タイトルなし）';
+  $bodyText.textContent  = rec.content || '';
+
+  $card.hidden = false;
+
+  document.getElementById('btn-back').onclick = ()=> nav('diary-list');
+  document.getElementById('btn-edit').onclick = ()=> nav('diary-new', `edit=${encodeURIComponent(rec.id)}`);
+
+  document.getElementById('btn-del').onclick  = async()=>{
+    if (!confirm('この記録を削除しますか？')) return;
+    await saveRecords(all.filter(r => String(r.id) !== String(rec.id)));
+    nav('diary-list');
+  };
+})();
+</script>
+
+</body>
+</html>

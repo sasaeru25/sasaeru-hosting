@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f29b8f">
+  <title>子どもの心理｜ステップ3-3</title>
+
+  <!-- ★ PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker
+                 .register('/service-worker.js')
+                 .catch(() => {});
+      });
+    }
+  </script>
+
+  <!-- ★ コア / 共通芯（クリップ対応） -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js"   defer></script>
+  <script src="/js/store.js" defer></script>
+  <script src="/js/common.js" defer></script>
+
+  <style>
+    /* ----------------- 全体 ----------------- */
+    :root{font-size:16px;}
+    @media(min-width:480px){:root{font-size:17px;}}
+
+    body{
+      margin:0;background:#f29b8f;
+      font-family:"Noto Sans JP",system-ui,sans-serif;color:#333;
+    }
+
+    /* ----------------- ページ枠 ----------------- */
+    .container{
+      max-width:480px;margin:auto;padding:0 1rem 1.2rem;
+      display:flex;flex-direction:column;gap:1rem;box-sizing:border-box;
+    }
+
+    /* ----------------- 見出しバナー ----------------- */
+    .banner{
+      background:#fff;border-radius:2rem;text-align:center;
+      padding:.8rem 1rem;font-size:1.4rem;font-weight:700;line-height:1.2;
+      margin-top:1rem;
+    }
+
+    /* ----------------- 本文 ----------------- */
+    .content-box{
+      background:#fef0cf;border-radius:4px;padding:1.6rem 1.4rem;
+      line-height:1.9;text-align:left;overflow:hidden;box-sizing:border-box;
+    }
+    .content-box img{
+      float:right;shape-outside:margin-box;
+      width:130px;max-width:45%;height:auto;
+      margin-left:1rem;margin-bottom:.5rem;margin-top:.2rem;border-radius:6px;
+    }
+
+    /* ----------------- フッターリンク ----------------- */
+    .page-nav{
+      display:flex;justify-content:center;gap:2.2rem;
+      padding:2rem 0 1rem;font-weight:700;font-size:1rem;
+    }
+    .nav-btn{color:#4d2bb6;text-decoration:none;}
+    .nav-btn:visited{color:#4d2bb6;}
+
+    @media(max-width:430px){
+      .content-box img{width:100px;}
+      .nav-btn{font-size:.92rem;}
+    }
+  </style>
+</head>
+
+<body>
+<main class="container">
+
+  <h2 class="banner">子どもの心理</h2>
+
+  <section class="content-box">
+    学校を完全にシャットダウンした子ども。学校への強い拒否感や絶望感が
+    強く固定されていることが考えられます。原因に対してなのかもしれないし、
+    これまでの経過を含めてのことかもしれません。原因に対してであっても、
+    学校に行けないということに対してであっても、
+    <strong>自己肯定感の著しい低下</strong>は確かです。
+    現実と「こうあるべき」の間で、もがき苦しんでいる状態です。
+    他者との接触を避けるのも、周囲の視線や評価を恐れる気持ちととれます。<br><br>
+
+    子ども自身も現状を憂い、将来への不安や現状の絶望感を感じ、
+    「現状を変えたい」という気持ちと「変えられない」という無力感の中で
+    揺れ動いています。どうしたらいいか、選択肢を広げられないのが子どもの
+    状況です。<br><br>
+
+    <img src="https://lh3.googleusercontent.com/d/1OBdyCmTqtrhx3DmAkz7obiNOxBxd38a7" alt="悩む女の子">
+
+    実際に次の段階へと移れるのは、
+    <strong>心のエネルギーが回復してから</strong>ですが（「子どもの心理」を参照してください）、
+    子どもがどうしたら学びをつなげていけるのかを少しずつ考えていきましょう。
+    子どもは自分で選択肢を得ることはできません。情報も限られています。<br><br>
+
+    学校に「行く・行かない」で戦ってきた子どもが別の道を考えるのは
+    とても難しいことです。そんな<strong>閉塞感</strong>を、どう開き、
+    今後の自立へとつなげるか……相談機関の利用や周囲のサポートを検討してみましょう。
+  </section>
+
+  <nav class="page-nav">
+    <a href="?page=step3-2" class="nav-btn prev">＜ 戻る</a>
+    <a href="?page=step3-4" class="nav-btn next">進む ＞</a>
+  </nav>
+
+</main>
+</body>
+</html>

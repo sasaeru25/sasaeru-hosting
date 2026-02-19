@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#ffe6e6" />
+  <title>多様な学びの場｜ささエール</title>
+
+  <!-- ★ PWA（Manifest & Service-Worker） -->
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator)
+      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+  </script>
+<!-- ★ コア / 共通芯 -->
+<link rel="stylesheet" href="/css/common.css">
+<script src="/js/lib.js" defer></script>
+<script src="/js/store.js" defer></script>
+
+  <!-- ===== スタイル全文 ===== -->
+  <style>
+    body{margin:0;font-family:"Noto Sans JP",system-ui,sans-serif;background:#ffe6e6;color:#333}
+    .kp-wrapper{background:#f29b8f;padding:2rem 1rem;max-width:430px;margin:auto;border-radius:8px;text-align:center;line-height:1.6;word-break:break-word;box-sizing:border-box;min-height:100vh}
+    .kp-heading{background:#fff;color:#333;display:inline-block;padding:.6rem 1.6rem;border-radius:30px;font-weight:bold;margin-bottom:2rem;font-size:1.3rem;box-shadow:0 2px 5px rgba(0,0,0,.1)}
+    .law-quote{background:#fff;border-radius:0;padding:1rem;margin:0;text-align:left;font-size:.98rem;line-height:1.6}
+    .law-quote+.law-quote{margin-top:1.2rem}
+    .refs{font-size:.72rem;color:#666;line-height:1.4;margin-top:.1rem;text-align:right;overflow-wrap:anywhere}
+    .comment-box{background:#fef0cf;border-radius:6px;padding:1rem;font-size:.96rem;text-align:left;line-height:1.6;margin-top:1.2rem}
+    .page-nav{display:flex;justify-content:center;gap:2rem;padding:1.6rem 0 .6rem;background:#f29b8f;margin-top:auto}
+    .nav-btn{text-decoration:none;color:#4d2bb6;font-weight:700}
+    .wavy-red{text-decoration:underline;text-decoration-style:wavy;text-decoration-color:#e60039}
+  </style>
+</head>
+
+<body>
+<main class="kp-wrapper">
+  <h2 class="kp-heading">🍀 多様な学びの場</h2>
+
+  <!-- 抜粋１ -->
+  <div class="law-quote">
+    <p>支援に際しては、<strong style="color:#e60039">「学校に登校する」という結果のみを目標</strong>にするのではなく、児童生徒が<strong style="color:#e60039">自らの進路を主体的に捉えて、社会的に自立すること</strong>を目指す必要がある</p>
+  </div>
+  <p class="refs">H28.9　文部科学省「不登校児童生徒への支援の在り方について」</p>
+
+  <!-- 抜粋２ -->
+  <div class="law-quote">
+    <p>学校以外の場での多様で適切な学習活動の重要性に鑑み、個々の休息の必要性を踏まえ、当該不登校児童生徒等に<strong style="color:#e60039">状況に応じた学習活動が行われること</strong>となるよう、…必要な情報の提供、助言、その他の措置を…</p>
+  </div>
+  <p class="refs">H28「教育機会確保法」</p>
+
+  <!-- 抜粋３ -->
+  <div class="law-quote">
+    <p><strong style="color:#e60039">様々な関係機関等を活用し社会的自立への支援</strong>を行うこと</p>
+  </div>
+  <p class="refs">R元　文部科学省「不登校児童生徒への支援の在り方について」</p>
+
+  <!-- 抜粋４ -->
+  <div class="law-quote">
+    <p>多様な教育機会の確保<br>
+      　・保健室、相談室、学校図書館を活用しつつ徐々に学校生活への適応が図れるよう工夫<br><br>
+      　・教育支援センター<br>
+      　・不登校特例校<br>
+      　・フリースクールなどの民間施設<br>
+      　・ICT を活用した学習&nbsp;… 等
+    </p>
+  </div>
+  <p class="refs">R元　文部科学省「不登校児童生徒への支援の在り方について」</p>
+
+  <!-- 解説 -->
+  <div class="comment-box">
+    <p>
+      「学校で学べること」はたくさんありますが、学校が苦しいときには他の場所や方法で「子どもの学びを継続する」ことも大切です。<br>
+      学校の中でできる柔軟な対応を相談することもできますし、学校外の教育支援センター・フリースクール・オンライン学習なども選択肢です。<br>
+      担任の先生や専門機関と連携しながら、子どもの思いをくみ取って進めていきましょう。
+    </p>
+  </div>
+
+  <!-- フッター -->
+  <nav class="page-nav">
+  <a href="?page=kuni"  class="nav-btn">＜ 戻る</a>
+  <a href="?page=kuni5" class="nav-btn">進む ＞</a>
+</nav>
+</main>
+</body>
+</html>

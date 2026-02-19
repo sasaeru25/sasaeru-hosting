@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f3a9a0">
+  <title>回復期｜ささエール</title>
+
+  <!-- ★ PWA（Manifest & Service-Worker） -->
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator)
+      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+  </script>
+
+  <!-- === 共通の芯 ========================================= -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js"   defer></script>
+  <script src="/js/store.js" defer></script>  <!-- ⭐クリップ／📝日記 -->
+  <!-- ===================================================== -->
+
+  <!-- ===== ページ固有 CSS ===== -->
+  <style>
+    html,body{height:100%}*,*::before,*::after{box-sizing:border-box}
+    body{margin:0;background:#f3a9a0;color:#333;font-family:"Noto Sans JP",system-ui,-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;font-size:16px;line-height:1.8}
+    .kp-wrapper{min-height:100%;padding:16px;padding-top:max(16px,env(safe-area-inset-top));padding-right:max(8px,env(safe-area-inset-right));padding-bottom:max(16px,env(safe-area-inset-bottom));padding-left:max(8px,env(safe-area-inset-left))}
+    .kp-card{max-width:430px;margin:0 auto;padding:16px 8px 18px;text-align:left}
+    .phase-heading{display:block;margin:4px auto 12px;width:max-content;background:#fffcc0;border:2px dashed #ddb;border-radius:30px;padding:.6rem 1.8rem;font-weight:700;font-size:1.6rem;line-height:1.2;text-align:center}
+    .label-yellow{display:inline-block;background:#ffd34d;border-radius:18px;padding:.35rem .8rem;font-weight:700;margin-bottom:.5rem}
+    .cream-panel{background:#fff3d6;border-radius:12px;padding:12px;display:grid;grid-template-columns:1fr 120px;gap:12px;align-items:start}
+    .panel-text{margin:0;line-height:1.8}
+    .panel-illu{width:120px;height:auto;border-radius:8px;justify-self:end}
+    @media(max-width:430px){.cream-panel{grid-template-columns:1fr}.panel-illu{width:60%;justify-self:center;margin-top:8px}}
+    .bubble-think{margin:.1rem 0}.think-svg{width:100%;height:auto;display:block}.think-svg .line{stroke-width:2}
+    .info-box{border-radius:10px;padding:10px 12px;margin:.6rem 0;line-height:1.8;text-align:left}
+    .info-box{background:#c9f1ee}.info-box.white{background:#fff}
+    .phase-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:.8rem}
+    .phase-btn{display:flex;align-items:center;justify-content:center;padding:1rem 0;border-radius:22px;background:#fff7b2;border:2px dashed #f1d662;color:#333;text-decoration:none;font-weight:700;box-shadow:0 2px 4px rgba(0,0,0,.12);writing-mode:vertical-rl;text-orientation:upright;font-size:clamp(.9rem,3.2vw,1.05rem)}
+    .phase-btn span{line-height:1.1}
+    @media(max-width:430px){.phase-btn{font-size:.9rem;padding:.9rem 0}}
+    .page-nav{display:flex;justify-content:center;margin-top:1rem}.nav-btn{color:#7e57c2;text-decoration:none;font-weight:700;padding:.7rem 0}
+  </style>
+</head>
+
+<body>
+<main class="kp-wrapper">
+  <!-- ⭐クリップ用 -->
+  <div class="clip-name" data-clip="⭐ 回復期"></div>
+
+  <article class="kp-card">
+
+    <h1 class="phase-heading">回復期</h1>
+
+    <!-- ▼ 子どもの様子 -->
+    <span class="label-yellow">子どもの様子</span>
+    <section class="cream-panel">
+      <p class="panel-text">
+        ・生活リズムが少しずつ整い始める<br>
+        ・信頼できる人との関わりを自分から求める<br>
+        ・将来や学びについて考える言葉が出てくる
+      </p>
+      <img class="panel-illu" src="https://lh3.googleusercontent.com/d/1A3r99b_q_sdyVqjrWWoGGageuoX0wPIB" alt="段階⑤">
+    </section>
+
+    <!-- ▼ 思考バルーン（SVG 完全版） -->
+    <section class="bubble-think">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 60 360 200" class="think-svg" role="img">
+        <defs>
+          <filter id="tshadow1" x="-25%" y="-30%" width="150%" height="160%">
+            <feDropShadow dx="0" dy="2" stdDeviation="1.9" flood-opacity=".18"/>
+          </filter>
+          <path id="mokuPath" class="line"
+            d="M74,208 C52,204,40,188,44,170
+               C24,164,16,144,28,130
+               C24,108,44,92,66,96
+               C74,76,98,68,118,76
+               C132,58,160,54,180,66
+               C200,54,230,60,242,80
+               C264,78,286,92,286,114
+               C304,120,312,140,300,156
+               C306,176,292,194,272,198
+               C260,212,232,214,216,206
+               C192,218,156,218,138,204
+               C120,212,92,214,74,208 Z"
+            fill="#fff" stroke="#333" vector-effect="non-scaling-stroke"/>
+          <clipPath id="clipMoku"><use href="#mokuPath"/></clipPath>
+        </defs>
+
+        <use href="#mokuPath" fill="#fff" stroke="#333" filter="url(#tshadow1)"/>
+
+        <g clip-path="url(#clipMoku)">
+          <text x="40" y="110" font-size="16" font-family="Noto Sans JP, sans-serif" fill="#333">
+            <tspan x="40" dy="0">「そろそろ外にも出てみようかな」</tspan>
+            <tspan x="40" dy="24">「自分のペースで進めば大丈夫」</tspan>
+          </text>
+        </g>
+
+        <g transform="translate(0,18)">
+          <circle cx="270" cy="106" r="13" fill="#fff" stroke="#333"/>
+          <circle cx="295" cy="88"  r="9"  fill="#fff" stroke="#333"/>
+          <circle cx="312" cy="74"  r="6"  fill="#fff" stroke="#333"/>
+        </g>
+      </svg>
+    </section>
+
+    <!-- ▼ どんな状態？ -->
+    <span class="label-yellow">どんな状態？</span>
+    <section class="info-box">
+      <p>
+        生活リズムが整い始め、「自分のペースで何かを始めたい」という意欲が芽生えます。<br>
+        再登校・フリースクール・学習塾など社会との再接続が始まる一方、心の奥にはまだ不安が残りがち。<br>
+        回復期はゴールではなく通過点です。子ども本人が「自分で選んで歩き出せた」と実感できることが長期的な安定につながります。
+      </p>
+    </section>
+
+    <!-- ▼ 関わり方のヒント -->
+    <span class="label-yellow">関わり方のヒント</span>
+    <section class="info-box white">
+      <p>
+        <strong>選択肢を示し、最終決定は子どもに。</strong><br>
+        別室・段階的登校、教育支援センター、フリースクール、ICT学習など複数の道を提案しつつ、<br>
+        “できる／できない” を一緒に確認していきましょう。<br><br>
+        情報収集や相談機関の併用で、保護者自身の不安もケアすることが大切です。
+      </p>
+    </section>
+
+    <!-- ▼ 段階ナビ -->
+    <div class="phase-row">
+      <a class="phase-btn" href="?page=dankai1"><span>前兆期</span></a>
+      <a class="phase-btn" href="?page=dankai2"><span>初期</span></a>
+      <a class="phase-btn" href="?page=dankai3"><span>中期</span></a>
+      <a class="phase-btn" href="?page=dankai4"><span>後期</span></a>
+      <a class="phase-btn" href="?page=dankai5"><span>回復期</span></a>
+    </div>
+
+    <!-- ▼ フッター -->
+    <nav class="page-nav">
+      <a href="?page=kodomo" class="nav-btn">＜ 子どもの心理</a>
+    </nav>
+
+  </article>
+</main>
+</body>
+</html>

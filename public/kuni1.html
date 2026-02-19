@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#ffe6e6" />
+  <title>今の時代の不登校との向き合い方｜ささエール</title>
+
+  <!-- PWA（Manifest & Service-Worker） -->
+  <link rel="manifest" href="/manifest.json" />
+  <script>
+    if ('serviceWorker' in navigator)
+      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+  </script>
+<!-- ★ コア / 共通芯 -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+
+
+  <!-- スタイル（ページ用） -->
+  <style>
+    body{
+      margin:0;
+      font-family:"Noto Sans JP",system-ui,sans-serif;
+      background:#ffe6e6;
+      color:#333;
+    }
+
+    .kp-wrapper{
+      background:#f29b8f;
+      padding:2rem 1rem;
+      width:100%;
+      max-width:430px;
+      margin:0 auto;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-start;
+      box-sizing:border-box;
+    }
+
+    .kp-heading{
+      background:#f0f0f0;
+      padding:.7rem 1.5rem;
+      font-size:1.3rem;
+      font-weight:bold;
+      border-radius:30px;
+      margin-bottom:1.5rem;
+      box-shadow:0 3px 6px rgba(0,0,0,.1);
+      display:inline-block;
+      text-align:left;
+      line-height:1.5;
+    }
+
+    .text-frame{
+      background:#fff3e0;
+      border-radius:8px;
+      padding:1.2rem;
+      text-align:left;
+      font-size:clamp(.85rem,4vw,.95rem);
+      margin-bottom:2rem;
+      line-height:1.6;
+      box-sizing:border-box;
+    }
+
+    .theme-btn-list{
+      display:flex;
+      flex-direction:column;
+      gap:1rem;
+      margin-bottom:2rem;
+    }
+
+    .theme-btn{
+      background:#f9f9f9;
+      padding:1rem;
+      border-radius:30px;
+      text-decoration:none;
+      color:#222;
+      font-size:clamp(.9rem,4vw,1.05rem);
+      font-weight:bold;
+      box-shadow:0 2px 4px rgba(0,0,0,.1);
+      text-align:center;
+      display:block;
+      box-sizing:border-box;
+    }
+
+    @media (max-width:360px){
+      .kp-wrapper{padding:1.5rem .8rem;}
+      .theme-btn{padding:.8rem;font-size:.9rem;}
+    }
+
+    /* フッター共通 */
+    .page-nav{
+      display:flex;
+      justify-content:center;
+      gap:2rem;
+      padding:1.6rem 0 .6rem;
+    }
+    .nav-btn{
+      text-decoration:none;
+      color:#4d2bb6;
+      font-weight:700;
+    }
+  </style>
+</head>
+
+<body>
+<main class="kp-wrapper">
+  <!-- 見出し -->
+  <h2 class="kp-heading">
+    今の時代の<br><span class="right-line">不登校との向き合い方</span>
+  </h2>
+
+  <!-- 本文 -->
+  <div class="text-frame">
+    <p>
+      平成28年ごろから、不登校に対する国や社会の考えは大きく変わってきています。保護者の皆さんが学校に行っていたころとは、子どもを取り巻く社会も環境も大きく変わりました。<br>
+      学校に行けない、行かない子どもたちが増加し、国も多くの調査・分析を重ねて捉え方が変化しています。
+    </p>
+  </div>
+
+  <!-- テーマ別リンクボタン -->
+  <div class="theme-btn-list">
+    <a class="theme-btn" href="?page=kuni2">🍀 不登校はどの子にも起こりうること</a>
+<a class="theme-btn" href="?page=kuni3">🍀 心の休息</a>
+<a class="theme-btn" href="?page=kuni4">🍀 多様な学びの場</a>
+<a class="theme-btn" href="?page=kuni5">🍀 学びの場情報</a>
+  </div>
+
+  <!-- フッター -->
+  <nav class="page-nav">
+  <a href="?page=kuni" class="nav-btn">＜ 戻る</a>
+</nav>
+</main>
+</body>
+</html>

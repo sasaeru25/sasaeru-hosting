@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f3a9a0">
+  <title>初期｜ささエール</title>
+
+  <!-- ★ PWA（Manifest & Service-Worker） -->
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator)
+      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+  </script>
+
+  <!-- === 共通の芯 ========================================= -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js"   defer></script>
+  <script src="/js/store.js" defer></script>  <!-- ⭐クリップ／📝日記 -->
+  <!-- ===================================================== -->
+
+  <!-- ===== ページ固有 CSS ===== -->
+  <style>
+    html,body{height:100%}*,*::before,*::after{box-sizing:border-box}
+    body{margin:0;background:#f3a9a0;color:#333;font-family:"Noto Sans JP",system-ui,-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;font-size:16px;line-height:1.8}
+    .kp-wrapper{min-height:100%;padding:16px;padding-top:max(16px,env(safe-area-inset-top));padding-right:max(8px,env(safe-area-inset-right));padding-bottom:max(16px,env(safe-area-inset-bottom));padding-left:max(8px,env(safe-area-inset-left))}
+    .kp-card{max-width:430px;margin:0 auto;padding:16px 8px 18px;text-align:left}
+    .phase-heading{display:block;margin:4px auto 12px;width:max-content;background:#fffcc0;border:2px dashed #ddb;border-radius:30px;padding:.6rem 1.8rem;font-weight:700;font-size:1.6rem;line-height:1.2;text-align:center}
+    .label-yellow{display:inline-block;background:#ffd34d;border-radius:18px;padding:.35rem .8rem;font-weight:700;margin-bottom:.5rem}
+    .cream-panel{background:#fff3d6;border-radius:12px;padding:12px;margin-bottom:.08rem;display:grid;grid-template-columns:1fr 120px;gap:12px;align-items:start}
+    .panel-text{margin:0;line-height:1.8}
+    .panel-illu{width:140px;height:auto;border-radius:8px;justify-self:end}
+    @media(max-width:430px){.cream-panel{grid-template-columns:1fr}.panel-illu{width:60%;justify-self:center;margin-top:8px}}
+
+    /* ▼▼▼ ここから：吹き出し「ズレない」安定版 ▼▼▼ */
+    .bubble-think{margin:.18rem 0 .35rem}
+    .think-wrap{
+      position:relative;
+      width:100%;
+    }
+    .think-svg{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+    .think-svg .line{stroke-width:2;vector-effect:non-scaling-stroke}
+
+    /* 文字はHTMLで重ねる（端末差でズレない） */
+    .think-text{
+      position:absolute;
+      inset:0;
+      /* 吹き出しの内側に収める余白（ここをいじると見た目が変わる） */
+      padding:18% 20% 18% 14%;
+      display:flex;
+      align-items:flex-start;
+      justify-content:flex-start;
+      pointer-events:none;
+      color:#333;
+      font-family:"Noto Sans JP",system-ui,-apple-system,BlinkMacSystemFont,
+                   "Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+      font-size:16px;
+      line-height:1.45;
+    }
+    .think-text p{margin:0}
+    /* ちょい小さい端末は文字だけ少し小さく */
+    @media(max-width:360px){
+      .think-text{font-size:15px}
+    }
+    /* ▲▲▲ ここまで：吹き出し安定版 ▲▲▲ */
+
+    .info-box{border-radius:10px;padding:10px 12px;margin:.6rem 0;line-height:1.8;text-align:left}
+    .info-box.mint{background:#c9f1ee}.info-box.white{background:#ffffff}
+    .phase-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:.8rem}
+    .phase-btn{display:flex;align-items:center;justify-content:center;padding:1rem 0;border-radius:22px;background:#fff7b2;border:2px dashed #f1d662;color:#333;text-decoration:none;box-shadow:0 2px 4px rgba(0,0,0,.12);font-weight:700;writing-mode:vertical-rl;text-orientation:upright;font-size:clamp(.9rem,3.2vw,1.05rem)}
+    .phase-btn span{line-height:1.1}
+    @media(max-width:430px){.phase-btn{font-size:.9rem;padding:.9rem 0}}
+    .page-nav{display:flex;justify-content:center;gap:10px;margin-top:1rem}.nav-btn{color:#7e57c2;text-decoration:none;font-weight:700;padding:.7rem 0}
+  </style>
+</head>
+
+<body>
+<main class="kp-wrapper">
+  <div class="clip-name" data-clip="⭐ 初期"></div>
+
+  <article class="kp-card">
+    <h1 class="phase-heading">初期</h1>
+
+    <span class="label-yellow">子どもの様子</span>
+    <section class="cream-panel">
+      <p class="panel-text">
+        ・身体の不調や食欲低下<br>
+        ・朝が起きられない／眠れない<br>
+        ・イライラや情緒不安定が目立つ
+      </p>
+      <img class="panel-illu" src="https://lh3.googleusercontent.com/d/1-10gtCH2qctE79m9Ud19ysyHaCZjlF0A" alt="段階②">
+    </section>
+
+    <!-- ▼ 思考バルーン（ズレない安定版：SVGは形だけ／文字はHTMLで重ねる） -->
+    <section class="bubble-think">
+      <div class="think-wrap" aria-label="思考バルーン">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 60 360 220" class="think-svg" role="img" aria-hidden="true">
+          <defs>
+            <filter id="tshadow1" x="-25%" y="-30%" width="150%" height="160%">
+              <feDropShadow dx="0" dy="2" stdDeviation="1.9" flood-opacity=".18"/>
+            </filter>
+            <path id="mokuPath" class="line"
+              d="M74,208 C52,204,40,188,44,170
+                 C24,164,16,144,28,130
+                 C24,108,44,92,66,96
+                 C74,76,98,68,118,76
+                 C132,58,160,54,180,66
+                 C200,54,230,60,242,80
+                 C264,78,286,92,286,114
+                 C304,120,312,140,300,156
+                 C306,176,292,194,272,198
+                 C260,212,232,214,216,206
+                 C192,218,156,218,138,204
+                 C120,212,92,214,74,208 Z"
+              fill="#fff" stroke="#333" vector-effect="non-scaling-stroke"/>
+          </defs>
+
+          <use href="#mokuPath" fill="#fff" stroke="#333" filter="url(#tshadow1)"/>
+
+          <g transform="translate(0,18)">
+            <circle cx="270" cy="106" r="13" fill="#fff" stroke="#333" class="line"/>
+            <circle cx="295" cy="88"  r="9"  fill="#fff" stroke="#333" class="line"/>
+            <circle cx="312" cy="74"  r="6"  fill="#fff" stroke="#333" class="line"/>
+          </g>
+        </svg>
+
+        <div class="think-text" aria-hidden="true">
+          <p>
+            「行かなきゃいけないのは<br>
+            分かってるけど、ムリ…」<br>
+            「どうしてこんなにつらいの？」
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <span class="label-yellow">どんな状態？</span>
+    <section class="info-box mint">
+      <p>
+        いよいよ登校が難しくなり、子どもは学校に行こうとするたびに強いストレス反応を起こすようになります。体の不調や朝起きられない状態が続き、感情が不安定になります。登校を促す家族に対して攻撃的な態度をとったり、泣いたり怒ったりすることもあります。<br>
+        この時期の子どもは「行きたいのに行けない」という強い葛藤を

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffe6e6">
+  <title>エネルギーをためるポイント｜ささエール</title>
+
+  <!-- ★ PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+      });
+    }
+  </script>
+ <!-- ★ コア / 共通芯 -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+
+  <style>
+    /* ---- ベース ---- */
+    body{
+      margin:0;background:#f29b8f;color:#333;
+      font-family:"Noto Sans JP",system-ui,sans-serif;
+    }
+    .kp-wrapper{
+      max-width:430px;margin:auto;
+      padding:1rem 1rem 2rem;
+      padding-top:calc(1rem + env(safe-area-inset-top));
+      padding-right:calc(1rem + env(safe-area-inset-right));
+      padding-bottom:calc(2rem + env(safe-area-inset-bottom));
+      padding-left:calc(1rem + env(safe-area-inset-left));
+    }
+
+    /* 見出し（白いピル） */
+    .kp-heading{
+      display:inline-block;background:#fff;color:#333;
+      padding:.5rem 1.2rem;border-radius:12px;font-weight:700;
+      box-shadow:0 2px 6px rgba(0,0,0,.08);margin:0 0 .8rem;
+    }
+
+    /* リード文の箱（クリーム色） */
+    .kp-lead{
+      background:#fff3e0;border-radius:10px;border:2px solid #e7c8b2;
+      padding:1rem;line-height:1.8;text-align:left;margin:0 0 1rem;
+    }
+
+    /* 白枠ボックス（共通） */
+    .white-box{
+      background:#fff;border:2px solid #e6a49b;border-radius:12px;
+      padding:1rem;box-shadow:0 6px 14px rgba(0,0,0,.08);margin-top:1rem;
+    }
+
+    /* ボックス内のバナー画像（先頭に置く） */
+    .box-hero{
+      display:block;width:100%;height:auto;border-radius:8px;margin:0 0 .8rem;
+    }
+
+    /* 本文 */
+    .kp-article{text-align:left;line-height:1.8;}
+    .kp-article::after{content:"";display:block;clear:both;}
+    .kp-article img{max-width:40vw;height:auto;}
+    @media(max-width:430px){.kp-article img{max-width:36vw;}}
+
+    .white-box h3{margin:1rem 0 .25rem;font-size:1.02rem;}
+    .white-box p{margin:.4rem 0 .8rem;}
+
+    /* フッターリンク */
+    .page-nav{
+      display:flex;justify-content:center;gap:2rem;
+      padding:1.6rem 0 .6rem;background:#f29b8f;
+    }
+    .nav-btn{text-decoration:none;color:#4d2bb6;font-weight:700;}
+  </style>
+</head>
+
+<body>
+<main class="kp-wrapper">
+  <h2 class="kp-heading">🍀 エネルギーをためる<br>ポイント</h2>
+
+  <!-- リード文 -->
+  <p class="kp-lead">
+    学校に行かない、行けないことで、子どもは満足をしているのでしょうか？答えは NO です。
+    行かないことで罪悪感を感じたり、行けないことで自己肯定感が下がったり…。
+    「学校に行かない」選択肢を選んでいても、状況によってはずっとマイナスの心のまま過ごしていることもあるんです。
+    マイナスの心のままエネルギーが溜まっていくでしょうか？<br>
+    まずは、エネルギーを溜めることが第一です。エネルギーを溜めるために、気を付けてみましょう。
+  </p>
+
+  <!-- 白枠１：望ましい対応のヒント -->
+  <section class="white-box">
+    <img class="box-hero"
+         src="https://lh3.googleusercontent.com/d/1yqLCcHcF-pb5AyT4OUX83xZL2sj05oyG"
+         alt="望ましい対応のヒント">
+    <article class="kp-article">
+      <h3>〇 理解を示す。</h3>
+      <p>
+        　「学校に行かない」「ゲームをしている」「返事をしない」。親にとって理解することは難しくても「理解を示す」ことが大切です。「この子は学校に行きたくないんだな」「ゲームの面白さがあるのかな」「気持ちがいっぱいなのかな」と「わかろうとする」ことに意味があるのです。
+        そしてその気持ちは子どもにも伝わります。
+      </p>
+
+      <h3>〇 受容的に接する。</h3>
+      <p>
+        <img src="https://lh3.googleusercontent.com/d/1fxNtFICreDFYsELXyjAp8-GqngXsLQJI"
+             alt="聞くウサギのイラスト"
+             style="float:right;height:auto;margin-left:.6rem;">
+        　否定的な態度や否定した言葉を使わないよう気をつけましょう。「そう感じているんだね」「そういう気分なんだね」と、子どもの思いを受け入れる態度で接していくと、子どもも自分を受け入れることができるようになり、心が安定してきます。意見を伝えたい時には、「私はこう思うんだけど…」というアイメッセージ（相手を尊重しつつ自分の意思を伝えるコミュニケーション）を使う方法もあります。<br>
+        　＜受容と肯定の違い＞<br>
+        　微妙な違いですが、「学校に行きたくないんだね」が「受容」で、子どもの気持ちに寄り添う態度。「学校に行かなくていい」は肯定です。子どものすべてを大人が肯定するようになると、「自分が正しい」という気持ちが大きくなりすぎることもあります。アイメッセージをうまく使って、受容的な態度を心がけましょう。
+      </p>
+
+      <h3>〇 子どもの主体性</h3>
+      <p>
+        　子どもの主体性は、「やりたい時に、やりたいことを、やりたいだけ」やることで育まれると言われています。今の子どもには、自分で選んでできることがゲームやTVである場合もあります。小さなことでも自分で考え、自分で決めてやることが必要な時期もあります。頭ごなしに否定せず、受容的コミュニケーションをとりながら見守ってあげましょう。元気が出てきたら一緒にできることに誘ってみるのもいいでしょう。
+        <img src="https://lh3.googleusercontent.com/d/17bDMJ8GjJTD4h2Ntw6eelBYhNPuo5bsF"
+             alt="料理をする親子"
+             style="float:right;height:auto;margin-left:.6rem;">
+      </p>
+    </article>
+  </section>
+
+  <!-- 白枠２：気を付けて！マイナスの働きかけ -->
+  <section class="white-box">
+    <img class="box-hero"
+         src="https://lh3.googleusercontent.com/d/1Cf6Rp2z98BQIqN8XQeDHsEQ8halj2wQ9"
+         alt="気を付けたい！こんな働きかけ">
+    <article class="kp-article">
+      <h3>〇 子どもの話を最後まで聞かない。</h3>
+      <p>
+        <img src="https://lh3.googleusercontent.com/d/15f_F7r3_5keHc8bZvIp3ON0p8YSl2ndC"
+             alt="戸惑う子ども"
+             style="float:right;height:auto;margin-left:.6rem;">
+        　ゲームの話をしていると、「ゲームを作る人になったら？」等、保護者が話をすり替えて進めていませんか？
+      </p>
+
+      <h3>〇 親の考えを次々と提案をする。</h3>
+      <p>
+         　次に進むのは、エネルギーが溜まってきてからです。安心した中で心を休ませる時間も必要です。
+      </p>
+
+      <h3>〇 「学校に行きたい」の意味の違い</h3>
+      <p>
+        <img src="https://lh3.googleusercontent.com/d/1f_I94Tsd8cQZb8r36KZwwe1EReyDreIp"
+             alt="残念ネコ"
+             style="float:right;height:auto;margin-left:.6rem;">
+        　子どもが「明日は学校に行きたい」と言っても、それの裏の気持ちは、「行きたい（want）」ではなく、
+        「行かないと（must）」ではないですか？ 相手が喜ぶだろうという気持ちから「明日は行く」ということもあります。約束を果たせなかったという経験を繰り返すのも、子どもにとってプラスにはなりません。
+      </p>
+    </article>
+  </section>
+
+  <!-- フッター -->
+  <nav class="page-nav">
+    <a href="?page=kodomo" class="nav-btn prev">＜ 子どもの心理</a>
+  </nav>
+</main>
+</body>
+</html>

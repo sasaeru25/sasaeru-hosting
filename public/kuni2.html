@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#ffe6e6" />
+  <title>不登校はどの子にも起こりうること｜ささエール</title>
+
+  <!-- ★ PWA（Manifest & Service-Worker） -->
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator)
+      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+  </script>
+
+  <!-- ★ コア / 共通芯 -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+
+  <!-- スタイル -->
+  <style>
+    body{
+      margin:0;
+      font-family:"Noto Sans JP",system-ui,sans-serif;
+      background:#ffe6e6;
+      color:#333;
+    }
+    .kp-wrapper{
+      background:#f29b8f;
+      padding:2rem 1rem;
+      max-width:430px;
+      margin:auto;
+      border-radius:8px;
+      text-align:center;
+      line-height:1.6;
+      word-break:break-word;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      box-sizing:border-box;
+    }
+    .kp-heading{
+      width:100%;
+      background:#fff;
+      color:#333;
+      padding:.6rem 1.5rem;
+      border-radius:30px;
+      font-weight:bold;
+      margin-bottom:2rem;
+      font-size:1.3rem;
+      box-shadow:0 2px 5px rgba(0,0,0,.1);
+      text-align:left;
+      line-height:1.5;
+    }
+    .right-line{display:block;text-align:right;}
+
+    .law-quote{
+      background:#fff;
+      padding:1rem;
+      margin-bottom:0;
+      text-align:left;
+      font-size:.98rem;
+      line-height:1.6;
+    }
+    .law-quote + .law-quote{margin-top:1.2rem;}
+
+    .refs{
+      font-size:.72rem;
+      color:#666;
+      line-height:1.4;
+      margin-top:.1rem;
+      text-align:right;
+      overflow-wrap:anywhere;
+    }
+
+    .comment-box{
+      background:#fef0cf;
+      border-radius:6px;
+      padding:1rem;
+      font-size:.98rem;
+      text-align:left;
+      line-height:1.6;
+      margin-top:1.2rem;
+    }
+
+    /* フッター */
+    .page-nav{
+      display:flex;
+      justify-content:center;
+      gap:2rem;
+      padding:1.6rem 0 .6rem;
+      margin-top:auto;
+    }
+    .nav-btn{
+      text-decoration:none;
+      color:#4d2bb6;
+      font-weight:700;
+    }
+  </style>
+</head>
+
+<body>
+<main class="kp-wrapper">
+  <h2 class="kp-heading">
+    🍀 不登校は<br><span class="right-line">どの子にも起こりうること</span>
+  </h2>
+
+  <!-- 法律の抜粋１ -->
+  <div class="law-quote">
+    <p>不登校は、取り巻く環境によっては
+      <strong style="color:#e60039">どの児童生徒にも起こりうるもの</strong>
+    </p>
+  </div>
+
+  <!-- 法律の抜粋２ -->
+  <div class="law-quote">
+    <p>不登校とは、多様な要因・背景により、結果として不登校状態になっているということであり、
+      <strong style="color:#e60039">その行為を「問題行動」として判断してはならない。</strong>
+    </p>
+  </div>
+
+  <p class="refs">
+    H28.9　:contentReference[oaicite:0]{index=0}「不登校児童生徒への支援の在り方について」
+  </p>
+
+  <!-- 解説 -->
+  <div class="comment-box">
+    <p>
+      国は、不登校を「どの児童生徒にも起こりうるもの」と位置づけています。不登校の背景は一つではなく、複数の要因が絡み合った結果であり、
+      「問題行動」と断じてはならない、と明記しています。<br>
+      保護者は「大問題！」と焦る前に、子どもの内面で何が起こっているのかに目を向け、まずは気持ちを受け止めることが大切です。
+      詳細は「子どもの心理」ページでも解説していますので、寄り添い方のヒントとしてご覧ください。
+    </p>
+  </div>
+
+  <!-- フッター（★内部遷移は ?page= に統一） -->
+  <nav class="page-nav">
+    <a href="?page=kuni"  class="nav-btn">＜ 戻る</a>
+    <a href="?page=kuni3" class="nav-btn">進む ＞</a>
+  </nav>
+</main>
+</body>
+</html>

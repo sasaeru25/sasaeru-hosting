@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#f29b8f" />
+  <title>ささエール</title>
+
+  <!-- === 共通の芯 ========================================= -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js"   defer></script>
+  <script src="/js/store.js" defer></script>
+  <!-- ===================================================== -->
+
+  <style>
+  :root{--pink:#f29b8f}
+  body{margin:0;background:var(--pink);
+       font-family:"Noto Sans JP",system-ui,sans-serif}
+  .cover{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
+  .card{position:relative;width:100%;max-width:420px;aspect-ratio:9/16}
+  .frame{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}
+
+  .title   {position:absolute;top:12%;width:100%;text-align:center;color:#6b5b53;
+            font-size:clamp(18px,4.5vw,24px);font-weight:600;letter-spacing:.04em}
+  .subtitle{position:absolute;top:20%;width:100%;text-align:center;color:#6b5b53;
+            font-size:clamp(14px,4vw,18px)}
+
+  .heart-btn{position:absolute;top:38%;left:50%;transform:translateX(-50%);
+             width:min(40vw,180px);aspect-ratio:1/1;border:0;padding:0;background:none;
+             cursor:pointer}
+  .heart-btn img{width:100%;height:100%;display:block}
+  .heart-btn:active{transform:translateX(-50%) scale(.96)}
+  .heart-btn:focus-visible{outline:3px solid #bfa36a;border-radius:12px}
+
+  /* ホーム画面追加ヒント */
+  #install-tip{position:fixed;right:16px;bottom:16px;z-index:9999;
+               max-width:320px;background:rgba(255,255,255,.75);border:1px solid #fff;
+               border-radius:14px;backdrop-filter:blur(4px);
+               box-shadow:0 4px 12px rgba(0,0,0,.12);padding:14px 16px 16px;
+               font-size:.9rem;line-height:1.5;color:#444}
+  #install-tip button{position:absolute;top:8px;right:8px;background:none;border:none;
+                      font-size:18px;cursor:pointer;color:#666}
+  @media(min-width:600px){#install-tip{right:24px;bottom:24px}}
+  .for-ios{display:none}.for-android{display:inline}
+  @supports(-webkit-touch-callout:none){.for-ios{display:inline}.for-android{display:none}}
+  </style>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator)
+      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+  </script>
+</head>
+
+<body>
+<main class="cover">
+  <section class="card" role="banner">
+    <img class="frame"
+         src="https://lh3.googleusercontent.com/d/1sQaMoKfTHm7F-FvtjMj7HP5ZNv8xtBXH=w1080-h0"
+         alt="" aria-hidden="true">
+
+    <h1 class="title">Information</h1>
+    <p class="subtitle">タップしてスタート！</p>
+
+    <!-- Firebase では ?page=home が使えないため直リンク -->
+    <a href="./home.html" class="heart-btn" aria-label="スタート">
+      <img src="https://lh3.googleusercontent.com/d/1fDquravuGZNVaE2P6WYtQCpV9x7P7KyI=s512" alt="表紙ハート">
+    </a>
+  </section>
+</main>
+
+<!-- ホーム画面追加ヒント -->
+<div id="install-tip">
+  <button id="tip-close" aria-label="閉じる">✕</button>
+  <p><strong>アイコン作成／ホーム画面に追加</strong><br>
+    <span class="for-android">Android: 右上「︙」→<br>「ホーム画面に追加」</span>
+    <span class="for-ios">iPhone: 共有 →<br>「ホーム画面に追加」</span>
+  </p>
+</div>
+
+<script>
+document.getElementById('tip-close')
+        .addEventListener('click',()=>document.getElementById('install-tip').remove());
+</script>
+</body>
+</html>

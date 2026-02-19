@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>参考図書</title>
+
+  <!-- PWA を導入する場合のみ必要 -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#f29b8f">
+  <!-- ★ コア / 共通芯（入れるならここ） -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+
+
+  <style>
+    :root{
+      --pink:#f29b8f;
+      --text:#333;
+      --purple:#4d2bb6;   /* 戻るリンクの紫 */
+    }
+
+    body{
+      margin:0;
+      background:var(--pink);
+      color:var(--text);
+      font-family:"Noto Sans JP",system-ui,sans-serif;
+      line-height:1.9;
+    }
+
+    .wrapper{
+      max-width:430px;
+      margin:0 auto;
+      padding:20px 16px 32px;
+      text-align:center;
+    }
+
+    /* 飾りイラスト */
+    .orn{
+      width:70%;
+      max-width:320px;
+      height:auto;
+      margin:0 auto 14px;
+      display:block;
+    }
+
+    /* 白枠タイトルラベル */
+    .label{
+      display:inline-block;
+      background:#fff;
+      padding:8px 26px;
+      border-radius:24px;
+      font-weight:700;
+      font-size:1.3rem;
+      margin-bottom:20px;
+      box-shadow:0 2px 6px rgba(0,0,0,.15);
+    }
+
+    /* 本の紹介 */
+    .book-entry{
+      margin:26px 0;
+      text-align:left;
+    }
+    .book-entry .title{
+      font-weight:700;
+      margin-bottom:4px;
+    }
+    .book-entry .meta{
+      font-size:.94rem;
+      padding-left:1.2em;
+    }
+
+    /* 戻るリンク */
+    .back-link{
+      margin:32px 0 8px;
+      text-align:center;
+    }
+    .back-link a{
+      color:var(--purple);
+      font-weight:700;
+      text-decoration:none;
+    }
+    .back-link a:hover{ text-decoration:underline; }
+  </style>
+</head>
+
+<body>
+<div class="wrapper">
+
+  <!-- タイトル -->
+  <div class="label">参考図書</div>
+
+  <!-- 飾りイラスト -->
+  <img class="orn"
+       src="https://lh3.googleusercontent.com/d/1Vhy7GHKRD70SGECpolpntqvIu__tb5B7=w1080-h0"
+       alt="飾り">
+
+  <!-- 本の一覧 -->
+  <div class="book-entry">
+    <div class="title">◆ 『不登校のはじまりからおわりまで』</div>
+    <div class="meta">斎藤万比古　日東書院　2025.3</div>
+  </div>
+
+  <div class="book-entry">
+    <div class="title">◆ 『不登校になりたくてなる子はいない。』</div>
+    <div class="meta">上野良樹　ぶどう社　2019.9</div>
+  </div>
+
+  <div class="book-entry">
+    <div class="title">◆ 『不登校の子どもを支える 家族・教師・医師のための対応ガイド』</div>
+    <div class="meta">小柳憲司　新興医学出版社　2025.3</div>
+  </div>
+
+  <div class="book-entry">
+    <div class="title">
+      ◆ 『NPOカタリバがみんなと作った<br>
+         不登校親子のための教科書』
+    </div>
+    <div class="meta">今村久美　ダイヤモンド社　2023.2</div>
+  </div>
+
+  <div class="book-entry">
+    <div class="title">◆ 『学校に行けない「からだ」』</div>
+    <div class="meta">富沢祥彦　図書文化　2022.7</div>
+  </div>
+
+  <div class="book-entry">
+    <div class="title">◆ 『学校に行けない子どもの気持ちがわかる本』</div>
+    <div class="meta">今野陽悦　WAVE出版　2023.3</div>
+  </div>
+
+  <div class="book-entry">
+    <div class="title">◆ 『学校に行けない子どもに伝わる声がけ』</div>
+    <div class="meta">今野陽悦　WAVE出版　2025.1</div>
+  </div>
+
+  <div class="book-entry">
+    <div class="title">◆ 『子どもが不登校になったら読む本』</div>
+    <div class="meta">rika　Clover出版　2021.2</div>
+  </div>
+
+  <div class="book-entry">
+    <div class="title">◆ 『学校に行きたくないと子どもが言ったとき親ができること』</div>
+    <div class="meta">石井志昂　ポプラ新書　2021.8</div>
+  </div>
+
+  <div class="book-entry">
+    <div class="title">◆ 『不登校・登校しぶり』</div>
+    <div class="meta">藤枝静暁　ナツメ社　2023.7</div>
+  </div>
+
+  <div class="book-entry">
+    <div class="title">◆ 『不登校・登校渋り 保護者のためのハンドブック』</div>
+    <div class="meta">世田谷区教育委員会　2024.3</div>
+  </div>
+
+  <div class="book-entry">
+    <div class="title">◆ 『不登校の理解と対応ガイドブック＝保護者編＝』</div>
+    <div class="meta">奈良教育大学 子ども・若者支援専門職養成研究所</div>
+  </div>
+
+  <div class="book-entry">
+    <div class="title">◆ 『子どもの支援者であるすべての教師のために』</div>
+    <div class="meta">佐賀教育センター　2025.3</div>
+  </div>
+
+  <!-- 戻る -->
+  <div class="back-link">
+    <a href="?page=home">メニューに戻る</a>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f29b8f">
+  <title>ステップ1 表紙｜ささエール</title>
+
+  <!-- ★ PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+      });
+    }
+  </script>
+
+  <!-- ★ コア / 共通芯 -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js"   defer></script>
+  <script src="/js/store.js" defer></script>
+  <script src="/js/common.js" defer></script>
+
+  <style>
+    body{
+      margin:0;background:#f29b8f;font-family:"Noto Sans JP",system-ui,sans-serif;
+    }
+    .cover-wrapper{
+      min-height:100vh;display:flex;flex-direction:column;
+      justify-content:center;align-items:center;padding:1rem;
+    }
+    .layer-container{position:relative;width:100%;max-width:360px;aspect-ratio:1/1;}
+    .cream-bg{
+      position:absolute;inset:0;background:#fef0cf;border-radius:8px;z-index:1;
+    }
+    .lace-overlay{
+      position:absolute;top:50%;left:50%;width:80%;transform:translate(-50%,-50%);z-index:2;
+    }
+    .text-overlay{
+      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      z-index:3;text-align:center;font-size:1.3rem;font-weight:bold;color:#333;
+      line-height:1.0;white-space:pre-line;
+    }
+    .nav{
+      display:flex;justify-content:space-between;margin-top:1.5rem;width:100%;max-width:360px;
+      font-weight:bold;font-size:1rem;
+    }
+    .nav a{color:#333;text-decoration:none;}
+  </style>
+</head>
+
+<body>
+  <main class="cover-wrapper">
+    <div class="layer-container">
+      <div class="cream-bg"></div>
+      <img src="https://lh3.googleusercontent.com/d/1ZpPcvPqIzooWWSgKTW9yZTc3fBaA5oEx"
+           alt="レース枠" class="lace-overlay">
+      <div class="text-overlay">
+        「行きたくない」<br>
+        が気になる<br>
+        保護者の方へ
+      </div>
+    </div>
+
+    <!-- ナビゲーション -->
+    <div class="nav">
+      <a href="?page=home">＜ 戻る</a>
+      <a href="?page=step1-2">進む ＞</a>
+    </div>
+  </main>
+</body>
+</html>

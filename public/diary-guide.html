@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>日記の使い方ガイド</title>
+
+  <!-- 芯（共通・必須） -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script defer src="/js/lib.js"></script>
+  <script defer src="/js/store.js"></script>
+
+  <meta name="theme-color" content="#FFF9F2">
+
+  <style>
+    :root{
+      --bg:#FFF9F2;
+      --accent:#FFDC65;
+      --purple:#6a1b9a;
+      --border:#e6e6e6;
+      --safe-bottom:env(safe-area-inset-bottom);
+    }
+    body{background:var(--bg);margin:0;}
+
+    .guide-page{
+      box-sizing:border-box;max-width:720px;margin:0 auto;
+      padding:18px 16px 28px;color:#333;
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans JP",sans-serif;
+    }
+
+    .page-head{display:flex;justify-content:center;margin-bottom:12px;}
+    .page-head h2{
+      margin:0;font-size:1.05rem;padding:.35rem .9rem;
+      background:#fff;border:1px solid var(--border);border-radius:999px;
+    }
+
+    .card{
+      background:#fff;border:1px solid #eee;border-radius:12px;
+      padding:14px;box-shadow:0 3px 10px rgba(0,0,0,.06);margin:10px 0 14px;
+    }
+    .card.intro{background:#FFEAF1;border:1px solid #FFD5E3;padding:18px;border-radius:14px;}
+
+    .intro .lead{
+      margin:0;line-height:1.9;font-weight:700;color:#000;text-align:left;
+    }
+
+    .sec-title{margin:.2rem 0 .6rem;font-size:1rem;color:#555;}
+
+    .steps{list-style:none;padding:0;margin:0;display:grid;gap:10px;}
+    .steps li{display:flex;gap:10px;align-items:flex-start;}
+    .stp-badge{
+      flex:0 0 auto;display:inline-grid;place-items:center;width:28px;height:28px;
+      border-radius:999px;background:var(--accent);font-weight:700;border:1px solid #e2c54a;
+    }
+    .stp-body{line-height:1.8;text-align:left;}
+
+    .bottom-nav{
+      display:flex;justify-content:center;gap:16px;background:var(--bg);
+      padding:12px 16px;margin:18px -16px 0;
+    }
+    .purple{color:var(--purple);text-decoration:none;font-weight:700;}
+
+    @media(max-width:430px){
+      .guide-page{padding:16px 14px 24px;}
+      .page-head h2{font-size:1rem;}
+    }
+
+    main{padding-bottom:calc(28px + var(--safe-bottom));}
+
+    *{-webkit-tap-highlight-color:rgba(0,0,0,.08);scroll-behavior:smooth;}
+  </style>
+</head>
+
+<body>
+<main class="guide-page" aria-labelledby="guide-title">
+  <div class="page-head">
+    <h2 id="guide-title">🐤 使い方 🐤</h2>
+  </div>
+
+  <section class="card intro">
+    <p class="lead">
+      このページは、<strong>日記として</strong>、また<strong>相談時の記録</strong>としてもお使いください。<br>
+      その日の出来事や気持ち、気づきをやさしく書き残すだけで大丈夫。<br>
+      あなたのペースで、肩の力を抜いて書いてみてください。
+    </p>
+  </section>
+
+  <section class="card">
+    <h3 class="sec-title">かんたん操作ガイド</h3>
+    <ol class="steps" aria-label="使い方の手順">
+      <li>
+        <span class="stp-badge">1</span>
+        <div class="stp-body">
+          <strong>「＋ 新規作成」</strong>を押します。日付は自動入力されます（変更もOK）。
+        </div>
+      </li>
+
+      <li>
+        <span class="stp-badge">2</span>
+        <div class="stp-body">
+          <strong>内容</strong>を入力して、<strong>保存</strong>を押します。<br>
+          記録は<strong>端末の中（この端末）</strong>に保存され、サーバーに送信されません。
+        </div>
+      </li>
+
+      <li>
+        <span class="stp-badge">3</span>
+        <div class="stp-body">
+          記録トップに並ぶ<strong>黄色い日付ボタン</strong>をタップすると、内容を<strong>閲覧</strong>できます（ポップアップで表示されます）。
+        </div>
+      </li>
+
+      <li>
+        <span class="stp-badge">4</span>
+        <div class="stp-body">
+          閲覧ポップアップの<strong>「削除」</strong>から、記録を消すことができます。<br>
+          ※ 現在、<strong>編集（書き換え）機能はありません</strong>。書き直したい場合は新しく作成してください。
+        </div>
+      </li>
+
+      <li>
+        <span class="stp-badge">5</span>
+        <div class="stp-body">
+          保存上限は<strong>100件</strong>です。上限に達すると、新しい記録を追加できません。<br>
+          新しく追加したいときは、不要な記録を削除してください。
+        </div>
+      </li>
+
+      <li>
+        <span class="stp-badge">6</span>
+        <div class="stp-body">
+          <strong>iPhone（Safari）</strong>では、環境により記録が消えることがあります。<br>
+          初回の保存後に表示される案内から、<strong>「端末にちゃんと残す（バックアップ）」</strong>を作っておくと安心です。<br>
+          バックアップは、<strong>記録トップにある「端末にちゃんと残す」</strong>からいつでも<strong>復元</strong>できます。
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <nav class="bottom-nav">
+    <a href="?page=diary" class="purple" id="back-diary">← 記録トップへ戻る</a>
+  </nav>
+</main>
+
+<script>
+  // go() があるなら統一、なければ href のまま
+  (function(){
+    const a = document.getElementById('back-diary');
+    if (!a) return;
+    a.addEventListener('click', function(e){
+      if (typeof window.go !== 'function') return;
+      e.preventDefault();
+      window.go('diary');
+    });
+  })();
+</script>
+
+</body>
+</html>

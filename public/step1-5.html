@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f29b8f">
+  <title>保護者の対応｜ステップ1-5</title>
+
+  <!-- ★ PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+      });
+    }
+  </script>
+
+  <!-- ★ コア / 共通芯 -->
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js"   defer></script>
+  <script src="/js/store.js" defer></script>
+  <script src="/js/common.js" defer></script>
+
+  <style>
+    /* ── 基本レイアウト ── */
+    body{margin:0;background:#f29b8f;font-family:"Noto Sans JP",system-ui,sans-serif;color:#333;}
+    .container{max-width:480px;margin:auto;padding:1rem;}
+
+    /* バナー */
+    .banner{
+      background:#fff;padding:.8rem 1rem;border-radius:2rem;
+      text-align:center;font-size:1.4rem;font-weight:700;color:#333;margin-bottom:1rem;
+    }
+
+    /* 白い本文枠 */
+    .content-box{background:#fff;padding:1.5rem;border-radius:4px;line-height:1.9;}
+
+    /* ブロック */
+    .content-block{margin-bottom:2rem;overflow:hidden;}
+
+    /* 既定＝右寄せ */
+    .content-block img{
+      float:right;width:45%;max-width:200px;height:auto;
+      margin-left:1rem;margin-bottom:.5rem;border-radius:8px;
+    }
+
+    /* ❶ 2枚目だけ左寄せ */
+    .content-block img.left-img{
+      float:left;margin-right:1rem;margin-left:0;
+    }
+
+    @media(max-width:480px){
+      .content-block img{width:60%;max-width:220px;}
+    }
+
+    /* フッター */
+    .page-nav{
+      display:flex;justify-content:space-between;font-weight:700;font-size:1rem;margin-top:1rem;
+    }
+    .nav-btn{color:#4d2bb6;text-decoration:none;}
+    .nav-btn:visited{color:#4d2bb6;}
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="banner">保護者の対応</div>
+
+    <div class="content-box">
+
+      <div class="content-block">
+        <img src="https://lh3.googleusercontent.com/d/1m1vqBfUYtZeqUVlFy6Vd5myp5xBM-ZZR" alt="語る親子2">
+        ・まずは子どもの訴えを受け止めて、大切に思っていることを示しながら話を聞いてあげましょう。<br>
+        話せるか話せないかはわかりません。ただ、「大切に思っている」「一人じゃない」ことを示して耳を傾けてあげましょう。
+      </div>
+
+      <div class="content-block">
+        <img src="https://lh3.googleusercontent.com/d/1cZWJRHZ2Xp3IWuYrsbBZbAdoMtXc-GoZ" alt="明るい親子①" class="left-img">
+        ・この段階は寄り添ってあげたり、励ましてあげたりすることで頑張れる子もたくさんいます。<br>
+        自分を否定して我慢して過ごしていても、そこで自分を肯定してくれる存在が「できる！」と励ましてくれることで乗り切れる場合も多くあります。<br>
+        すぐに「休んでいいよ」と背を向けることを促すのが逆効果になることもあるのです。よく見極めて支えてあげましょう。
+      </div>
+
+      <div class="content-block">
+        <img src="https://lh3.googleusercontent.com/d/1-B9RgvddtPWplZUltnCnWoITWDlAjMI6" alt="相談１">
+        ・この段階で強い味方になるのは、学校の先生です。遠慮せずに家での様子や保護者の心配を伝え、情報交換を行いましょう。<br>
+        きっと先生も、気が付くことがあれば守ってくれ、理由が明確でなくても細やかな気遣いをしてくれることでしょう。上手に相談しながら、一緒に子どもを支えましょう。
+      </div>
+
+      <div class="content-block">
+        ・学校で頑張って過ごしている状況がわかったら、家はできるだけ居心地がよく、リラックスできるよう工夫してあげましょう。<br>
+        心のエネルギーチャージが大切です。
+      </div>
+
+      <div class="content-block">
+        <img src="https://lh3.googleusercontent.com/d/1JzEUJ8tjR6NcpMFfFv5joO1ByxRUfgKp" alt="食欲ある子ども">
+        ・子どもが頑張っている分、生活リズムを整えてあげましょう。早寝早起き、そして朝ごはん！<br>
+        縁の下の力持ちとして、生活のリズムをサポートしてあげましょう。
+      </div>
+
+    </div>
+
+    <nav class="page-nav">
+      <a href="?page=step1-4" class="nav-btn prev">＜ 戻る</a>
+      <a href="?page=renkei1"  class="nav-btn next">進む ＞</a>
+    </nav>
+
+  </div>
+</body>
+</html>
