@@ -5,12 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>日記の使い方ガイド</title>
 
-  <!-- 芯（共通・必須） -->
-  <link rel="stylesheet" href="/css/common.css">
-  <script defer src="/js/lib.js"></script>
-  <script defer src="/js/store.js"></script>
-
+  <!-- ★ PWA（必要なら） -->
+  <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#FFF9F2">
+
+  <!-- ===== 芯（共通・推奨の並び）===== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+  <script src="/js/common.js" defer></script>  <!-- SW登録（軽いやつ） -->
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+
+  <!-- ===== 日記ページだけ追加（統一のため入れてOK） ===== -->
+  <script src="/js/diary.js" defer></script>
 
   <style>
     :root{
@@ -72,7 +85,7 @@
 </head>
 
 <body>
-<main class="guide-page" aria-labelledby="guide-title">
+<main class="guide-page" data-page="diary-guide" aria-labelledby="guide-title">
   <div class="page-head">
     <h2 id="guide-title">🐤 使い方 🐤</h2>
   </div>
@@ -138,22 +151,11 @@
   </section>
 
   <nav class="bottom-nav">
-    <a href="?page=diary" class="purple" id="back-diary">← 記録トップへ戻る</a>
+    <!-- ★変更：GASの ?page= ではなく .html へ（見た目は同じ） -->
+    <a href="/diary.html" class="purple">← 記録トップへ戻る</a>
   </nav>
 </main>
 
-<script>
-  // go() があるなら統一、なければ href のまま
-  (function(){
-    const a = document.getElementById('back-diary');
-    if (!a) return;
-    a.addEventListener('click', function(e){
-      if (typeof window.go !== 'function') return;
-      e.preventDefault();
-      window.go('diary');
-    });
-  })();
-</script>
-
+<!-- ページ内JSはゼロ：必要なら /js/lib.js の go() で統一 -->
 </body>
 </html>

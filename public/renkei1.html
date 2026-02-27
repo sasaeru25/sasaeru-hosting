@@ -11,6 +11,13 @@
   
   <!-- ======================================================= -->
 <!-- ★ コア / 共通芯 -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
 <link rel="stylesheet" href="/css/common.css">
 <script src="/js/lib.js"   defer></script>
 <script src="/js/store.js" defer></script>
@@ -134,10 +141,12 @@
 <main class="wrap">
 
   <!-- バナー画像 -->
+  <picture>
+  <source srcset="/images_webp/学校との連携.webp" type="image/webp">
   <img class="banner-img"
-       src="https://lh3.googleusercontent.com/d/1jsXm5ovj3XxipaUZcZDSi85SxxFVQlYX"
+       src="/images/学校との連携.png"
        alt="学校との連携">
-
+</picture>
   <!-- 本文（連携①） -->
   <section class="card">
     <p class="lead">〜いま大切なのは、原因探しより“安心づくり”〜</p>
@@ -145,10 +154,10 @@
       まずは担任や保健室の先生に、最近の様子をそっと共有してみましょう。学校の中で気になっていること（席・提出物・友だち関係・体育など）が見えてくると、周りの支えと後押しで、朝の“引っかかり”が軽くなることがあります。
     </p>
     <p>
-      保護者だけでスクールカウンセラー（SC）に相談するのも良い一歩です。学校への伝え方を一緒に整えてくれます。
+      保護者だけでスクールカウンセラー（SC）に相談するのもよい一歩です。学校への伝え方を一緒に整えてくれます。
     </p>
     <p>
-      「すぐ休ませる」以外にも、見守りと伴走で頑張れるケースも多くあります。子どもの気持ちに寄り添いつつ、「味方がいるよ」と支えてあげましょう。
+      「すぐ休ませる」以外にも、見守りと伴走で頑張れるケースも多くあります。子どもの気持ちに寄り添いつつ、力強い味方として支えましょう。
     </p>
   </section>
 
@@ -165,10 +174,9 @@
     </ul>
   </section>
 
-  <!-- フッター -->
-  <nav class="page-nav">
-    <a class="nav-btn" href="?page=home" target="_top">＜ メニューへ</a>
-  </nav>
+ <nav class="page-nav">
+  <a class="nav-btn" href="/home.html">＜ メニューへ</a>
+</nav>
 
 </main>
 

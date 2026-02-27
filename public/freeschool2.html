@@ -5,6 +5,19 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>フリースクール等</title>
 
+<!-- ===== 芯（Firebase側の共通）===== -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+<script defer src="/js/common.js"></script>
+<script defer src="/js/lib.js"></script>
+<script defer src="/js/store.js"></script>
+
 <style>
 :root{
   --mint:#caf4d6;
@@ -68,6 +81,21 @@ a.fac-link::after{content:"↗";font-size:.85em;margin-left:.25em}
 }
 .nav-btn{font-weight:700;color:#4d2bb6;text-decoration:none;font-size:1rem;}
 @media(max-width:430px){.nav-btn{font-size:.95rem;}}
+
+/* =======================================================
+   ★ 追加：トップ見出しと検索欄を中央寄せ（ここだけ）
+   ======================================================= */
+.wrapper{ text-align:center; }     /* badge（inline-block）を中央へ */
+.desc, #tblWrap, .table-wrap{ text-align:left; } /* 本文・表は左寄せ維持 */
+
+#filterWrap{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.6rem;
+  text-align:center;
+  width:100%;
+}
 </style>
 </head>
 
@@ -87,98 +115,129 @@ a.fac-link::after{content:"↗";font-size:.85em;margin-left:.25em}
   </div>
 
   <div id="filterWrap">
-    市町村：
+    <span>市町村：</span>
     <select id="selRegion"><option value="ALL">すべて</option></select>
   </div>
 
   <div id="tblWrap">読み込み中…</div>
+
+  <!-- ★ナビ：指定どおり（soudankikan / home） -->
+  <nav class="page-nav" aria-label="ページナビ">
+    <a class="nav-btn prev" href="/soudankikan.html">＜ 戻る</a>
+    <a class="nav-btn next" href="/home.html">メニュー ＞</a>
+  </nav>
 </main>
 
-<nav class="page-nav" aria-label="ページナビ">
-  <button type="button" class="nav-btn prev" onclick="go('soudankikan')">＜ 戻る</button>
-  <button type="button" class="nav-btn next" onclick="go('home')">メニュー ＞</button>
-</nav>
-
 <script>
-const escapeHtml = s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[m]));
+/* ============================================================
+   Firebase配信ページ（静的HTML）→ fetchでGAS WebApp(JSON)を読む
+   ※ google.script.run は使わない（Firebaseでは動かない）
+   ============================================================ */
+
+const escapeHtml = s => String(s ?? '').replace(/[&<>"']/g, m => ({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+}[m]));
+
+// ★GAS側のWebApp（JSON API）
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbx4krcccAyVZZA99PJ_-7pCH29O0evjwkRYUQNk4sYWLkv9wAoALUzlVMmADVL2URvGwA/exec';
+
+// ★シート設定（指定どおり）
 const CFG = { sheetName:'フリースクール等', filterCol:2 };
+
+const $sel  = document.getElementById('selRegion');
+const $wrap = document.getElementById('tblWrap');
 
 function showError(where, err){
   console.error(where, err);
-  document.getElementById('tblWrap').innerHTML =
+  $wrap.innerHTML =
     `<div style="padding:.8rem;background:#fff;border:1px solid #ddd;border-radius:8px;">
        データ取得でエラーが発生しました。<br><small>${escapeHtml(where)}</small>
      </div>`;
 }
+
 function normURL(v){
   if(!v) return '';
   let u = String(v).trim();
   if(!/^https?:\/\//i.test(u)){
-    if(/^[\w-]+(\.[\w-]+)+/.test(u)) u = 'https://'+u;
+    if(/^[\w-]+(\.[\w-]+)+/.test(u)) u = 'https://' + u;
     else return '';
   }
   return u;
 }
 
-/* 地域プルダウン取得 */
-function loadRegions(){
-  google.script.run
-    .withSuccessHandler(initRegions)
-    .withFailureHandler(err=>showError('地域一覧取得に失敗', err))
-    .getRegionsDynamic(CFG.sheetName, CFG.filterCol);
+async function api(params = {}){
+  const url = new URL(ENDPOINT);
+  Object.entries(params).forEach(([k,v]) => url.searchParams.set(k, v));
+  const res = await fetch(url, { cache:'no-store' });
+  if(!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
 }
+
+/* ---------- 地域プルダウン（fetch） ---------- */
+async function loadRegions(){
+  try{
+    const list = await api({ mode:'regions', sheet:CFG.sheetName, col:CFG.filterCol });
+    initRegions(list || []);
+  }catch(e){
+    showError('地域一覧取得に失敗', e);
+  }
+}
+
 function initRegions(list){
-  const sel = document.getElementById('selRegion');
-  sel.insertAdjacentHTML('beforeend',list.map(r=>`<option>${escapeHtml(r)}</option>`).join(''));
-  sel.addEventListener('change', ()=>loadTable(sel.value));
+  $sel.insertAdjacentHTML('beforeend', list.map(r => `<option>${escapeHtml(r)}</option>`).join(''));
+  $sel.addEventListener('change', () => loadTable($sel.value));
   loadTable('ALL');
 }
 
-/* 表データ取得 */
-function loadTable(region){
-  document.getElementById('tblWrap').textContent='読み込み中…';
-  google.script.run
-    .withSuccessHandler(drawTable)
-    .withFailureHandler(err=>showError('表データ取得に失敗', err))
-    .getTableDynamic(CFG.sheetName, CFG.filterCol, region);
+/* ---------- 表データ（fetch） ---------- */
+async function loadTable(region){
+  $wrap.textContent = '読み込み中…';
+  try{
+    const data = await api({ mode:'table', sheet:CFG.sheetName, col:CFG.filterCol, region });
+    drawTable(data);
+  }catch(e){
+    showError('表データ取得に失敗', e);
+  }
 }
 
-/* テーブル描画 */
-function drawTable({ head=[], rows=[] }={}){
-  const wrap=document.getElementById('tblWrap');
-  if(!rows.length){wrap.innerHTML='<div class="table-wrap">該当データがありません</div>';return;}
+/* ---------- テーブル描画（元ロジック維持） ---------- */
+function drawTable({ head=[], rows=[] } = {}){
+  if(!rows.length){
+    $wrap.innerHTML = '<div class="table-wrap">該当データがありません</div>';
+    return;
+  }
 
   const norm = s => String(s ?? '').trim();
-const pick = (idx, fallback) => (idx >= 0 ? idx : fallback);
+  const pick = (idx, fallback) => (idx >= 0 ? idx : fallback);
 
-const nameIdx = pick(head.findIndex(h => /名称|施設名|名前/i.test(norm(h))), 0);
-const urlIdx  = pick(head.findIndex(h => /(url|hp|サイト|リンク)/i.test(norm(h))), -1);
-const prIdx   = pick(head.findIndex(h => /(pr|紹介|内容|特徴|備考|コメント)/i.test(norm(h))), -1);
+  const nameIdx = pick(head.findIndex(h => /名称|施設名|名前/i.test(norm(h))), 0);
+  const urlIdx  = pick(head.findIndex(h => /(url|hp|サイト|リンク)/i.test(norm(h))), -1);
+  const prIdx   = pick(head.findIndex(h => /(pr|紹介|内容|特徴|備考|コメント)/i.test(norm(h))), -1);
 
-// ★ これが抜けてた
-const visIdx  = head.map((_, i) => i).filter(i => i !== urlIdx);
+  // URL列は表示しない（見つからなければそのまま全部表示）
+  const visIdx  = head.map((_, i) => i).filter(i => i !== urlIdx);
 
-  const colgroup='<colgroup>'+visIdx.map(i=>
-      i===prIdx  ?'<col style="min-width:28ch;width:36ch;">'
-    : i===nameIdx?'<col style="min-width:16ch;">'
-    :             '<col style="min-width:8ch;">'
-  ).join('')+'</colgroup>';
+  const colgroup = '<colgroup>' + visIdx.map(i =>
+      i===prIdx   ? '<col style="min-width:28ch;width:36ch;">'
+    : i===nameIdx ? '<col style="min-width:16ch;">'
+    :               '<col style="min-width:8ch;">'
+  ).join('') + '</colgroup>';
 
-  const thead='<thead><tr>'+visIdx.map(i=>`<th>${escapeHtml(head[i])}</th>`).join('')+'</tr></thead>';
+  const thead = '<thead><tr>' + visIdx.map(i => `<th>${escapeHtml(head[i])}</th>`).join('') + '</tr></thead>';
 
-  const tbody='<tbody>'+rows.map(r=>
-    '<tr>'+visIdx.map(i=>{
-      let cell=escapeHtml(r[i]);
-      if(i===nameIdx&&urlIdx>=0){
-        const link=normURL(r[urlIdx]);
-        if(link) cell=`<a class="fac-link" href="${link}" target="_blank" rel="noopener">${cell}</a>`;
+  const tbody = '<tbody>' + rows.map(r =>
+    '<tr>' + visIdx.map(i => {
+      let cell = escapeHtml(r[i]);
+      if(i === nameIdx && urlIdx >= 0){
+        const link = normURL(r[urlIdx]);
+        if(link) cell = `<a class="fac-link" href="${link}" target="_blank" rel="noopener">${cell}</a>`;
       }
-      const keyAttr=i===nameIdx?' data-key="name"':'';
+      const keyAttr = (i === nameIdx) ? ' data-key="name"' : '';
       return `<td${keyAttr} data-label="${escapeHtml(head[i])}">${cell.replace(/\n/g,'<br>')}</td>`;
-    }).join('')+'</tr>'
-  ).join('')+'</tbody>';
+    }).join('') + '</tr>'
+  ).join('') + '</tbody>';
 
-  wrap.innerHTML=`<div class="table-wrap"><table class="resp">${colgroup}${thead}${tbody}</table></div>`;
+  $wrap.innerHTML = `<div class="table-wrap"><table class="resp">${colgroup}${thead}${tbody}</table></div>`;
 }
 
 /* 起動 */

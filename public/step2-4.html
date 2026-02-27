@@ -1,4 +1,4 @@
-<!doctype html>
+<!doctype html> 
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
@@ -16,11 +16,21 @@
     }
   </script>
 
-  <!-- ★ コア / 共通芯（クリップ対応） -->
+  <!-- ===== 共通の芯（全ページ共通） ===== -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#f3a9a0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
   <link rel="stylesheet" href="/css/common.css">
-  <script src="/js/lib.js"   defer></script>
-  <script src="/js/store.js" defer></script>
+
+  <!-- 共通JS（依存順：common → lib → store） -->
   <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+  <!-- ================================ -->
 
   <style>
     /* ── ベース ── */
@@ -38,14 +48,32 @@
       background:#fff;border-radius:4px;padding:1.6rem 1.2rem;
       line-height:1.9;font-size:1rem;text-align:left;
     }
-    .section{margin-bottom:2rem;overflow:hidden;}
 
-    /* 画像（既定右寄せ） */
-    .section img{
-      float:right;shape-outside:margin-box;width:120px;max-width:45%;height:auto;
-      margin-left:1rem;margin-bottom:.5rem;border-radius:8px;
+    /* セクション：floatの影響を安定化 */
+    .section{
+      margin-bottom:2rem;
+      overflow:visible;                 /* ★hiddenやめる */
     }
-    .left-img{float:left;margin-right:1rem;margin-left:0;}
+    .section::after{ content:""; display:block; clear:both; } /* floatの高さを拾う */
+
+    /* 画像ラッパ：右寄せ＋折り返し（iPhone安定） */
+    .section .illu-wrap{
+      float:right;
+      width:clamp(95px, 30vw, 130px);
+      margin:.2rem -4px .6rem 1rem;     /* ★右寄せ気味 */
+    }
+    .section .illu-wrap img{
+      width:100%;
+      height:auto;
+      border-radius:8px;
+      display:block;
+    }
+
+    /* 2枚目だけ左寄せ */
+    .section .illu-wrap.left{
+      float:left;
+      margin:.2rem 1rem .6rem -4px;     /* ★左寄せ気味 */
+    }
 
     /* フッター */
     .page-nav{
@@ -58,8 +86,19 @@
     /* モバイル調整 */
     @media(max-width:430px){
       .content-area{font-size:.95rem;}
-      .section img{width:95px;}
       .nav-btn{font-size:.92rem;}
+    }
+    @media(max-width:360px){
+      .section .illu-wrap{
+        float:none;
+        width:72%;
+        margin:.3rem auto .9rem;
+      }
+      .section .illu-wrap.left{
+        float:none;
+        width:72%;
+        margin:.3rem auto .9rem;
+      }
     }
   </style>
 </head>
@@ -71,44 +110,59 @@
     <div class="content-area">
 
       <div class="section">
-        <img src="https://lh3.googleusercontent.com/d/1vNASDqh9n-UQei-YjxZyLQRi79Z_pk-C" alt="語る親子１">
+        <picture class="illu-wrap">
+          <source srcset="/images_webp/語る親子１.webp" type="image/webp">
+          <img src="/images/語る親子１.png" alt="語る親子１">
+        </picture>
         ・寄り添って話を聞いてあげましょう。どんなことでも、「これまでずっと我慢をしてきた」という事実があります。<br>
-        そこを受け止めて、「つらかったね」「しんどいんだね」と受け止めてあげましょう。
+        そこを受け止めて、「つらかったね」「しんどいんだね」と受容的に話を聞きましょう。
       </div>
 
       <div class="section">
-        <img src="https://lh3.googleusercontent.com/d/18EqhL49F-_1xAnABexgaJp27TbRzTvjr" alt="電話" class="left-img">
+        <picture class="illu-wrap left">
+          <source srcset="/images_webp/電話.webp" type="image/webp">
+          <img src="/images/電話.png" alt="電話">
+        </picture>
         ・保護者としても、聞きづらいこともあるかもしれませんが、学校の先生に状況を説明しながら情報共有をしましょう。<br>
         子どもの苦しさが見えてくる面もあるかもしれませんし、先生の支援で苦しさが軽減できる面もあるかもしれません。
       </div>
 
       <div class="section">
-        <img src="https://lh3.googleusercontent.com/d/1coZ7lj84O_OI2_zzmtUMht4TNCPiki-Q" alt="語る親子４">
+        <picture class="illu-wrap">
+          <source srcset="/images_webp/語る親子４.webp" type="image/webp">
+          <img src="/images/語る親子４.png" alt="語る親子４">
+        </picture>
         ・さて、登校をどうするかですが、状況によってさまざまなパターンがあります。<br><br>
-        保護者に思いのたけを打ち明けてわかってもらうことでエネルギーを得て、頑張れる子もいます。その場合は、家を安全基地として休める環境を確保しながら寄り添ってエネルギーを与えてあげましょう。<br><br>
-        また、わかってもらって安心をし、数日休むと頑張る元気が湧く子もいます。どうしてもだめそうであれば、「少し体も心も休ませよう」と、どのくらい休みたいかを相談し、その間ゆっくり休ませてあげる方法もあります。<br>
+        保護者に思いのたけを打ち明けてわかってもらうことで力を得て、頑張れる子もいます。その場合は、家を安全基地として休める環境を確保しながら寄り添ってエネルギーを与えましょう。<br><br>
+        また、わかってもらって安心をし、数日休むと頑張る元気が湧く子もいます。どうしてもだめそうであれば、「少し体も心も休ませよう」と、どのくらい休みたいかを相談し、その間ゆっくり休ませるという方法もあります。<br>
         その際は<strong>「味方だよ」「見守っているよ」</strong>と愛情を伝える時間を忘れずに。自己肯定感の低下が大きい今、「あなたは大切な存在だ」と感じられる時間が子どものエネルギーに変わります。
       </div>
 
       <div class="section">
-        <img src="https://lh3.googleusercontent.com/d/1vvrpy6yVHnZJqKGNe4L68WcgKfn3oZiG" alt="学校相談">
+        <picture class="illu-wrap">
+          <source srcset="/images_webp/学校相談.webp" type="image/webp">
+          <img src="/images/学校相談.png" alt="学校相談">
+        </picture>
         ・休みが長くなりそうなときは、担任の先生だけでなく、学校スクールカウンセラーや教育相談室など相談機関を利用する方法もあります。<br>
         状況を話してアドバイスをもらうことは、子どものためだけでなく、頑張っている保護者の支えにもなります。<br>
         子どもの心配は保護者にとって大きなストレスですから、<strong>ご自身のメンタルケア</strong>も忘れずに。保護者が一人で抱えて頑張りすぎず、いろいろな立場から子どもを支えていきましょう。
       </div>
 
       <div class="section">
-        <img src="https://lh3.googleusercontent.com/d/1AC0ja20BEZUqipV3XBASCGLDpTaiEnVo" alt="温かい手">
+        <picture class="illu-wrap">
+          <source srcset="/images_webp/温かい手.webp" type="image/webp">
+          <img src="/images/温かい手.png" alt="温かい手">
+        </picture>
         ・国の方針でも、不登校そのものを「問題」とは捉えていません。懸念されるのは、学業の遅れや心理的負担など子どもが被る<strong>「不利益」</strong>です。<br><br>
-        休みが長引きそうなときはそこを念頭に入れて支援を考えましょう。ただし急ぎは禁物。子どもが次の行動に移れるのは<strong>十分なエネルギー</strong>が戻ってからです。<br>
+        休みが長引きそうなときはそこを念頭に入れて支援を考えましょう。ただし急ぎは禁物。子どもが次の行動に移れるのは<strong>十分な心のエネルギー</strong>が戻ってからです。<br>
         「子どもの心理」内の<em>回復への道のり</em>を参考に、相談機関と連携しながら今後を一緒に考えてみましょう。
       </div>
 
     </div>
 
     <nav class="page-nav">
-      <a href="?page=step2"   class="nav-btn prev">＜ 戻る</a>
-      <a href="?page=renkei2" class="nav-btn next">進む ＞</a>
+      <a href="/step2-3.html" class="nav-btn prev">＜ 戻る</a>
+      <a href="/renkei2.html" class="nav-btn next">進む ＞</a>
     </nav>
 
   </main>

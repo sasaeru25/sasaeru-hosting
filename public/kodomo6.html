@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#ffe6e6">
-  <title>エネルギーをためるポイント｜ささエール</title>
+  <title>エネルギーをためるポイント</title>
 
   <!-- ★ PWA -->
   <link rel="manifest" href="/manifest.json">
@@ -15,8 +15,17 @@
       });
     }
   </script>
- <!-- ★ コア / 共通芯 -->
-  <link rel="stylesheet" href="/css/common.css">
+
+  <!-- ===== 共通の芯（全ページ共通） ===== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+  <script src="/js/common.js" defer></script>
   <script src="/js/lib.js" defer></script>
   <script src="/js/store.js" defer></script>
 
@@ -34,6 +43,9 @@
       padding-bottom:calc(2rem + env(safe-area-inset-bottom));
       padding-left:calc(1rem + env(safe-area-inset-left));
     }
+
+    /* ★追加：見出し行を中央寄せ */
+    .kp-heading-row{ text-align:center; }
 
     /* 見出し（白いピル） */
     .kp-heading{
@@ -79,34 +91,46 @@
 
 <body>
 <main class="kp-wrapper">
-  <h2 class="kp-heading">🍀 エネルギーをためる<br>ポイント</h2>
+
+  <!-- ★見出し中央寄せ（行で包む） -->
+  <div class="kp-heading-row">
+    <h2 class="kp-heading">🍀 エネルギーをためる<br>ポイント</h2>
+  </div>
 
   <!-- リード文 -->
   <p class="kp-lead">
     学校に行かない、行けないことで、子どもは満足をしているのでしょうか？答えは NO です。
     行かないことで罪悪感を感じたり、行けないことで自己肯定感が下がったり…。
-    「学校に行かない」選択肢を選んでいても、状況によってはずっとマイナスの心のまま過ごしていることもあるんです。
-    マイナスの心のままエネルギーが溜まっていくでしょうか？<br>
-    まずは、エネルギーを溜めることが第一です。エネルギーを溜めるために、気を付けてみましょう。
+    「学校に行かない」選択肢を選んでいても、状況によってはずっとマイナスの心のまま過ごしていることもあるのです。
+    マイナスの心のままでエネルギーが溜まっていくでしょうか？<br>
+    まずは、エネルギーを溜めることが第一です。エネルギーを溜めるために、対応に気をつけてみましょう。
   </p>
 
   <!-- 白枠１：望ましい対応のヒント -->
   <section class="white-box">
-    <img class="box-hero"
-         src="https://lh3.googleusercontent.com/d/1yqLCcHcF-pb5AyT4OUX83xZL2sj05oyG"
-         alt="望ましい対応のヒント">
+    <picture>
+      <source srcset="/images_webp/のぞましい対応のヒント.webp" type="image/webp">
+      <img class="box-hero" src="/images/のぞましい対応のヒント.png" alt="のぞましい対応のヒント">
+    </picture>
+
     <article class="kp-article">
-      <h3>〇 理解を示す。</h3>
+      <h3>〇 理解を示す</h3>
       <p>
         　「学校に行かない」「ゲームをしている」「返事をしない」。親にとって理解することは難しくても「理解を示す」ことが大切です。「この子は学校に行きたくないんだな」「ゲームの面白さがあるのかな」「気持ちがいっぱいなのかな」と「わかろうとする」ことに意味があるのです。
         そしてその気持ちは子どもにも伝わります。
       </p>
 
-      <h3>〇 受容的に接する。</h3>
+      <h3>〇 受容的に接する</h3>
       <p>
-        <img src="https://lh3.googleusercontent.com/d/1fxNtFICreDFYsELXyjAp8-GqngXsLQJI"
-             alt="聞くウサギのイラスト"
-             style="float:right;height:auto;margin-left:.6rem;">
+        <picture>
+  <source srcset="/images_webp/聞くうさぎ.webp" type="image/webp">
+  <img
+    src="/images/聞くうさぎ.png"
+    alt="聞くうさぎ"
+    style="float:right;width:120px;height:auto;margin-left:.6rem;"
+    loading="lazy"
+    decoding="async">
+</picture>
         　否定的な態度や否定した言葉を使わないよう気をつけましょう。「そう感じているんだね」「そういう気分なんだね」と、子どもの思いを受け入れる態度で接していくと、子どもも自分を受け入れることができるようになり、心が安定してきます。意見を伝えたい時には、「私はこう思うんだけど…」というアイメッセージ（相手を尊重しつつ自分の意思を伝えるコミュニケーション）を使う方法もあります。<br>
         　＜受容と肯定の違い＞<br>
         　微妙な違いですが、「学校に行きたくないんだね」が「受容」で、子どもの気持ちに寄り添う態度。「学校に行かなくていい」は肯定です。子どものすべてを大人が肯定するようになると、「自分が正しい」という気持ちが大きくなりすぎることもあります。アイメッセージをうまく使って、受容的な態度を心がけましょう。
@@ -114,47 +138,67 @@
 
       <h3>〇 子どもの主体性</h3>
       <p>
-        　子どもの主体性は、「やりたい時に、やりたいことを、やりたいだけ」やることで育まれると言われています。今の子どもには、自分で選んでできることがゲームやTVである場合もあります。小さなことでも自分で考え、自分で決めてやることが必要な時期もあります。頭ごなしに否定せず、受容的コミュニケーションをとりながら見守ってあげましょう。元気が出てきたら一緒にできることに誘ってみるのもいいでしょう。
-        <img src="https://lh3.googleusercontent.com/d/17bDMJ8GjJTD4h2Ntw6eelBYhNPuo5bsF"
-             alt="料理をする親子"
-             style="float:right;height:auto;margin-left:.6rem;">
+        　子どもの主体性は、「やりたい時に、やりたいことを、やりたいだけ」やることで育まれると言われています。今の子どもには、自分で選んでできることがゲームやTVである場合もあります。小さなことでも自分で考え、自分で決めてやることが必要な時期もあります。頭ごなしに否定せず、受容的コミュニケーションをとりながら見守りましょう。元気が出てきたら一緒にできることに誘ってみるのもいいでしょう。
+        <picture>
+  <source srcset="/images_webp/料理する親子.webp" type="image/webp">
+  <img
+    src="/images/料理する親子.png"
+    alt="料理する親子"
+    style="float:right;width:120px;height:auto;margin-left:.6rem;"
+    loading="lazy"
+    decoding="async">
+</picture>
       </p>
     </article>
   </section>
 
   <!-- 白枠２：気を付けて！マイナスの働きかけ -->
   <section class="white-box">
-    <img class="box-hero"
-         src="https://lh3.googleusercontent.com/d/1Cf6Rp2z98BQIqN8XQeDHsEQ8halj2wQ9"
-         alt="気を付けたい！こんな働きかけ">
+    <picture>
+      <source srcset="/images_webp/気を付けたい！こんな働きかけ.webp" type="image/webp">
+      <img class="box-hero" src="/images/気を付けたい！こんな働きかけ.png" alt="気を付けたい！こんな働きかけ">
+    </picture>
+
     <article class="kp-article">
-      <h3>〇 子どもの話を最後まで聞かない。</h3>
+      <h3>〇 子どもの話を最後まで聞かない</h3>
       <p>
-        <img src="https://lh3.googleusercontent.com/d/15f_F7r3_5keHc8bZvIp3ON0p8YSl2ndC"
-             alt="戸惑う子ども"
-             style="float:right;height:auto;margin-left:.6rem;">
+      <picture style="float:right;width:clamp(90px, 28vw, 120px);max-width:120px;height:auto;margin-left:.6rem;">
+  <source srcset="/images_webp/戸惑う子ども.webp" type="image/webp">
+  <img
+    src="/images/戸惑う子ども.png"
+    alt="戸惑う子ども"
+    style="width:100%;height:auto;display:block;"
+    loading="lazy"
+    decoding="async">
+</picture>
         　ゲームの話をしていると、「ゲームを作る人になったら？」等、保護者が話をすり替えて進めていませんか？
       </p>
 
-      <h3>〇 親の考えを次々と提案をする。</h3>
+      <h3>〇 親の考えを次々と提案をする</h3>
       <p>
          　次に進むのは、エネルギーが溜まってきてからです。安心した中で心を休ませる時間も必要です。
       </p>
 
       <h3>〇 「学校に行きたい」の意味の違い</h3>
       <p>
-        <img src="https://lh3.googleusercontent.com/d/1f_I94Tsd8cQZb8r36KZwwe1EReyDreIp"
-             alt="残念ネコ"
-             style="float:right;height:auto;margin-left:.6rem;">
+        <picture>
+  <source srcset="/images_webp/残念ネコ.webp" type="image/webp">
+  <img
+    src="/images/残念ネコ.png"
+    alt="残念ネコ"
+    style="float:right;width:clamp(72px, 22vw, 90px);height:auto;margin-left:.6rem;display:block;"
+    loading="lazy"
+    decoding="async">
+</picture>
         　子どもが「明日は学校に行きたい」と言っても、それの裏の気持ちは、「行きたい（want）」ではなく、
-        「行かないと（must）」ではないですか？ 相手が喜ぶだろうという気持ちから「明日は行く」ということもあります。約束を果たせなかったという経験を繰り返すのも、子どもにとってプラスにはなりません。
+        「行かないと（must）」ではないですか？ 相手が喜ぶだろうという気持ちから「明日は行く」と言うこともあります。約束を果たせなかったという経験を繰り返すのも、子どもにとってプラスにはなりません。
       </p>
     </article>
   </section>
 
-  <!-- フッター -->
+  <!-- フッター（★Firebaseで生きるリンクへ） -->
   <nav class="page-nav">
-    <a href="?page=kodomo" class="nav-btn prev">＜ 子どもの心理</a>
+    <a href="/kodomo.html" class="nav-btn prev">＜ 子どもの心理</a>
   </nav>
 </main>
 </body>

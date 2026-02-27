@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f29b8f">
-  <title>ステップ1-2｜ささエール</title>
+  <title>ステップ1-2</title>
 
   <!-- ★ PWA -->
   <link rel="manifest" href="/manifest.json">
@@ -16,11 +16,22 @@
     }
   </script>
 
-  <!-- ★ コア / 共通芯 -->
-  <link rel="stylesheet" href="/css/common.css">
-  <script src="/js/lib.js"   defer></script>
-  <script src="/js/store.js" defer></script>
+    <!-- ===== 共通の芯（全ページ共通） ===== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+
+  <!-- 共通JS（依存順：common → lib → store） -->
   <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+  <!-- ================================ -->
+
 
   <style>
     body{
@@ -32,17 +43,42 @@
       gap:2rem;box-sizing:border-box;
     }
 
-    /* ─── 上段 ─── */
-    .top-box{
-      background:#fef0cf;padding:1.2rem;border-radius:8px;font-size:1rem;line-height:1.7;
-      display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;
-    }
-    .top-text{flex:1 1 200px;min-width:0;}
-    .top-box img{width:110px;height:auto;flex-shrink:0;margin-left:auto;}
+    /* ─── 上段（iPhone安定：floatで回り込み） ─── */
+.top-box{
+  background:#fef0cf;
+  padding:1.2rem;
+  border-radius:8px;
+  font-size:1rem;
+  line-height:1.7;
+}
+
+/* 画像ラッパ：右寄せ＋折り返し */
+.top-box .illu-wrap{
+  float:right;
+  width:clamp(90px, 28vw, 120px);
+  margin:.2rem -4px .6rem 1rem;  /* ★さらに右寄せしたいなら -4px */
+}
+.top-box .illu-wrap img{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+/* クリア（floatの高さを拾う） */
+.top-box::after{ content:""; display:block; clear:both; }
+
+/* pのデフォ余白を揃える（被り感軽減） */
+.top-box p{ margin:0; }
 
     /* ─── 中段 ─── */
     .middle-box{
-      background:url("https://lh3.googleusercontent.com/d/1GhxIo1goauswQZWV0wLyg11aUFn6ytJs") center/100% 100% no-repeat;
+      background-image: image-set(
+  url("/images_webp/もくもく枠.webp") type("image/webp"),
+  url("/images/もくもく枠.png") type("image/png")
+);
+background-position:center;
+background-size:100% 100%;
+background-repeat:no-repeat;
       padding:4rem 1.5rem;font-size:.95rem;line-height:1.8;border-radius:8px;box-sizing:border-box;
     }
 
@@ -69,18 +105,22 @@
 
     <!-- 上段 -->
     <div class="top-box">
-      <div class="top-text">
-        <p>
-          なんだか最近、学校に行きたくないそぶりが見られる…。<br>
-          おなかを痛がったり、頭痛を訴えたり…。<br>
-          頑張って行かせるようにしているものの、このままでいいのか…。<br>
-          この後、もっと登校を渋るようになったらどう<br>
-          しよう…。
-        </p>
-      </div>
 
-      <img src="https://lh3.googleusercontent.com/d/1eXH8Adfl1nsiwfWDQ_x1qVA-hqk1b_vW" alt="悩む女性のイラスト">
-    </div>
+  <picture class="illu-wrap">
+    <source srcset="/images_webp/悩む女性１.webp" type="image/webp">
+    <img src="/images/悩む女性１.png" alt="悩む女性１">
+  </picture>
+
+  <div class="top-text">
+    <p>
+      なんだか最近、学校に行きたくないそぶりが見られる…。<br>
+      おなかを痛がったり、頭痛を訴えたり…。<br>
+      頑張って行かせるようにしているものの、このままでいいのか…。<br>
+      この後、もっと登校を渋るようになったらどうしよう…。
+    </p>
+  </div>
+
+</div>
 
     <!-- 中段 -->
     <div class="middle-box">
@@ -96,9 +136,9 @@
 
     <!-- フッター -->
     <nav class="page-nav">
-      <a href="?page=step1"   class="nav-btn prev">＜ 戻る</a>
-      <a href="?page=step1-3" class="nav-btn next">進む ＞</a>
-    </nav>
+  <a href="/step1.html"   class="nav-btn prev">＜ 戻る</a>
+  <a href="/step1-3.html" class="nav-btn next">進む ＞</a>
+</nav>
 
   </div>
 </body>

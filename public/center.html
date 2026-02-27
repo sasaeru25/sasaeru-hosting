@@ -5,24 +5,60 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>教育支援センター</title>
 
-  <link rel="stylesheet" href="/css/common.css">
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
 
-  <!-- 共通ライブラリ（idb-keyval, go(), など） -->
-  <script defer src="/js/lib.js"></script>
-  <!-- IndexedDB ＋ localStorage フォールバックストア -->
-  <script defer src="/js/store.js"></script>
+<link rel="stylesheet" href="/css/common.css">
+  <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
 
   <style>
   :root{--mint:#caf4d6;--accent:#7e57c2;--shadow:0 6px 12px rgba(0,0,0,.15);}
   body{margin:0;background:var(--mint);font-family:"Noto Sans JP",system-ui,sans-serif;color:#222;}
   .wrapper{max-width:430px;margin:0 auto;padding:1rem;}
-  .badge{display:inline-block;padding:.65rem 2rem;margin:0 0 22px;border-radius:999px;
-         background:linear-gradient(180deg,#fff,#f3f4f8);box-shadow:var(--shadow);
-         font-size:clamp(18px,5vw,26px);font-weight:700;}
+
+  /* ★決定版：見出し行をページ幅いっぱいにして中央固定 */
+  .badge-row{
+    width:100%;
+    display:flex;
+    justify-content:center;
+  }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:.35rem;
+    padding:.65rem 2rem;
+    margin:0 0 22px;
+    border-radius:999px;
+    background:linear-gradient(180deg,#fff,#f3f4f8);
+    box-shadow:var(--shadow);
+    font-size:clamp(18px,5vw,26px);
+    font-weight:700;
+    text-align:center;
+  }
   .badge img{width:1.4em;vertical-align:-.2em;margin-right:.2em}
-  .desc{background:#fff;padding:1.4rem .9rem;margin-bottom:1.8rem;line-height:1.7;
-        font-size:clamp(14px,4.2vw,17px);box-shadow:0 3px 6px rgba(0,0,0,.1);text-align:left;}
-  #filterWrap{margin-bottom:1rem;font-size:1rem;} #selRegion{font-size:1rem;padding:.3rem .6rem;}
+
+  .desc{
+    background:#fff;padding:1.4rem .9rem;margin-bottom:1.8rem;line-height:1.7;
+    font-size:clamp(14px,4.2vw,17px);box-shadow:0 3px 6px rgba(0,0,0,.1);text-align:left;
+  }
+
+  /* ★市町村検索：中央寄せ（flexで固定） */
+  #filterWrap{
+    margin-bottom:1rem;
+    font-size:1rem;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:.5rem;
+  }
+  #selRegion{font-size:1rem;padding:.3rem .6rem;}
+
   #tblWrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
   table{border-collapse:collapse;width:100%;min-width:320px;font-size:.9rem;background:#fff;}
   th,td{border:1px solid #ccc;padding:.45rem .6rem;white-space:nowrap;text-align:left;}
@@ -31,10 +67,17 @@
   @media(max-width:380px){.desc{font-size:15px}table{font-size:.8rem}}
   a.fac-link{color:#0b63c9;font-weight:700;text-decoration:underline;}
   a.fac-link::after{content:"↗";font-size:.85em;margin-left:.25em;}
-  .page-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;
-            padding:1rem .5rem;margin-top:1.2rem;background:var(--mint);}
-  .nav-btn{background:transparent;border:none;color:var(--accent);font-weight:700;text-decoration:none;padding:.6rem .2rem;}
-  .nav-btn:hover{text-decoration:underline;} .nav-btn:visited{color:var(--accent);}
+
+  .page-nav{
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+    padding:1rem .5rem;margin-top:1.2rem;background:var(--mint);
+  }
+  .nav-btn{
+    background:transparent;border:none;color:var(--accent);font-weight:700;
+    text-decoration:none;padding:.6rem .2rem;display:inline-block;
+  }
+  .nav-btn:hover{text-decoration:underline;}
+  .nav-btn:visited{color:var(--accent);}
   .nav-btn:active{transform:translateY(1px);}
   </style>
 </head>
@@ -43,9 +86,12 @@
 <main class="wrapper">
   <div class="clip-name" data-clip="⭐ 教育支援センター"></div>
 
-  <h1 class="badge">
-    <img src="https://twemoji.maxcdn.com/v/latest/svg/1f34a.svg" alt="">教育支援センター
-  </h1>
+  <!-- ★見出し：ページ幅の中央に固定 -->
+  <div class="badge-row">
+    <h1 class="badge">
+      <img src="https://twemoji.maxcdn.com/v/latest/svg/1f34a.svg" alt="">教育支援センター
+    </h1>
+  </div>
 
   <div class="desc">
     児童生徒の社会的自立や学校復帰に向けて、市町村の教育委員会が設置している施設です。<br>
@@ -54,17 +100,18 @@
     お住まいの<strong>市町村</strong>を選択して近隣の施設を絞り込むこともできます。
   </div>
 
+  <!-- ★市町村検索：中央固定 -->
   <div id="filterWrap">
-    市町村：
+    <span>市町村：</span>
     <select id="selRegion"><option value="ALL">すべて</option></select>
   </div>
 
   <div id="tblWrap">読み込み中…</div>
 
   <nav class="page-nav" aria-label="ページナビ">
-  <button type="button" class="nav-btn prev" onclick="go('manabi-school')">＜ 戻る</button>
-  <button type="button" class="nav-btn next" onclick="go('freeschool')">進む ＞</button>
-</nav>
+    <a class="nav-btn prev" href="/kuni5.html">＜ 戻る</a>
+    <a class="nav-btn next" href="/freeschool.html">進む ＞</a>
+  </nav>
 </main>
 
 <script>
@@ -77,7 +124,13 @@ const COL_IDX = 2;                     // 市町村列のインデックス（1 
 const $sel  = document.getElementById('selRegion');
 const $wrap = document.getElementById('tblWrap');
 
-const errBox = msg => `<div style="padding:.8rem;background:#fff;border:1px solid #ddd;border-radius:8px;">${msg}</div>`;
+const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+}[m]));
+
+const errBox = msg =>
+  `<div style="padding:.8rem;background:#fff;border:1px solid #ddd;border-radius:8px;">${esc(msg)}</div>`;
+
 const normURL = v => {
   if(!v) return '';
   let u = String(v).trim();
@@ -93,7 +146,7 @@ async function api(params = {}){
   const url = new URL(ENDPOINT);
   Object.entries(params).forEach(([k,v]) => url.searchParams.set(k,v));
   const res = await fetch(url, { cache:'no-store' });
-  if(!res.ok) throw new Error(res.status);
+  if(!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
 
@@ -101,7 +154,7 @@ async function api(params = {}){
 async function initRegions(){
   try{
     const list = await api({ mode:'regions', sheet:SHEET, col:COL_IDX });
-    $sel.insertAdjacentHTML('beforeend', list.map(r=>`<option>${r}</option>`).join(''));
+    $sel.insertAdjacentHTML('beforeend', (list||[]).map(r => `<option>${esc(r)}</option>`).join(''));
     $sel.onchange = () => drawTable($sel.value);
     drawTable('ALL');
   }catch(e){
@@ -119,15 +172,15 @@ async function drawTable(region){
 
     const NAME = 2, URL = 3;
 
-    const thead = `<thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead>`;
+    const thead = `<thead><tr>${head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead>`;
     const tbody = `<tbody>${
-      rows.map(r=>`<tr>${
-        r.map((c,i)=>{
-          if(i===NAME){
+      rows.map(r => `<tr>${
+        r.map((c,i) => {
+          if(i === NAME){
             const link = normURL(r[URL]);
-            if(link) return `<td><a class="fac-link" href="${link}" target="_blank" rel="noopener">${c??''}</a></td>`;
+            if(link) return `<td><a class="fac-link" href="${link}" target="_blank" rel="noopener">${esc(c ?? '')}</a></td>`;
           }
-          return `<td>${c??''}</td>`;
+          return `<td>${esc(c ?? '')}</td>`;
         }).join('')
       }</tr>`).join('')
     }</tbody>`;

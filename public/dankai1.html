@@ -4,41 +4,53 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f3a9a0">
-  <title>前兆期｜ささエール</title>
+  <title>前兆期</title>
 
   <!-- ★ PWA -->
   <link rel="manifest" href="/manifest.json">
   <script>
     if ('serviceWorker' in navigator)
-      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+      window.addEventListener('load', () =>
+        navigator.serviceWorker.register('/service-worker.js').catch(()=>{}));
   </script>
 
-  <!-- === 共通の芯 === -->
-  <link rel="stylesheet" href="/css/common.css">
+  <!-- ===== 共通の芯（全ページ共通） ===== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+  <script src="/js/common.js" defer></script>
   <script src="/js/lib.js" defer></script>
   <script src="/js/store.js" defer></script>
 
   <style>
-    html,body{height:100%}
-    *,*::before,*::after{box-sizing:border-box}
+    /* ===== ベース ===== */
+    html, body { height: 100%; }
+    *, *::before, *::after { box-sizing: border-box; }
 
     body{
       margin:0;
-      background:#f3a9a0;
+      background:#f3a9a0; /* ★途切れ防止：bodyにも背景 */
       color:#333;
       font-family:"Noto Sans JP",system-ui,-apple-system,BlinkMacSystemFont,
-                   "Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+                  "Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
       font-size:16px;
       line-height:1.8;
     }
 
+    /* ===== レイアウト ===== */
     .kp-wrapper{
-      min-height:100%;
+      min-height:100svh; /* ★重要：ピンクが途中で切れない */
+      background:#f3a9a0; /* ★念押し */
       padding:16px;
-      padding-top:max(16px,env(safe-area-inset-top));
-      padding-right:max(8px,env(safe-area-inset-right));
-      padding-bottom:max(16px,env(safe-area-inset-bottom));
-      padding-left:max(8px,env(safe-area-inset-left));
+      padding-top:max(16px, env(safe-area-inset-top));
+      padding-right:max(8px, env(safe-area-inset-right));
+      padding-bottom:max(16px, env(safe-area-inset-bottom));
+      padding-left:max(8px, env(safe-area-inset-left));
     }
 
     .kp-card{
@@ -49,6 +61,7 @@
       text-align:left;
     }
 
+    /* ===== 見出し ===== */
     .phase-heading{
       display:block;
       margin:4px auto 12px;
@@ -63,6 +76,7 @@
       text-align:center;
     }
 
+    /* ===== ラベル ===== */
     .label-yellow{
       display:block;
       width:max-content;
@@ -74,59 +88,65 @@
       margin:.4rem 0 .5rem;
     }
 
-    /* ▼ ここ調整：イラストを大きく */
-    .cream-panel{
-      background:#fff3d6;
-      border-radius:12px;
-      padding:12px;
-      margin-bottom:.4rem;
-      display:grid;
-      grid-template-columns:1fr minmax(140px,36%);
-      gap:14px;
-      align-items:start;
-    }
+   /* ===== 子どもの様子 ===== */
+.cream-panel{
+  background:#fff3d6;
+  border-radius:12px;
+  padding:12px;
+  margin-bottom:.4rem;
+  display:grid;
+  grid-template-columns:1fr auto; /* ★右側はautoで安定 */
+  gap:14px;
+  align-items:start;
+  justify-items:start;
+}
 
-    .panel-text{margin:0}
+.panel-text{ min-width:0; }        /* ★テキストが原因の崩れ防止 */
+.cream-panel picture{ justify-self:end; }
 
-    .panel-illu{
-      width:100%;
-      max-width:none;
-      height:auto;
-      border-radius:10px;
-      justify-self:end;
-      align-self:start;
-    }
+/* 画像 */
+.panel-illu{
+  width:min(140px, 36vw); /* ★125→140 / 32vw→36vw */
+  height:auto;
+  border-radius:10px;
+  justify-self:end;
+  align-self:start;
+  display:block;
+}
 
-    @media(max-width:430px){
-      .cream-panel{grid-template-columns:1fr}
-      .panel-illu{
-        width:72%;
-        justify-self:center;
-        margin-top:6px;
-      }
-    }
+/* ★極小端末だけ縦積み（ここがポイント：430→360） */
+@media (max-width:360px){
+  .cream-panel{ grid-template-columns:1fr; }
+  .panel-illu{
+    width:55%;
+    justify-self:center;
+    margin-top:6px;
+  }
+}
 
-    /* ▼ 吹き出し */
-    .bubble-think{margin:.2rem 0 .4rem}
-    .think-svg{display:block;width:100%;height:auto}
-    .think-svg .line{stroke-width:2;vector-effect:non-scaling-stroke}
+    /* ===== 思考バルーン ===== */
+    .bubble-think{ margin:.2rem 0 .4rem; }
+    .think-svg{ display:block; width:100%; height:auto; }
+    .think-svg .line{ stroke-width:2; vector-effect:non-scaling-stroke; }
 
+    /* ===== 情報ボックス ===== */
     .info-box{
       border-radius:10px;
       padding:10px 12px;
       margin:.6rem 0;
       line-height:1.8;
+      text-align:left;
     }
-    .info-box.mint{background:#c9f1ee}
-    .info-box.white{background:#ffffff}
+    .info-box.mint{ background:#c9f1ee; }
+    .info-box.white{ background:#ffffff; }
 
+    /* ===== フェーズ切替 ===== */
     .phase-row{
       display:grid;
-      grid-template-columns:repeat(5,minmax(0,1fr));
+      grid-template-columns:repeat(5, minmax(0, 1fr));
       gap:10px;
       margin-top:.9rem;
     }
-
     .phase-btn{
       display:flex;
       align-items:center;
@@ -139,18 +159,20 @@
       text-decoration:none;
       box-shadow:0 2px 4px rgba(0,0,0,.12);
       font-weight:700;
-      writing-mode:vertical-rl;
-      text-orientation:upright;
+      writing-mode: vertical-rl;
+      text-orientation: upright;
       font-size:clamp(.9rem,3.2vw,1.05rem);
     }
+    .phase-btn span{ display:block; line-height:1.1; }
 
+    /* ===== 下ナビ ===== */
     .page-nav{
       display:flex;
       justify-content:center;
       gap:10px;
       margin-top:1rem;
     }
-    .nav-btn{
+    .page-nav .nav-btn{
       color:#7e57c2;
       text-decoration:none;
       font-weight:700;
@@ -172,88 +194,88 @@
     <section class="cream-panel">
       <p class="panel-text">
         ・朝起きづらくなる<br>
-        ・学校の話題にネガティブな反応<br>
+        ・学校の話題にネガティブな反応をする<br>
         ・忘れ物、遅刻、体調不良が増える
       </p>
-      <img class="panel-illu"
-           src="https://lh3.googleusercontent.com/d/1jFNcKeNdXOvhQ0rWkVUDbxhlAMpCl1j5"
-           alt="段階①">
+      <picture>
+  <source srcset="/images_webp/段階①.webp" type="image/webp">
+  <img class="panel-illu"
+       src="/images/段階①.png"
+       alt="段階①">
+</picture>
     </section>
 
-    <!-- ▼ 思考バルーン（文字位置調整済） -->
     <section class="bubble-think">
-      <svg xmlns="http://www.w3.org/2000/svg"
-           viewBox="0 60 360 180"
-           class="think-svg"
-           role="img"
-           aria-label="思考バルーン">
-        <defs>
-          <filter id="tshadow1" x="-25%" y="-30%" width="150%" height="160%">
-            <feDropShadow dx="0" dy="2" stdDeviation="1.9" flood-opacity=".18"/>
-          </filter>
-          <path id="mokuPathDef" class="line"
-            d="M74,208 C52,204,40,188,44,170
-               C24,164,16,144,28,130
-               C24,108,44,92,66,96
-               C74,76,98,68,118,76
-               C132,58,160,54,180,66
-               C200,54,230,60,242,80
-               C264,78,286,92,286,114
-               C304,120,312,140,300,156
-               C306,176,292,194,272,198
-               C260,212,232,214,216,206
-               C192,218,156,218,138,204
-               C120,212,92,214,74,208 Z"
-            fill="#fff" stroke="#333"/>
-          <clipPath id="clipMoku">
-            <use href="#mokuPathDef"/>
-          </clipPath>
-        </defs>
+  <div class="bubble-stack" aria-label="思考バルーン">
+    <!-- SVG（吹き出し形だけ） -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 60 360 180" class="think-svg" role="img" aria-hidden="true">
+      <defs>
+        <filter id="tshadow1" x="-25%" y="-30%" width="150%" height="160%">
+          <feDropShadow dx="0" dy="2" stdDeviation="1.9" flood-opacity=".18"/>
+        </filter>
+        <path id="mokuPathDef" class="line"
+          d="M74,208 C52,204,40,188,44,170
+             C24,164,16,144,28,130
+             C24,108,44,92,66,96
+             C74,76,98,68,118,76
+             C132,58,160,54,180,66
+             C200,54,230,60,242,80
+             C264,78,286,92,286,114
+             C304,120,312,140,300,156
+             C306,176,292,194,272,198
+             C260,212,232,214,216,206
+             C192,218,156,218,138,204
+             C120,212,92,214,74,208 Z"
+          fill="#fff" stroke="#333" vector-effect="non-scaling-stroke"/>
+      </defs>
 
-        <use href="#mokuPathDef" fill="#fff" stroke="#333" filter="url(#tshadow1)"/>
+      <use href="#mokuPathDef" fill="#fff" stroke="#333" filter="url(#tshadow1)"/>
+      <circle cx="270" cy="106" r="13" fill="#fff" stroke="#333" class="line"/>
+      <circle cx="295" cy="88"  r="9"  fill="#fff" stroke="#333" class="line"/>
+      <circle cx="312" cy="74"  r="6"  fill="#fff" stroke="#333" class="line"/>
+    </svg>
 
-        <g clip-path="url(#clipMoku)">
-          <text x="52" y="98"
-                font-size="16"
-                font-family="Noto Sans JP, sans-serif"
-                fill="#333">
-            <tspan x="52" dy="20">「なんか行くのがしんどいな…」</tspan>
-            <tspan x="52" dy="26">「行きたくないな…」</tspan>
-          </text>
-        </g>
+    <!-- ★文字（ここだけページごとに変える） -->
+    <div class="bubble-text">
+      <p>「なんか行くのが」</p>
+      <p>「しんどいな…」</p>
+      <p>「行きたくないな…」</p>
+    </div>
+  </div>
+</section>
+       
 
-        <circle cx="270" cy="106" r="13" fill="#fff" stroke="#333" class="line"/>
-        <circle cx="295" cy="88"  r="9"  fill="#fff" stroke="#333" class="line"/>
-        <circle cx="312" cy="74"  r="6"  fill="#fff" stroke="#333" class="line"/>
-      </svg>
-    </section>
-
+        
     <span class="label-yellow">どんな状態？</span>
     <section class="info-box mint">
       <p>
-        この時期、子どもは無意識のうちにストレスを感じており、それが態度や言動に表れはじめます。
-        …
+        この時期、子どもは無意識のうちにストレスを感じており、それが態度や言動に表れはじめます。学校に対する違和感や「なんとなく行きたくない」という気持ちが芽生えている一方で、まだ本人自身もその理由をうまく言葉にできません。<br>
+        「学校がつまらない」「先生が嫌い」などの発言が増えることもありますが、これは単なるわがままではなく、心の中にある不安や不快感を訴える精いっぱいのサインの場合があります。<br>
+        また、身体の不調（頭痛、腹痛など）を頻繁に訴えるようになるのもこの時期の特徴で、特に週末明けや登校直前に多く見られます。集中力が低下して、忘れ物や遅刻が目立つようになるのも、内面の混乱の表れです。
       </p>
     </section>
 
     <span class="label-yellow">関わり方のヒント</span>
     <section class="info-box white">
       <p>
-        このころの子どもは、うまく自分の困り感を伝えられないことが多くあります。
-        …
+        このころの子どもは、うまく自分の困り感を伝えられないことが多くあります。そのため、保護者からすると「なんで？」と唐突に感じられることもあります。思いに寄り添い、理解を示し、励ましてあげることで、力を得て学校に行ける子もいます。<br>
+        保護者としては、学校に行ってほしいのがもちろんですが、子ども自身が「自分はダメなんだ…」と思っているところに、保護者が味方になって良さを認め、誉め、励ましてくれることがエネルギーになるのです。どうしてもつらそうなら、話し合って休息期間を取る方法もあるでしょう。<br><br>
+        また、学校との連携が一番効果をもたらす時期でもあります。家での状況や保護者の心配を話し、学校での様子を振り返り、気になることに配慮をしてもらえることで学校で過ごしやすくなるかもしれません。
+        担任や話しやすい先生にちょっと話してみませんか？
       </p>
     </section>
 
+    <!-- ★Firebaseで動くリンクに修正 -->
     <div class="phase-row">
-      <a class="phase-btn" href="?page=dankai1"><span>前兆期</span></a>
-      <a class="phase-btn" href="?page=dankai2"><span>初期</span></a>
-      <a class="phase-btn" href="?page=dankai3"><span>中期</span></a>
-      <a class="phase-btn" href="?page=dankai4"><span>後期</span></a>
-      <a class="phase-btn" href="?page=dankai5"><span>回復期</span></a>
+      <a class="phase-btn" href="/dankai1.html"><span>前兆期</span></a>
+      <a class="phase-btn" href="/dankai2.html"><span>初期</span></a>
+      <a class="phase-btn" href="/dankai3.html"><span>中期</span></a>
+      <a class="phase-btn" href="/dankai4.html"><span>後期</span></a>
+      <a class="phase-btn" href="/dankai5.html"><span>回復期</span></a>
     </div>
 
     <nav class="page-nav">
-      <a href="?page=kodomo" class="nav-btn">＜ 子どもの心理</a>
+      <a href="/kodomo.html" class="nav-btn">＜ 子どもの心理</a>
     </nav>
 
   </article>

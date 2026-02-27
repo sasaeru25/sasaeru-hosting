@@ -16,11 +16,19 @@
     }
   </script>
 
-  <!-- ★ コア / 共通芯（クリップ対応） -->
-  <link rel="stylesheet" href="/css/common.css">
-  <script src="/js/lib.js"   defer></script>
-  <script src="/js/store.js" defer></script>
+  <!-- ===== 共通の芯（全ページ共通） ===== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
   <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+  <!-- ================================ -->
 
   <style>
     /* ── 共通ベース ── */
@@ -48,10 +56,14 @@
     }
     .left-img{float:left;margin-right:1rem;margin-left:0;}
 
-    /* フッター */
+    /* フッター（左右に離す） */
     .page-nav{
-      display:flex;justify-content:center;gap:2.2rem;
-      padding:2rem 0 1rem;font-weight:700;font-size:1rem;
+      display:flex;
+      justify-content:space-between; /* ← 左右に離す */
+      align-items:center;
+      gap:1rem;
+      padding:2rem 0 1rem;
+      font-weight:700;font-size:1rem;
     }
     .nav-btn{color:#4d2bb6;text-decoration:none;}
     .nav-btn:visited{color:#4d2bb6;}
@@ -67,6 +79,8 @@
 <body>
   <main class="container">
 
+    <div class="clip-name" data-clip="⭐ 次のステップへ"></div>
+
     <h2 class="banner">次のステップへ</h2>
 
     <section class="content-box">
@@ -74,37 +88,46 @@
       子どもの心のエネルギーが回復してくると、家の中での過ごし方も変化してきます。<br><br>
 
       ・家の中で落ち着いて過ごし、家族との会話もスムーズになる。<br>
-      ・家族と出かけることができるようになる。<br>
-      ・趣味や遊びに興味がわく。<br>
-      ・簡単な運動や家事ができる。<br><br>
+      ・家族と出かけることができるようになる<br>
+      ・趣味や遊びに興味がわく<br>
+      ・簡単な運動や家事ができる<br><br>
 
       こんな様子が見られるようになったら、徐々に次のステップを考えてもいいころかもしれません。<br>
-      学校に戻るのか、別の学びの場を考えるのか？ 子どもの世界では、<strong>「学校に戻る」</strong>という選択肢しか知らない場合もあります。そのハードルが高いと感じたとき、再び心を閉ざしてしまうことも。大人が選択肢を切り開いてあげることがとても大切です。例えば…<br><br>
+      学校に戻るのか、別の学びの場を考えるのか？子どもの世界では、もしかしたら<strong>「学校に戻る」</strong>という選択肢しか知らないかもしれません。そして、そのハードルがまだまだ高いと感じたときには、壁を感じ、また心を閉ざしてしまうことも考えられます。大人が選択肢を切り開いてあげることがとても大切です。例えば…<br><br>
 
-      <img src="https://lh3.googleusercontent.com/d/1l6KdjLSEZB-_pCf36O2WTCKj-Zk_qFJG" alt="学校">
+      <!-- 校舎イラスト（右寄せ） -->
+     <picture>
+  <source srcset="/images_webp/学校.webp" type="image/webp">
+  <img src="/images/学校.png" alt="学校">
+</picture>
 
       <strong>学校に戻る →</strong><br>
-      　　〇 通常登校<br>
-      　　〇 短時間登校<br>
-      　　〇 保健室など別室登校<br>
-      　　〇 放課後登校<br>
-      　　〇 タッチ登校（校門・担任に顔を出す）<br>
-      　　〇 家庭訪問指導<br><br>
+      　　〇通常通りに戻る<br>
+      　　〇短時間登校<br>
+      　　〇保健室など別室登校<br>
+      　　〇放課後登校<br>
+      　　〇タッチ登校（敷地内に入り、担任に会う）<br>
+      　　〇家庭訪問<br><br>
 
-      <img src="https://lh3.googleusercontent.com/d/1ZCjmAKM2pIsa9gcj7rLmJO5gyM_90so-" alt="教科書" class="left-img">
+      <!-- 本のイラスト（左寄せ） -->
+      <picture>
+  <source srcset="/images_webp/教科書.webp" type="image/webp">
+  <img src="/images/教科書.png" alt="教科書" class="left-img">
+</picture>
 
       <strong>多様な学びの場 →</strong><br>
-      　　〇 教育支援センター（適応指導教室）<br>
-      　　〇 フリースクール<br>
-      　　〇 夜間中学・通信制高校など<br><br>
+      　　〇教育支援センター<br>
+      　　〇フリースクール<br>
+      　　〇夜間中学<br><br>
 
-      子どもたちには自分自身の人生を歩む権利があります。今は「もうだめだ」と後ろ向きでも、自分らしく進める道を見つければ、いばらの道を切り拓く力がきっと芽生えます。<br>
-      選択肢を広げるには、学校はもちろん、カウンセラー・教育支援センターなど<strong>相談機関</strong>が大きな力になります。情報を集め、子どもと一緒に未来を描いていきましょう。
+      子どもたちには自分自身の人生を歩んでいく権利があります。今は「もうだめだ」と後ろ向きになるときもあるかもしれませんが、自分らしく進める道を見つけることで、いばらの道を切り拓く力もきっとあるはずです。<br>
+      回り道をしても、自分らしく社会的自立へと進んでいけるように、選択肢を一緒に考えていきましょう。<br>
+      選択肢を考えるには、学校はもちろん、カウンセラー・教育支援センターなど<strong>相談機関</strong>が力になってくれます。情報をたくさんもっている相談機関を活用してください。
     </section>
 
     <nav class="page-nav">
-      <a href="?page=step3"   class="nav-btn prev">＜ 戻る</a>
-      <a href="?page=renkei3" class="nav-btn next">進む ＞</a>
+      <a href="/step3.html"    class="nav-btn prev">＜ 戻る</a>
+      <a href="/renkei3.html"  class="nav-btn next">進む ＞</a>
     </nav>
 
   </main>

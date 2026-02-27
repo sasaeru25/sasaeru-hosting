@@ -6,11 +6,19 @@
   <title>フリースクール等</title>
 
   <!-- ===== 芯（共通・必須）===== -->
-  <link rel="stylesheet" href="/css/common.css">
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+  <script defer src="/js/common.js"></script>
   <script defer src="/js/lib.js"></script>
   <script defer src="/js/store.js"></script>
 
-  <!-- ===== CSS（表示まわり：元コードそのまま）===== -->
+  <!-- ===== CSS（表示まわり：元コードそのまま + 中央寄せだけ）===== -->
   <style>
   :root{
     --mint:#caf4d6;
@@ -18,7 +26,14 @@
     --shadow:0 6px 12px rgba(0,0,0,.15);
   }
   body{margin:0;background:var(--mint);font-family:"Noto Sans JP",system-ui,sans-serif;color:#222;}
-  .wrapper{max-width:430px;margin:0 auto;padding:1rem;}
+
+  /* ★追加：ページの上部（見出し＆検索）を中央寄せ */
+  .wrapper{
+    max-width:430px;
+    margin:0 auto;
+    padding:1rem;
+    text-align:center;
+  }
   @media (min-width:768px){.wrapper{max-width:960px;}}
 
   .badge{
@@ -29,16 +44,23 @@
   }
   .badge img{width:1.4em;vertical-align:-.2em;margin-right:.2em}
 
+  /* 説明文・表は左寄せのまま */
   .desc{
     background:#fff;padding:1.4rem .9rem;margin-bottom:1.8rem;line-height:1.7;
     font-size:clamp(14px,4.2vw,17px);box-shadow:0 3px 6px rgba(0,0,0,.1);
     text-align:left;
   }
 
-  #filterWrap{font-size:1rem;margin-bottom:1rem;}
-  #selRegion{font-size:1rem;padding:.35rem .6rem;}
+  /* ★追加：検索欄を中央寄せ（wrapperでも中央だが保険） */
+  #filterWrap{
+    font-size:1rem;
+    margin-bottom:1rem;
+    text-align:center;
+  }
+  #selRegion{font-size:1rem;padding:.35rem .6rem;display:inline-block;}
 
-  #tblWrap{overflow:visible;}
+  /* 表は左寄せ */
+  #tblWrap{overflow:visible;text-align:left;}
   .table-wrap{overflow-x:auto}
 
   table{
@@ -83,6 +105,7 @@
     padding:1rem;background:var(--mint);
     box-shadow:0 -2px 6px rgba(0,0,0,.06);
     margin-top:1.2rem;
+    text-align:left; /* ナビは通常 */
   }
   .nav-btn{font-weight:700;color:#4d2bb6;text-decoration:none;font-size:1rem;}
   @media(max-width:430px){.nav-btn{font-size:.95rem;}}
@@ -104,7 +127,7 @@
     お住まいの<strong>市町村</strong>を選択して近隣の施設だけを見ることもできます。
   </div>
 
-  <!-- フィルタ -->
+  <!-- フィルタ（中央寄せ） -->
   <div id="filterWrap">
     市町村：
     <select id="selRegion"><option value="ALL">すべて</option></select>
@@ -112,12 +135,13 @@
 
   <!-- 表 -->
   <div id="tblWrap">読み込み中…</div>
-</main>
 
-<nav class="page-nav" aria-label="ページナビ">
-  <button type="button" class="nav-btn prev" onclick="go('kuni5')">＜ 戻る</button>
-  <button type="button" class="nav-btn next" onclick="go('home')">メニュー ＞</button>
-</nav>
+  <!-- ★ナビ：go()依存をやめて実ファイルへ -->
+  <nav class="page-nav" aria-label="ページナビ">
+    <a class="nav-btn prev" href="/kuni5.html">＜ 戻る</a>
+    <a class="nav-btn next" href="/home.html">メニュー ＞</a>
+  </nav>
+</main>
 
 <!-- ===== JS（Apps Script → fetch 版） ============================== -->
 <script>
@@ -131,7 +155,7 @@ const $sel  = document.getElementById('selRegion');
 const $wrap = document.getElementById('tblWrap');
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-const errBox = m => `<div style="padding:.8rem;background:#fff;border:1px solid #ddd;border-radius:8px;">${m}</div>`;
+const errBox = m => `<div style="padding:.8rem;background:#fff;border:1px solid #ddd;border-radius:8px;">${esc(m)}</div>`;
 
 const normURL = v=>{
   if(!v) return '';
@@ -155,7 +179,7 @@ async function api(params={}){
 async function initRegions(){
   try{
     const list = await api({mode:'regions',sheet:SHEET,col:COL_IDX});
-    $sel.insertAdjacentHTML('beforeend',list.map(r=>`<option>${esc(r)}</option>`).join(''));
+    $sel.insertAdjacentHTML('beforeend', (list||[]).map(r=>`<option>${esc(r)}</option>`).join(''));
     $sel.onchange = ()=> drawTable($sel.value);
     drawTable('ALL');
   }catch(e){
@@ -172,15 +196,13 @@ async function drawTable(region){
     if(!rows.length){$wrap.innerHTML=errBox('該当データがありません');return;}
 
     const norm = s => String(s ?? '').trim();
-const pick = (idx, fallback) => (idx >= 0 ? idx : fallback);
+    const pick = (idx, fallback) => (idx >= 0 ? idx : fallback);
 
-const nameIdx = pick(head.findIndex(h => /名称|施設名|名前/i.test(norm(h))), 0);
-const urlIdx  = pick(head.findIndex(h => /(url|hp|サイト|リンク)/i.test(norm(h))), -1);
-const prIdx   = pick(head.findIndex(h => /(pr|紹介|内容|特徴|備考|コメント)/i.test(norm(h))), -1);
+    const nameIdx = pick(head.findIndex(h => /名称|施設名|名前/i.test(norm(h))), 0);
+    const urlIdx  = pick(head.findIndex(h => /(url|hp|サイト|リンク)/i.test(norm(h))), -1);
+    const prIdx   = pick(head.findIndex(h => /(pr|紹介|内容|特徴|備考|コメント)/i.test(norm(h))), -1);
 
-// ★ これが抜けてた
-const visIdx  = head.map((_, i) => i).filter(i => i !== urlIdx);
-
+    const visIdx  = head.map((_, i) => i).filter(i => i !== urlIdx);
 
     const colgroup='<colgroup>'+visIdx.map(i=>
         i===prIdx   ? '<col style="min-width:28ch;width:36ch;">'

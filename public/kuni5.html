@@ -6,10 +6,18 @@
   <title>学びの場</title>
   <meta name="theme-color" content="#c9f7dc">
 
-  <!-- ===== 芯（共通・必須）===== -->
-  <link rel="stylesheet" href="/css/common.css">
-  <script defer src="/js/lib.js"></script>
-  <script defer src="/js/store.js"></script>
+  <!-- ===== 共通の芯（全ページ共通） ===== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+  <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
 
   <style>
     :root{
@@ -84,21 +92,25 @@
     </h1>
 
     <ul class="pills">
-      <li><a class="pill" href="?page=manabi-school">🍎 学校での工夫</a></li>
-      <li><a class="pill" href="?page=center">🍊 教育支援センター</a></li>
-      <li><a class="pill" href="?page=freeschool">🍇 フリースクール等</a></li>
+      <li><a class="pill" href="/manabi-school.html">🍎 学校での工夫</a></li>
+      <li><a class="pill" href="/center.html">🍊 教育支援センター</a></li>
+      <li><a class="pill" href="/freeschool.html">🍇 フリースクール等</a></li>
     </ul>
 
+    <!-- ★ここを“長い版”に戻す -->
     <div class="note">
-      学校でも短時間登校や居場所の工夫などの支援が、必要に応じて調整される場合があります。
+      学校でも短時間登校や、過ごす場を変えるなどの支援や調整を相談しながら行えます。<br>
+      また、それぞれの地域に子どもの学びを支える支援施設があります。各ページではお住まいの
+      地域等で近い施設が絞り込めるようになっています。アプリ内の「相談支援施設」を活用して
+      相談しながら進める方法もあります。
     </div>
 
   </section>
 </main>
 
 <nav class="page-nav" aria-label="ページナビ">
-  <a href="?page=home" class="nav-btn prev">＜ 戻る</a>
-  <a href="?page=manabi-school" class="nav-btn next">進む ＞</a>
+  <a href="/home.html" class="nav-btn prev">＜ 戻る</a>
+  <a href="/manabi-school.html" class="nav-btn next">進む ＞</a>
 </nav>
 
 </body>

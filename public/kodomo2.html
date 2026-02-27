@@ -4,13 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#f29b8f" />
-  <title>不登校とは｜ささエール</title>
+  <title>不登校とは</title>
 
-  <!-- === 共通の芯 ========================================= -->
-  <link rel="stylesheet" href="/css/common.css">
-  <script src="/js/lib.js"   defer></script>
+  <!-- ===== 共通の芯（全ページ共通） ===== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+
+  <!-- 共通JS（依存順：common → lib → store） -->
+  <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
   <script src="/js/store.js" defer></script>
-  <!-- ===================================================== -->
 
   <!-- ★ PWA -->
   <link rel="manifest" href="/manifest.json">
@@ -32,6 +41,9 @@
       margin:auto;
       border-radius:4px;
     }
+
+    /* ★見出し行を中央寄せ（追加） */
+    .kp-heading-row{ text-align:center; }
 
     /* 見出しラベル */
     .kp-heading{
@@ -116,24 +128,27 @@
 
 <body>
   <main class="kp-wrapper">
-    <!-- 見出し -->
-    <h2 class="kp-heading">🍀 不登校とは</h2>
+    <!-- 見出し（★中央寄せに修正） -->
+    <div class="kp-heading-row">
+      <h2 class="kp-heading">🍀 不登校とは</h2>
+    </div>
 
     <!-- 上の枠（定義〜SOSまで） -->
     <section class="kp-lead">
-      <p>「不登校」とは、子どもが学校に行けない・行かない状態のことをいいます。文部科学省では、病気や経済的な理由を除き、年間30日以上登校していない場合を「不登校」と定義しています。<br>
-      この言葉を聞くと、「特別なケース」や「一部の子どもの問題」と思われがちですが、実はそうではありません。不登校は、どの子どもにも起こりうることです。文部科学省も明言しています。<br>
-      子どもが不登校になる理由はさまざまです。友達関係のトラブル、授業についていけない不安、先生との相性、家庭内の変化、体調や睡眠の問題…。はっきりした原因が分からないことも少なくありません。</p>
+      <p>「不登校」とは、子どもが学校に行けない・行かない状態のことをいいます。文部科学省では、病気や経済的な理由を除き、年間30日以上登校していない場合を「不登校」と定義しています。この言葉を聞くと、「特別なケース」や「一部の子どもの問題」と思われがちですが、実はそうではありません。不登校は、どの子どもにも起こりうることです。文部科学省も明言しています。子どもが不登校になる理由はさまざまです。友達関係のトラブル、授業についていけない不安、先生との相性、家庭内の変化、体調や睡眠の問題…。はっきりした原因が分からないことも少なくありません。</p>
     </section>
 
     <!-- ▼ 図：タップで拡大 ▼ -->
     <figure class="diagram diagram--dark">
-      <img
-        src="https://lh3.googleusercontent.com/d/1FGRDNdoqI8Fr5NjRDOMbdgSYRMYfT4F6"
-        alt="（図の説明）"
-        loading="lazy">
-      <small class="hint">タップで拡大</small>
-    </figure>
+  <picture>
+    <source srcset="/images_webp/原因の氷山.webp" type="image/webp">
+    <img
+      src="/images/原因の氷山.png"
+      alt="（図の説明）"
+      loading="lazy">
+  </picture>
+  <small class="hint">タップで拡大</small>
+</figure>
 
     <!-- 下の枠 -->
     <section class="kp-lead">
@@ -176,10 +191,10 @@
       })();
     </script>
 
-    <!-- ▽ 共通フッターリンク ▽ -->
+    <!-- ▽ フッターリンク（★Firebaseで動くリンクに修正） ▽ -->
     <nav class="page-nav">
-      <a href="?page=kodomo"  class="nav-btn prev">＜ 子どもの心理</a>
-      <a href="?page=kodomo3" class="nav-btn next">進む ＞</a>
+      <a href="/kodomo.html"  class="nav-btn prev">＜ 子どもの心理</a>
+      <a href="/kodomo3.html" class="nav-btn next">進む ＞</a>
     </nav>
   </main>
 </body>

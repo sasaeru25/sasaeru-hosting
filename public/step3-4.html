@@ -16,11 +16,21 @@
     }
   </script>
 
-  <!-- ★ コア / 共通芯（クリップ対応） -->
-  <link rel="stylesheet" href="/css/common.css">
-  <script src="/js/lib.js"   defer></script>
-  <script src="/js/store.js" defer></script>
+  <!-- ===== 共通の芯（全ページ共通） ===== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+
+  <!-- 共通JS（依存順：common → lib → store） -->
   <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+  <!-- ================================ -->
 
   <style>
     /* ── 基本レイアウト ── */
@@ -38,23 +48,44 @@
       background:#fff;border-radius:4px;padding:1.6rem 1.4rem;
       line-height:1.9;text-align:left;box-sizing:border-box;
     }
-    .section{margin-bottom:2rem;overflow:hidden;}
+   .section{
+  margin-bottom:2rem;
+  overflow:visible;                 /* ★hiddenやめる */
+}
+.section::after{ content:""; display:block; clear:both; } /* floatの高さを拾う */
 
-    /* 画像（右寄せ） */
-    .section img{
-      float:right;shape-outside:margin-box;width:45%;max-width:180px;height:auto;
-      margin-left:1rem;margin-bottom:.5rem;border-radius:8px;
-    }
+/* 画像ラッパ：右寄せ＋文字折り返し（iPhone安定） */
+.section .illu-wrap{
+  float:right;
+  width:clamp(120px, 40vw, 180px);
+  margin:.2rem -4px .6rem 1rem;     /* ★右寄せ気味 */
+}
+.section .illu-wrap img{
+  width:100%;
+  height:auto;
+  border-radius:8px;
+  display:block;
+}
 
-    @media(max-width:480px){
-      .section img{width:60%;max-width:220px;}
-      .content-box{font-size:.95rem;}
-    }
+@media(max-width:480px){
+  .content-box{font-size:.95rem;}
+}
+@media(max-width:360px){
+  .section .illu-wrap{
+    float:none;
+    width:72%;
+    margin:.3rem auto .9rem;
+  }
+}
 
-    /* ナビゲーション */
+    /* ナビゲーション（左右に離す） */
     .page-nav{
-      display:flex;justify-content:center;gap:2.2rem;
-      padding:2rem 0 1rem;font-weight:700;font-size:1rem;
+      display:flex;
+      justify-content:space-between; /* ← 左右に離す */
+      align-items:center;
+      gap:1rem;
+      padding:2rem 0 1rem;
+      font-weight:700;font-size:1rem;
     }
     .nav-btn{color:#4d2bb6;text-decoration:none;}
     .nav-btn:visited{color:#4d2bb6;}
@@ -65,34 +96,55 @@
 <body>
   <main class="container">
 
+    <div class="clip-name" data-clip="⭐ 保護者の対応３"></div>
+
     <h2 class="banner">保護者の対応</h2>
 
     <div class="content-box">
 
+      <!-- 1章：十分な休養（GAS側の文章に合わせて長い版） -->
       <div class="section">
-        <img src="https://lh3.googleusercontent.com/d/1coZ7lj84O_OI2_zzmtUMht4TNCPiki-Q" alt="語る親子">
-        ・まずは、心のエネルギーが回復するように十分な休養を取らせてあげましょう。毎日「今日はどうする」「今日は行けるか」といったやり取りをしていると、罪悪感や挫折感が続き、なかなかエネルギーが溜まりません。<br>
-        子どもと相談して休養を取り、エネルギーを溜めましょう。
+  <picture class="illu-wrap">
+    <source srcset="/images_webp/語る親子４.webp" type="image/webp">
+    <img src="/images/語る親子４.png" alt="語る親子４">
+  </picture>
+        ・まずは、心のエネルギーが回復するように十分な休養を取らせてあげましょう。毎日「今日はどうする」「今日は行けるか」
+        といったやり取りをしていると、ずっと罪悪感や挫折感を感じ続け、なかなか心のエネルギーは溜まりません。<br>
+        子どもと相談して休養を取り、心のエネルギーを溜めましょう。<br><br>
       </div>
 
+      <!-- 2章：温かい見守り（GAS側の文章に合わせて長い版） -->
       <div class="section">
-        ・温かく見守りましょう。エネルギーが尽きている子どもは反応が薄いかもしれませんが、安心基地としての家庭で<strong>自己肯定感</strong>を回復できるよう「味方だよ」と伝え続けてください。
+        ・温かく見守りましょう。心のエネルギーが尽きてしまっている子どもは、反応が薄いかもしれません。しかし、
+        <strong>自己肯定感</strong> が上がるよう、安心基地としての家庭で安心感を得られるよう、優しい声かけ・励まし・
+        「味方だよ」というメッセージを続けてください。<br><br>
       </div>
 
+      <!-- 3章：相談機関の活用（GAS側の文章に合わせて長い版） -->
       <div class="section">
-        <img src="https://lh3.googleusercontent.com/d/1O17IQXc6nIZ-hnsQS9-lvjyl7c6fl2hK" alt="相談">
-        ・子どものことを常に心配し続けるのは保護者の大きな負担です。スクールカウンセラーや外部相談機関を利用し、保護者自身のメンタルケアも忘れずに行いましょう。
+         <picture class="illu-wrap">
+    <source srcset="/images_webp/相談３.webp" type="image/webp">
+    <img src="/images/相談３.png" alt="相談３">
+  </picture>
+        ・子どものことを常に心配し続けているのは、保護者にとっても心身ともに大きな負担となります。<br>
+        子どものためにも、自分のためにもスクールカウンセラーや相談機関を利用して、心の重しを軽くしていきましょう。<br><br>
       </div>
 
+      <!-- 4章：国の方針を踏まえた支援（GAS側の文章に合わせて長い版） -->
       <div class="section">
-        ・国の方針でも、不登校は<strong>「問題」</strong>ではなく、学業の遅れや心理的負担といった<strong>「不利益」</strong>が懸念されています。欠席が長期化しそうなら、その不利益をどう減らすかを念頭に支援策を考えましょう。ただし<strong>急ぎは禁物</strong>。次の行動に移るのは十分なエネルギーが戻ってからです。
+        ・国の方針でも、不登校はそのこと自体が<strong>「問題」</strong>とはされていません。学校に行かないことで子どもが得る
+        「不利益」――学業の遅れや心理的負担――が懸念されています。欠席が長期にわたってきたら、そこを念頭に入れて支援を
+        考えましょう。<br>
+        自立した大人に成長していく道は一つではありません。ただし<strong>急ぎは禁物</strong>。子どもが次の行動に移れるのは、
+        十分に心のエネルギーが溜まったときです。「子どもの心理」>「回復への道のり」を参考に、相談機関も利用しながら
+        今後を一緒に考えてみましょう。
       </div>
 
     </div>
 
     <nav class="page-nav">
-      <a href="?page=step3"   class="nav-btn prev">＜ 戻る</a>
-      <a href="?page=step3-5" class="nav-btn next">進む ＞</a>
+      <a href="/step3.html"   class="nav-btn prev">＜ 戻る</a>
+      <a href="/step3-5.html" class="nav-btn next">進む ＞</a>
     </nav>
 
   </main>

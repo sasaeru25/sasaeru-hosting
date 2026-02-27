@@ -16,11 +16,22 @@
     }
   </script>
 
-  <!-- ★ コア / 共通芯 -->
-  <link rel="stylesheet" href="/css/common.css">
-  <script src="/js/lib.js"   defer></script>
-  <script src="/js/store.js" defer></script>
+    <!-- ===== 共通の芯（全ページ共通） ===== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+
+  <!-- 共通JS（依存順：common → lib → store） -->
   <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+  <!-- ================================ -->
+
 
   <style>
     /* ── 基本レイアウト ── */
@@ -41,9 +52,9 @@
 
     /* 既定＝右寄せ */
     .content-block img{
-      float:right;width:45%;max-width:200px;height:auto;
-      margin-left:1rem;margin-bottom:.5rem;border-radius:8px;
-    }
+  float:right;width:40%;max-width:180px;height:auto;   /* ★45→40 / 200→180 */
+  margin-left:1rem;margin-bottom:.5rem;border-radius:8px;
+}
 
     /* ❶ 2枚目だけ左寄せ */
     .content-block img.left-img{
@@ -51,8 +62,8 @@
     }
 
     @media(max-width:480px){
-      .content-block img{width:60%;max-width:220px;}
-    }
+  .content-block img{width:52%;max-width:200px;}       /* ★60→52 / 220→200 */
+}
 
     /* フッター */
     .page-nav{
@@ -71,41 +82,53 @@
     <div class="content-box">
 
       <div class="content-block">
-        <img src="https://lh3.googleusercontent.com/d/1m1vqBfUYtZeqUVlFy6Vd5myp5xBM-ZZR" alt="語る親子2">
-        ・まずは子どもの訴えを受け止めて、大切に思っていることを示しながら話を聞いてあげましょう。<br>
-        話せるか話せないかはわかりません。ただ、「大切に思っている」「一人じゃない」ことを示して耳を傾けてあげましょう。
+        <picture>
+  <source srcset="/images_webp/語る親子２.webp" type="image/webp">
+  <img src="/images/語る親子２.png" alt="語る親子２">
+</picture>
+        ・まずは子どもの訴えを受け止めて、大切に思っていることを示しながら話に耳を傾けましょう。<br>
+        話せるか話せないかはわかりません。ただ、「大切に思っている」「一人じゃない」ことを示して、ゆっくり、そして受容的に話を聞きましょう。
       </div>
 
       <div class="content-block">
-        <img src="https://lh3.googleusercontent.com/d/1cZWJRHZ2Xp3IWuYrsbBZbAdoMtXc-GoZ" alt="明るい親子①" class="left-img">
-        ・この段階は寄り添ってあげたり、励ましてあげたりすることで頑張れる子もたくさんいます。<br>
-        自分を否定して我慢して過ごしていても、そこで自分を肯定してくれる存在が「できる！」と励ましてくれることで乗り切れる場合も多くあります。<br>
-        すぐに「休んでいいよ」と背を向けることを促すのが逆効果になることもあるのです。よく見極めて支えてあげましょう。
+        <picture>
+  <source srcset="/images_webp/明るい親子１.webp" type="image/webp">
+  <img src="/images/明るい親子１.png" alt="明るい親子１" class="left-img">
+</picture>
+        ・この段階は、信頼できる存在が寄り添ったり、励ましたりすることで頑張れるという子もたくさんいます。<br>
+        自分を否定して、気持ちを我慢しながら過ごしていても、自分を肯定してくれる大切な存在の「できる！」という言葉が力になって乗り切れる場合も多くあります。<br>
+        すぐに「休んでいいよ」と背を向けることを促すのが逆効果になることもあるのです。コミュニケーションを取りながら、よく見極めて支えましょう。
       </div>
 
       <div class="content-block">
-        <img src="https://lh3.googleusercontent.com/d/1-B9RgvddtPWplZUltnCnWoITWDlAjMI6" alt="相談１">
+        <picture>
+  <source srcset="/images_webp/相談１.webp" type="image/webp">
+  <img src="/images/相談１.png" alt="相談１">
+</picture>
         ・この段階で強い味方になるのは、学校の先生です。遠慮せずに家での様子や保護者の心配を伝え、情報交換を行いましょう。<br>
         きっと先生も、気が付くことがあれば守ってくれ、理由が明確でなくても細やかな気遣いをしてくれることでしょう。上手に相談しながら、一緒に子どもを支えましょう。
       </div>
 
       <div class="content-block">
-        ・学校で頑張って過ごしている状況がわかったら、家はできるだけ居心地がよく、リラックスできるよう工夫してあげましょう。<br>
+        ・学校で頑張って過ごしている状況がわかったら、家はできるだけ居心地がよく、リラックスできるよう工夫しましょう。<br>
         心のエネルギーチャージが大切です。
       </div>
 
       <div class="content-block">
-        <img src="https://lh3.googleusercontent.com/d/1JzEUJ8tjR6NcpMFfFv5joO1ByxRUfgKp" alt="食欲ある子ども">
-        ・子どもが頑張っている分、生活リズムを整えてあげましょう。早寝早起き、そして朝ごはん！<br>
-        縁の下の力持ちとして、生活のリズムをサポートしてあげましょう。
+        <picture>
+  <source srcset="/images_webp/食欲ある子ども.webp" type="image/webp">
+  <img src="/images/食欲ある子ども.png" alt="食欲ある子ども">
+</picture>
+        ・子どもが頑張っている分、無理のないようにしつつ、生活リズムを整えるのもサポートのひとつです。早寝早起き、そして朝ごはん！<br>
+        縁の下の力持ちとして、過ごしやすい生活リズムをサポートしましょう。
       </div>
 
     </div>
 
-    <nav class="page-nav">
-      <a href="?page=step1-4" class="nav-btn prev">＜ 戻る</a>
-      <a href="?page=renkei1"  class="nav-btn next">進む ＞</a>
-    </nav>
+   <nav class="page-nav">
+  <a href="/step1-4.html" class="nav-btn prev">＜ 戻る</a>
+  <a href="/renkei1.html" class="nav-btn next">進む ＞</a>
+</nav>
 
   </div>
 </body>

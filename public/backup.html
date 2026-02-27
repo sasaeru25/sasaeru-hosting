@@ -1,164 +1,272 @@
-<!-- /public/backup.html : 端末バックアップ（書き出し/復元）-->
-<!DOCTYPE html>
+<!-- /public/backup.html : 端末バックアップ（書き出し/復元）Firebase版（フルHTML） -->
+<!doctype html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>端末バックアップ | ささエール</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#FFF9F2" />
+  <title>端末にちゃんと残す｜ささエール</title>
+
+  <!-- 共通（Firebase側） -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
 
 <link rel="stylesheet" href="/css/common.css">
+  <script src="/js/common.js" defer></script>
+  <script src="/js/store.js" defer></script>
 
-<!-- 共通ライブラリ（idb-keyval, go(), など） -->
-<script defer src="/js/lib.js"></script>
-<!-- IndexedDB ＋ localStorage フォールバックストア -->
-<script defer src="/js/store.js"></script>
+  <style>
+    :root{
+      --bg:#FFF9F2;
+      --accent:#FFDC65;
+      --border:#e6e6e6;
+      --purple:#6a1b9a;
+      --sh-1:0 3px 10px rgba(0,0,0,.08);
+      --safe-bottom:env(safe-area-inset-bottom);
+    }
+    body{margin:0;background:var(--bg);color:#333;
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans JP",sans-serif;
+    }
+    main{padding-bottom:calc(28px + var(--safe-bottom));}
 
-<!-- 小さなレイアウト用変数 -->
-<style>:root{--sh-1:0 3px 10px rgba(0,0,0,.08);}</style>
+    .backup-page{max-width:720px;margin:0 auto;padding:20px 14px 34px;}
+    .page-head{margin:10px 0 16px;text-align:left;}
+    .page-head h2{
+      margin:0 0 10px;
+      display:inline-flex;align-items:center;gap:10px;
+      padding:10px 18px;border-radius:999px;background:#fff;border:1px solid var(--border);
+      font-weight:900;font-size:1.05rem;
+    }
+    .backup-note{
+      background:#fff3e0;border-radius:10px;padding:10px 12px;
+      text-align:left;line-height:1.7;border:1px solid #f3e1c8;
+    }
+
+    .backup-card{
+      background:#fff;border-radius:14px;box-shadow:var(--sh-1);
+      padding:14px 14px 16px;text-align:left;border:1px solid #eee;
+    }
+    .backup-card h3{margin:4px 0 8px;font-size:1.05rem;}
+    .muted{color:#666;font-size:.92rem;line-height:1.7;}
+    .warn{
+      background:#fff7f7;border:1px solid #f0caca;border-radius:10px;
+      padding:10px 12px;line-height:1.6;
+    }
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      min-height:52px;padding:12px 16px;border-radius:16px;
+      background:#fff;border:1px solid #ddd;text-decoration:none;
+      color:#111;font-weight:900;cursor:pointer;
+      box-shadow:0 10px 16px rgba(0,0,0,.08);
+    }
+    .btn.secondary{
+      background:var(--accent);
+      border:1px solid #e7cf6a;
+      box-shadow:0 10px 16px rgba(0,0,0,.10);
+    }
+
+    .top-links{
+      display:flex;gap:12px;flex-wrap:wrap;
+      margin:14px 0 0;justify-content:flex-start;
+    }
+    .link{
+      color:var(--purple);text-decoration:none;font-weight:900;
+      display:inline-flex;align-items:center;gap:6px;
+    }
+  </style>
 </head>
+
 <body>
-
-<main class="backup-page" aria-labelledby="backup-title">
-  <div class="page-head">
-    <h2 id="backup-title">🧷 端末にちゃんと残す</h2>
-    <p class="backup-note">
-      ここで作るバックアップは、端末（Files / ダウンロード）に保存されます。<br>
-      iPhoneの環境で記録が消える場合でも、ここから復元できます。
-    </p>
-  </div>
-
-  <!-- ───── 作成 ───── -->
-  <section class="backup-card">
-    <h3>① バックアップを作る（書き出し）</h3>
-    <p class="muted">日記＋クリップをまとめて 1 つのファイルにします。</p>
-    <button id="btn-export" class="btn secondary" type="button">
-      端末に残す（バックアップ作成）
-    </button>
-    <p id="export-status" class="muted" style="margin-top:.6rem;"></p>
-  </section>
-
-  <!-- ───── 復元 ───── -->
-  <section class="backup-card" style="margin-top:16px;">
-    <h3>② バックアップから復元する（読み込み）</h3>
-    <p class="muted">ファイルを選ぶと、アプリ内の記録が復元されます。</p>
-
-    <input id="file" type="file" accept="application/json,.json" hidden>
-    <button id="btn-pick" class="btn" type="button">ファイルを選ぶ</button>
-
-    <div class="warn" style="margin-top:12px;">
-      <strong>注意：</strong>復元すると、現在のアプリ内データを<strong>上書き</strong>します。<br>
-      迷う場合は、先に「バックアップを作る」を押してから復元してください。
+  <main class="backup-page" aria-labelledby="backup-title">
+    <div class="page-head">
+      <h2 id="backup-title">🧷 端末にちゃんと残す</h2>
+      <p class="backup-note">
+        ここで作るバックアップは、端末（Files/ダウンロード）に保存されます。<br>
+        iPhoneの環境で記録が消える場合でも、ここから復元できます。
+      </p>
+      <div class="top-links">
+        <a class="link" href="/diary.html">← 記録トップ</a>
+        <a class="link" href="/diary-list.html">一覧</a>
+      </div>
     </div>
 
-    <p id="import-status" class="muted" style="margin-top:.6rem;"></p>
-  </section>
+    <section class="backup-card">
+      <h3>① バックアップを作る（書き出し）</h3>
+      <p class="muted">日記＋クリップをまとめて1つのファイルにします。</p>
+      <button id="btn-export" class="btn secondary" type="button">端末に残す（バックアップ作成）</button>
+      <p id="export-status" class="muted" style="margin-top:.6rem;"></p>
+    </section>
 
-  <!-- ───── ヘルプ ───── -->
-  <section class="backup-card" style="margin-top:16px;">
-    <h3>困ったとき</h3>
-    <ul style="text-align:left;line-height:1.8;margin:0;padding-left:1.1rem;">
-      <li>iPhone：保存先は「ファイル」アプリ（この iPhone 内 / iCloud Drive）にあります</li>
-      <li>Android：保存先は「ダウンロード」や「Files」に入ることが多いです</li>
-      <li>見つからないときは、ファイル名 <code>sasaeru-backup-日付.json</code> を検索してください</li>
-    </ul>
-  </section>
-</main>
+    <section class="backup-card" style="margin-top:16px;">
+      <h3>② バックアップから復元する（読み込み）</h3>
+      <p class="muted">ファイルを選ぶと、アプリ内の記録が復元されます。</p>
 
-<!-- ───── 画面用スタイル ───── -->
-<style>
-  body{margin:0;font-family:"Noto Sans JP",system-ui,sans-serif;background:#FFF9F2;color:#333;}
-  .backup-page{max-width:720px;margin:0 auto;padding:20px 14px 34px;}
-  .page-head{margin:10px 0 16px;}
-  .backup-note{background:#fff3e0;border-radius:10px;padding:10px 12px;text-align:left;line-height:1.7;}
-  .backup-card{background:#fff;border-radius:14px;box-shadow:var(--sh-1);padding:14px 14px 16px;text-align:left;}
-  .backup-card h3{margin:4px 0 8px;font-size:1.05rem;font-weight:800;}
-  .muted{color:#666;font-size:.92rem;}
-  .warn{background:#fff7f7;border:1px solid #f0caca;border-radius:10px;padding:10px 12px;line-height:1.6;}
-  .btn{border:none;border-radius:10px;padding:12px 18px;font-weight:700;cursor:pointer;font-size:1rem;}
-  .btn.secondary{background:#FFDC65;} .btn{background:#fff;border:1px solid #ddd;color:#6a1b9a;}
-</style>
+      <input id="file" type="file" accept="application/json,.json" hidden>
+      <button id="btn-pick" class="btn" type="button">ファイルを選ぶ</button>
 
-<!-- ───── バックアップロジック ───── -->
-<script>
-(() => {
-  /* store.js が読み込まれるまで待つ */
-  const ready = () => new Promise(r => {
-    if (window.__STORE_READY__) return r();
-    const id = setInterval(() => {
-      if (window.__STORE_READY__ || window.__STORE_ERROR__) {
-        clearInterval(id); r();
+      <div class="warn" style="margin-top:12px;">
+        <strong>注意：</strong>復元すると、現在のアプリ内データを上書きします。<br>
+        迷う場合は、先に「バックアップを作る」を押してから復元してください。
+      </div>
+
+      <p id="import-status" class="muted" style="margin-top:.6rem;"></p>
+    </section>
+
+    <section class="backup-card" style="margin-top:16px;">
+      <h3>困ったとき</h3>
+      <ul style="text-align:left;line-height:1.8;margin:0;padding-left:1.1rem;">
+        <li>iPhone：保存先は「ファイル」アプリ（このiPhone内 / iCloud Drive）にあります</li>
+        <li>Android：保存先は「ダウンロード」や「Files」に入ることが多いです</li>
+        <li>見つからないときは、ファイル名「sasaeru-backup-日付.json」を検索してください</li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    // ---- 依存：store.js 側で提供されている想定 ----
+    // window.loadRecords / saveRecords（日記）
+    // window.loadClips   / saveClips（クリップ）
+    const hasDiary = (typeof window.loadRecords === 'function' && typeof window.saveRecords === 'function');
+    const hasClips = (typeof window.loadClips   === 'function' && typeof window.saveClips   === 'function');
+
+    const $ = (id) => document.getElementById(id);
+
+    const btnExport = $('btn-export');
+    const exportStatus = $('export-status');
+    const btnPick = $('btn-pick');
+    const fileInput = $('file');
+    const importStatus = $('import-status');
+
+    function nowJST_yyyymmdd() {
+      // JSTでファイル名を作る（端末でも見つけやすく）
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth()+1).padStart(2,'0');
+      const day = String(d.getDate()).padStart(2,'0');
+      return `${y}-${m}-${day}`;
+    }
+
+    async function buildBackupObject() {
+      const diaries = hasDiary ? (await window.loadRecords()) : [];
+      const clips   = hasClips ? (await window.loadClips())   : [];
+
+      return {
+        schema: 'sasaeru-backup',
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        app: 'ささエール',
+        diaries,
+        clips
+      };
+    }
+
+    function downloadJson(obj) {
+      const json = JSON.stringify(obj, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url  = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `sasaeru-backup-${nowJST_yyyymmdd()}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+    }
+
+    async function exportBackup() {
+      exportStatus.textContent = '';
+      try {
+        const obj = await buildBackupObject();
+        downloadJson(obj);
+        exportStatus.textContent = 'バックアップを作成しました。保存先（Files/ダウンロード）をご確認ください。';
+      } catch (e) {
+        console.error(e);
+        exportStatus.textContent = 'バックアップ作成に失敗しました。もう一度お試しください。';
       }
-    }, 50);
-  });
+    }
 
-  const $ = id => document.getElementById(id);
-  const btnExport = $('btn-export');
-  const exportSt  = $('export-status');
-  const btnPick   = $('btn-pick');
-  const fileInput = $('file');
-  const importSt  = $('import-status');
+    function readFileAsText(file) {
+      return new Promise((resolve, reject) => {
+        const fr = new FileReader();
+        fr.onload = () => resolve(String(fr.result || ''));
+        fr.onerror = () => reject(fr.error || new Error('read failed'));
+        fr.readAsText(file);
+      });
+    }
 
-  function today() {
-    const d=new Date(), p=n=>String(n).padStart(2,'0');
-    return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;
-  }
-  const schema = 'sasaeru-backup', ver = 1;
+    function validateBackup(obj) {
+      if (!obj || typeof obj !== 'object') return 'バックアップ形式が不正です。';
+      if (obj.schema !== 'sasaeru-backup') return 'このファイルは「ささエール」のバックアップではありません。';
+      if (obj.version !== 1) return 'バックアップのバージョンが対応外です。';
+      if (!Array.isArray(obj.diaries)) return '日記データが見つかりません。';
+      if (!Array.isArray(obj.clips)) return 'クリップデータが見つかりません。';
+      return '';
+    }
 
-  async function buildBackup() {
-    const diaries = await (window.loadRecords?.() ?? []);
-    const clips   = await (window.loadClips?.()   ?? []);
-    return {schema,version:ver,exportedAt:new Date().toISOString(),app:'ささエール',diaries,clips};
-  }
-  function saveJson(obj){
-    const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');
-    a.href=url; a.download=`sasaeru-backup-${today()}.json`;
-    document.body.append(a); a.click(); a.remove();
-    setTimeout(()=>URL.revokeObjectURL(url),4e3);
-  }
+    async function importBackupFromFile(file) {
+      importStatus.textContent = '';
+      try {
+        const text = await readFileAsText(file);
+        const obj = JSON.parse(text);
 
-  /* ---------- export ---------- */
-  async function doExport(){
-    exportSt.textContent='';
-    try{ saveJson(await buildBackup());
-      exportSt.textContent='バックアップを作成しました。ファイルアプリを確認してください。';
-    }catch(e){console.error(e);exportSt.textContent='作成に失敗しました';}
-  }
+        const err = validateBackup(obj);
+        if (err) {
+          importStatus.textContent = err;
+          return;
+        }
 
-  /* ---------- import ---------- */
-  const readText=f=>new Promise((ok,ng)=>{const r=new FileReader();
-    r.onload=()=>ok(String(r.result));r.onerror=()=>ng(r.error);r.readAsText(f);});
-  function validate(o){
-    if(o?.schema!==schema) return '「ささエール」のバックアップではありません';
-    if(o?.version!==ver)   return 'バックアップのバージョンが対応外です';
-    if(!Array.isArray(o.diaries)||!Array.isArray(o.clips)) return 'データが壊れています';
-    return '';
-  }
-  async function importFile(f){
-    importSt.textContent='';
-    try{
-      const obj=JSON.parse(await readText(f));
-      const err=validate(obj); if(err){importSt.textContent=err;return;}
-      if(!confirm('復元すると現在のデータは上書きされます。続けますか？')) return;
-      await window.saveRecords?.(obj.diaries); await window.saveClips?.(obj.clips);
-      importSt.textContent=`復元しました（日記 ${obj.diaries.length} 件 / クリップ ${obj.clips.length} 件）`;
-      alert('復元が完了しました。日記・クリップページで確認してください。');
-    }catch(e){console.error(e);importSt.textContent='復元に失敗しました';}
-  }
+        const ok = confirm(
+          'バックアップから復元します。\n' +
+          '現在のアプリ内データは上書きされます。\n\n' +
+          '先に「バックアップを作る」を押しましたか？\n\n' +
+          'OKなら復元します。'
+        );
+        if (!ok) {
+          importStatus.textContent = '復元をキャンセルしました。';
+          return;
+        }
 
-  /* ---------- init ---------- */
-  ready().then(()=>{
-    btnExport?.addEventListener('click',doExport);
-    btnPick?.addEventListener('click',()=>fileInput?.click());
-    fileInput?.addEventListener('change',e=>{
-      const f=e.target.files?.[0]; fileInput.value=''; if(f) importFile(f);
+        if (!hasDiary || !hasClips) {
+          importStatus.textContent = '復元に必要なストア関数が見つかりません（store.js を確認してください）。';
+          return;
+        }
+
+        await window.saveRecords(obj.diaries || []);
+        await window.saveClips(obj.clips || []);
+
+        importStatus.textContent = `復元しました（日記 ${obj.diaries.length}件 / クリップ ${obj.clips.length}件）。`;
+        alert('復元が完了しました。日記・クリップページで内容をご確認ください。');
+      } catch (e) {
+        console.error(e);
+        importStatus.textContent = '復元に失敗しました。ファイルが正しいか確認してください。';
+      }
+    }
+
+    btnExport?.addEventListener('click', exportBackup);
+
+    btnPick?.addEventListener('click', () => fileInput?.click());
+    fileInput?.addEventListener('change', async () => {
+      const f = fileInput.files && fileInput.files[0];
+      fileInput.value = '';
+      if (!f) return;
+      await importBackupFromFile(f);
     });
-    if(!window.loadRecords||!window.saveRecords||!window.loadClips||!window.saveClips){
-      importSt.textContent='注意：ストア関数が見つかりません（store.js を確認）';
+
+    if (!hasDiary || !hasClips) {
+      const msg = [];
+      if (!hasDiary) msg.push('日記ストア（loadRecords/saveRecords）が見つかりません');
+      if (!hasClips) msg.push('クリップストア（loadClips/saveClips）が見つかりません');
+      importStatus.textContent = '注意：' + msg.join(' / ');
     }
   });
-})();
-</script>
+  </script>
 </body>
 </html>

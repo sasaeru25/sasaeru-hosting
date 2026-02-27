@@ -16,11 +16,22 @@
     }
   </script>
 
-  <!-- ★ コア / 共通芯 -->
-  <link rel="stylesheet" href="/css/common.css">
-  <script src="/js/lib.js"   defer></script>
-  <script src="/js/store.js" defer></script>
+    <!-- ===== 共通の芯（全ページ共通） ===== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+
+  <!-- 共通JS（依存順：common → lib → store） -->
   <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+  <!-- ================================ -->
+
 
   <style>
     /* 全体レイアウト */
@@ -35,16 +46,39 @@
 
     /* 本文：黄色枠 */
     .content-box{
-      background:#fef0cf;border-radius:6px;line-height:1.85;
-      padding:1.6rem 1.4rem;text-align:left;overflow:hidden;
-    }
+  background:#fef0cf;
+  border-radius:6px;
+  line-height:1.85;
+  padding:1.6rem 1.4rem;
+  text-align:left;
 
-    /* 画像：右寄せ・四角回り込み */
-    .content-box img{
-      float:right;shape-outside:margin-box;
-      width:120px;max-width:45%;height:auto;
-      margin-left:1rem;margin-bottom:.4rem;border-radius:6px;
-    }
+  overflow:visible;                 /* ★hiddenやめる */
+}
+
+/* 画像ラッパ：右寄せ＋文字折り返し（iPhone安定） */
+.content-box .illu-wrap{
+  float:right;
+  width:clamp(130px, 36vw, 170px);  /* ★大きく */
+  margin:.2rem -4px .7rem 1rem;     /* ★右寄せ気味 */
+}
+.content-box .illu-wrap img{
+  width:100%;
+  height:auto;
+  border-radius:8px;
+  display:block;
+}
+
+/* floatの高さを拾う */
+.content-box::after{ content:""; display:block; clear:both; }
+
+/* モバイル調整（小さい端末は下に回すと確実） */
+@media(max-width:360px){
+  .content-box .illu-wrap{
+    float:none;
+    width:70%;
+    margin:.2rem auto 1rem;
+  }
+}
     /* 左寄せ用クラス（未使用だが汎用） */
     .left-img{float:left;margin-right:1rem;margin-left:0;}
 
@@ -56,11 +90,10 @@
     .nav-btn{color:#4d2bb6;text-decoration:none;}
     .nav-btn:visited{color:#4d2bb6;}
 
-    /* モバイル調整 */
     @media(max-width:430px){
-      .content-box img{width:95px;}
-      .nav-btn{font-size:.92rem;}
-    }
+  .content-box .illu-wrap{ width:120px; } /* 好みで 110px とか */
+  .nav-btn{font-size:.92rem;}
+}
   </style>
 </head>
 
@@ -70,10 +103,12 @@
     <h2 class="banner">子どもの心理</h2>
 
     <section class="content-box">
-      <img src="https://lh3.googleusercontent.com/d/1s1x0gb7mzhCJIqFwdS3UoNIAASjx811i"
-           alt="悩む女の子">
+    <picture class="illu-wrap">
+  <source srcset="/images_webp/悩む女の子１.webp" type="image/webp">
+  <img src="/images/悩む女の子１.png" alt="悩む女の子１">
+</picture>
       何とかして学校を避けようという子ども。学校でのストレス要因のこともありますし、自分自身や家庭、友人関係などの悩みが影響していることもあります。<br>
-      登校を拒否することで、言葉にできない自分の苦しみをわかってほしいという <strong>SOS</strong> なのかもしれません。<br><br>
+      登校を拒否することで、言葉にできない自分の苦しみを分かってほしいという <strong>SOS</strong> なのかもしれません。<br><br>
 
       自分で今まで頑張ってきたものの、「もう一人ではどうにもならない」と絶望感や無力感を抱いているかもしれません。<br>
       すぐには言葉で助けを求められないこともあります。学校に恐怖感や拒否感を抱いている反面、学校に行けない自分を責める気持ち、家族に迷惑をかけている自分はダメなんだという思いをもつ子もたくさんいます。<br>
@@ -81,9 +116,9 @@
     </section>
 
     <nav class="page-nav">
-      <a href="?page=step2-2" class="nav-btn prev">＜ 戻る</a>
-      <a href="?page=step2-4" class="nav-btn next">進む ＞</a>
-    </nav>
+  <a href="/step2-2.html" class="nav-btn prev">＜ 戻る</a>
+  <a href="/step2-4.html" class="nav-btn next">進む ＞</a>
+</nav>
 
   </main>
 </body>

@@ -5,26 +5,69 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>教育支援センター</title>
 
-  <link rel="stylesheet" href="/css/common.css">
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
 
-  <!-- 共通ライブラリ（idb-keyval, go(), など） -->
-  <script defer src="/js/lib.js"></script>
-  <!-- IndexedDB ＋ localStorage フォールバックストア -->
-  <script defer src="/js/store.js"></script>
+<link rel="stylesheet" href="/css/common.css">
+  <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
 
   <!-- ===== CSS（このページ固有の上書き） ===== -->
   <style>
     :root{--mint:#caf4d6;--accent:#7e57c2;--shadow:0 6px 12px rgba(0,0,0,.15);}
     body{margin:0;background:var(--mint);font-family:"Noto Sans JP",system-ui,sans-serif;color:#222;}
-    .wrapper{max-width:430px;margin:0 auto;padding:1rem;}
-    .badge{display:inline-block;padding:.65rem 2rem;margin:0 0 22px;border-radius:999px;
-           background:linear-gradient(180deg,#fff,#f3f4f8);box-shadow:var(--shadow);
-           font-size:clamp(18px,5vw,26px);font-weight:700;}
+
+    /* ★ここ：全体は中央寄せ（見出し＆検索が中央に来る） */
+    .wrapper{
+      max-width:430px;
+      margin:0 auto;
+      padding:1rem;
+      text-align:center; /* ★追加 */
+    }
+
+    /* 見出しピル（中央寄せは親の text-align で効く） */
+    .badge{
+      display:inline-flex;            /* ★inline-block→inline-flex（アイコンと文字が安定） */
+      align-items:center;
+      gap:.35rem;
+      padding:.65rem 2rem;
+      margin:0 0 22px;
+      border-radius:999px;
+      background:linear-gradient(180deg,#fff,#f3f4f8);
+      box-shadow:var(--shadow);
+      font-size:clamp(18px,5vw,26px);
+      font-weight:700;
+    }
     .badge img{width:1.4em;vertical-align:-.2em;margin-right:.2em}
-    .desc{background:#fff;padding:1.4rem .9rem;margin-bottom:1.8rem;line-height:1.7;
-          font-size:clamp(14px,4.2vw,17px);box-shadow:0 3px 6px rgba(0,0,0,.1);text-align:left;}
-    #filterWrap{margin-bottom:1rem;font-size:1rem;} #selRegion{font-size:1rem;padding:.3rem .6rem;}
-    #tblWrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+
+    /* 説明文や表は左寄せのまま */
+    .desc{
+      background:#fff;padding:1.4rem .9rem;margin-bottom:1.8rem;line-height:1.7;
+      font-size:clamp(14px,4.2vw,17px);box-shadow:0 3px 6px rgba(0,0,0,.1);text-align:left;
+    }
+
+    /* ★ここ：市町村検索を中央寄せ */
+    #filterWrap{
+      margin-bottom:1rem;
+      font-size:1rem;
+      text-align:center; /* ★追加（wrapperでも中央だが保険） */
+    }
+    #selRegion{
+      font-size:1rem;
+      padding:.3rem .6rem;
+      display:inline-block; /* ★追加 */
+    }
+
+    #tblWrap{
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+      text-align:left; /* ★追加：中身（表）を左寄せに戻す */
+    }
     table{border-collapse:collapse;width:100%;min-width:320px;font-size:.9rem;background:#fff;}
     th,td{border:1px solid #ccc;padding:.45rem .6rem;white-space:nowrap;text-align:left;}
     th{background:#f3f6ff;font-weight:600;}
@@ -32,10 +75,16 @@
     @media(max-width:380px){.desc{font-size:15px}table{font-size:.8rem}}
     a.fac-link{color:#0b63c9;font-weight:700;text-decoration:underline;}
     a.fac-link::after{content:"↗";font-size:.85em;margin-left:.25em;}
-    .page-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;
-              padding:1rem .5rem;margin-top:1.2rem;background:var(--mint);}
+
+    /* ★リンクはここ（この2つを絶対に変えない） */
+    .page-nav{
+      display:flex;justify-content:space-between;align-items:center;gap:12px;
+      padding:1rem .5rem;margin-top:1.2rem;background:var(--mint);
+      text-align:left; /* ★追加：ナビ内は通常どおり */
+    }
     .nav-btn{background:transparent;border:none;color:var(--accent);font-weight:700;text-decoration:none;padding:.6rem .2rem;}
-    .nav-btn:hover{text-decoration:underline;} .nav-btn:visited{color:var(--accent);}
+    .nav-btn:hover{text-decoration:underline;}
+    .nav-btn:visited{color:var(--accent);}
     .nav-btn:active{transform:translateY(1px);}
   </style>
 </head>
@@ -62,11 +111,10 @@
 
   <div id="tblWrap">読み込み中…</div>
 
+  <!-- ★リンクはここ（この2つを絶対に変えない） -->
   <nav class="page-nav" aria-label="ページナビ">
-  <button type="button" class="nav-btn prev" onclick="go('manabi-school')">＜ 戻る</button>
-  <button type="button" class="nav-btn next" onclick="go('freeschool')">進む ＞</button>
-</nav>
-
+    <a class="nav-btn prev" href="/soudankikan.html">＜ 戻る</a>
+  </nav>
 </main>
 
 <script>
@@ -74,12 +122,19 @@
 const ENDPOINT = 'https://script.google.com/macros/s/AKfycbx4krcccAyVZZA99PJ_-7pCH29O0evjwkRYUQNk4sYWLkv9wAoALUzlVMmADVL2URvGwA/exec';
 const CFG = { sheetName:'教育支援センター', filterCol:2 };
 
+/* ---------- HTMLエスケープ（安全表示用） ---------- */
+function escapeHtml(s){
+  return String(s ?? '').replace(/[&<>"']/g, m => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[m]));
+}
+
 /* ---------- エラー ---------- */
 function showError(where, err){
   console.error(where, err);
   document.getElementById('tblWrap').innerHTML =
     `<div style="padding:.8rem;background:#fff;border:1px solid #ddd;border-radius:8px;">
-       データ取得でエラーが発生しました。<br><small>${where}</small>
+       データ取得でエラーが発生しました。<br><small>${escapeHtml(where)}</small>
      </div>`;
 }
 
@@ -115,7 +170,7 @@ async function loadRegions(){
 
 function initRegions(list){
   const sel = document.getElementById('selRegion');
-  sel.insertAdjacentHTML('beforeend', (list||[]).map(r=>`<option>${r}</option>`).join(''));
+  sel.insertAdjacentHTML('beforeend', (list||[]).map(r=>`<option>${escapeHtml(r)}</option>`).join(''));
   sel.addEventListener('change', () => loadTable(sel.value));
   loadTable('ALL');
 }
@@ -132,19 +187,19 @@ async function loadTable(region){
   }
 }
 
-function drawTable({ head=[], rows=[] }={}){
+function drawTable({ head=[], rows=[] }={}) {
   const wrap = document.getElementById('tblWrap');
   if(!rows.length){ wrap.textContent='該当データがありません'; return; }
 
   const nameIdx = 2, urlIdx = 3;
-  const thead = '<thead><tr>'+head.map(h=>`<th>${h}</th>`).join('')+'</tr></thead>';
+  const thead = '<thead><tr>'+head.map(h=>`<th>${escapeHtml(h)}</th>`).join('')+'</tr></thead>';
   const tbody = '<tbody>'+rows.map(r=>
     '<tr>'+r.map((c,i)=> {
       if(i===nameIdx){
         const link = normURL(r[urlIdx]);
-        if(link) return `<td><a class="fac-link" href="${link}" target="_blank" rel="noopener">${c??''}</a></td>`;
+        if(link) return `<td><a class="fac-link" href="${link}" target="_blank" rel="noopener">${escapeHtml(c??'')}</a></td>`;
       }
-      return `<td>${c??''}</td>`;
+      return `<td>${escapeHtml(c??'')}</td>`;
     }).join('')+'</tr>'
   ).join('')+'</tbody>';
 

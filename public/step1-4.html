@@ -16,11 +16,22 @@
     }
   </script>
 
-  <!-- ★ コア / 共通芯 -->
-  <link rel="stylesheet" href="/css/common.css">
-  <script src="/js/lib.js"   defer></script>
-  <script src="/js/store.js" defer></script>
+    <!-- ===== 共通の芯（全ページ共通） ===== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+
+  <!-- 共通JS（依存順：common → lib → store） -->
   <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+  <!-- ================================ -->
+
 
   <style>
     body{
@@ -43,13 +54,26 @@
     }
     .content-box::after{content:"";display:block;clear:both;}
 
-    .content-box img{
-      float:right;width:140px;height:auto;margin:0 0 1rem 1rem;
-      shape-outside:margin-box;
-    }
-    @media(max-width:430px){
-      .content-box img{width:min(45vw,150px);}
-    }
+   /* 画像：右寄せ＋折り返し（iPhone安定：shape-outside無し） */
+.content-box .illu-wrap{
+  float:right;
+  width:clamp(110px, 30vw, 145px); /* ★少し小さく */
+  margin:1.1rem -4px 1rem 1rem;
+}
+.content-box .illu-wrap img{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+/* 小さい端末は下に回して中央（被り防止） */
+@media(max-width:360px){
+  .content-box .illu-wrap{
+    float:none;
+    width:72%;
+    margin:.4rem auto 1rem;
+  }
+}
 
     .page-nav{
       display:flex;justify-content:space-between;font-weight:700;font-size:1rem;
@@ -71,15 +95,18 @@
 
       <p>嫌なことがあっても、言葉には出せないことが多いのかもしれません。うまくいかない自分を本人が一番受け入れられず、助けを求められない。本当に困っていても、心配をかけたくなくて言えない。どう助けを求めたらいいのかわからない…。</p>
 
-      <img src="https://lh3.googleusercontent.com/d/1sCi77VCPk8ADoNZ3tsgOln8KgP5M6wkw" alt="ランドセルと子ども">
+      <picture class="illu-wrap">
+  <source srcset="/images_webp/ランドセルと子供.webp" type="image/webp">
+  <img src="/images/ランドセルと子供.png" alt="ランドセルと子供">
+</picture>
 
       <p>ずっと我慢をしていると、心がそのことに集中してしまい、言葉にも出せなくなってしまうこともあるかもしれません。そんな中での我慢の限界や変化が表出されてきているのかもしれません。</p>
     </div>
 
     <nav class="page-nav">
-      <a href="?page=step1-3" class="nav-btn prev">＜ 戻る</a>
-      <a href="?page=step1-5" class="nav-btn next">進む ＞</a>
-    </nav>
+  <a href="/step1-3.html" class="nav-btn prev">＜ 戻る</a>
+  <a href="/step1-5.html" class="nav-btn next">進む ＞</a>
+</nav>
 
   </div>
 </body>

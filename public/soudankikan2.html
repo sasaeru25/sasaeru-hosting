@@ -6,8 +6,16 @@
   <meta name="theme-color" content="#caf4d6">
   <title>相談支援機関</title>
 
-  <!-- ===== 芯（共通・必須）===== -->
-  <link rel="stylesheet" href="/css/common.css">
+  <!-- ===== 芯（共通・必須：1回だけ読み込む）===== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+  <script defer src="/js/common.js"></script>
   <script defer src="/js/lib.js"></script>
   <script defer src="/js/store.js"></script>
 
@@ -23,13 +31,15 @@
     html,body{height:100%;}
     body{
       margin:0;background:var(--mint);color:var(--ink);
-      font-family:"Noto Sans JP",system-ui,-apple-system,"Segoe UI",Roboto;
+      font-family:"Noto Sans JP",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+      text-align:left;
     }
 
     .wrapper{
       width:100%;max-width:clamp(360px,92vw,430px);margin:0 auto;padding:1rem;
       padding-left:calc(1rem + env(safe-area-inset-left));
       padding-right:calc(1rem + env(safe-area-inset-right));
+      overflow-x:hidden;
     }
     @media(min-width:768px){.wrapper{max-width:720px;}}
 
@@ -47,6 +57,7 @@
       background:var(--paper);border-radius:14px;padding:14px 12px;
       font-size:clamp(15px,3.8vw,17px);line-height:1.8;
       box-shadow:0 2px 6px rgba(0,0,0,.06);
+      text-align:left;
     }
 
     .title-chip{
@@ -55,6 +66,7 @@
       border:3px solid var(--green-deep);border-radius:12px;background:#fff;
       color:#163f2f;font-weight:700;font-size:clamp(15px,4vw,18px);
     }
+    .title-chip .em{font-size:1.05em;}
 
     .cta-wrap{display:flex;justify-content:flex-end;margin-top:.6rem;}
     .cta-blue{
@@ -74,7 +86,10 @@
       background:var(--mint);box-shadow:0 -2px 6px rgba(0,0,0,.06);
       margin-top:1rem;
     }
-    .nav-btn{font-weight:700;color:#4d2bb6;text-decoration:none;font-size:clamp(15px,3.8vw,17px);}
+    .nav-btn{
+      font-weight:700;color:#4d2bb6;text-decoration:none;
+      font-size:clamp(15px,3.8vw,17px);
+    }
   </style>
 </head>
 
@@ -91,33 +106,37 @@
     <!-- 学校の相談窓口 -->
     <article class="card">
       <div class="card-body">
-        <span class="title-chip">💛 学校の相談窓口</span>
-        <p>学校では担任の先生だけでなく、保健室の先生や教頭・校長、SC・SSW などが相談を受ける場合があります。</p>
+        <span class="title-chip"><span class="em">💛</span> 学校の相談窓口</span>
+        <p>
+          学校では、担任の先生だけでなく、保健室の先生や教頭・校長、場合によっては他の先生などの相談や手助けも可能です。
+          学校を通して SC（スクールカウンセラー）や SSW（スクールソーシャルワーカー）に相談することもできます。
+          遠くに行かずに利用できるので気軽に聞いてみましょう。
+        </p>
       </div>
     </article>
 
-    <!-- 教育支援センター -->
+    <!-- 教育支援センター（内部リンク） -->
     <article class="card">
       <div class="card-body">
-        <span class="title-chip">💛 教育支援センター</span>
-        <p>市町村が運営する公的機関で、登校練習や学習支援などを実施しています。</p>
+        <span class="title-chip"><span class="em">💛</span> 教育支援センター</span>
+        <p>市町村が運営している公的機関で、不登校児の支援を行っています。登校練習や学習支援なども提供しています。</p>
         <div class="cta-wrap">
-          <a class="cta-blue" href="?page=center2">CLICK HERE</a>
+          <a class="cta-blue" href="/center3.html">CLICK HERE</a>
         </div>
       </div>
     </article>
 
-    <!-- つなぐん -->
+    <!-- つなぐん（外部リンク） -->
     <article class="card">
       <div class="card-body">
-        <span class="title-chip">💛 相談支援窓口 つなぐん</span>
-        <p>群馬県の総合相談窓口です。電話・来所・メールなど幅広い相談が可能です。</p>
+        <span class="title-chip"><span class="em">💛</span> 相談支援窓口 つなぐん</span>
+        <p>群馬県が設置している総合相談窓口です。電話相談、来所相談、メール相談、保護者の相談・悩みの場など幅広く扱っています。</p>
         <div class="cta-wrap">
           <a class="cta-blue"
              href="https://sites.google.com/edu-g.gsn.ed.jp/tsunagun/"
              target="_blank" rel="noopener"
              data-external="true"
-             data-preconnect="https://sites.google.com">
+             data-preconnect="https://tsunagun.example.jp">
             CLICK HERE
           </a>
         </div>
@@ -127,57 +146,83 @@
     <!-- 心療内科 -->
     <article class="card">
       <div class="card-body">
-        <span class="title-chip">💛 心療内科・医療機関</span>
-        <p>専門的な診断や治療が必要な場合に利用される機関です。状況に応じて併用できます。</p>
+        <span class="title-chip"><span class="em">💛</span> 心療内科・医療機関</span>
+        <p>心因性の要因がある場合、専門的な診断と治療が必要なケースもあります。他の機関と併用して相談する方法もあります。</p>
       </div>
     </article>
 
-    <!-- フリースクール等 -->
+    <!-- フリースクール等（内部リンク） -->
     <article class="card">
       <div class="card-body">
-        <span class="title-chip">💛 フリースクール等</span>
-        <p>学びの場の提供に加え、保護者支援や親の会を実施している場合もあります。</p>
+        <span class="title-chip"><span class="em">💛</span> フリースクール等</span>
+        <p>子どもの学びの場の提供とともに、保護者支援や親の会が利用できる場合もあります。</p>
         <div class="cta-wrap">
-          <a class="cta-blue" href="?page=freeschool2">CLICK HERE</a>
+          <a class="cta-blue" href="/freeschool3.html">CLICK HERE</a>
         </div>
       </div>
     </article>
 
   </section>
+
+  <!-- フッター -->
+  <nav class="page-nav">
+    <a href="/home.html" class="nav-btn next">メニュー ＞</a>
+  </nav>
 </main>
 
-<nav class="page-nav">
-  <a href="?page=home" class="nav-btn">メニュー ＞</a>
-</nav>
-
+<!-- 外部リンクの軽量化スクリプト（closest安全版：エラー回避） -->
 <script>
-/* 低速回線警告 */
 (function(){
-  const isSlow=()=>{
-    const c=navigator.connection||{};const t=(c.effectiveType||'').toLowerCase();
-    return c.saveData||t.includes('2g')||t.includes('3g')||t.includes('slow');
+  const isSlow = () => {
+    const c = navigator.connection || {};
+    const t = (c.effectiveType || '').toLowerCase();
+    return c.saveData === true || t.includes('2g') || t.includes('3g') || t.includes('slow');
   };
-  document.addEventListener('click',e=>{
-    const a=e.target.closest('a[data-external="true"]');if(!a)return;
-    if(isSlow()&&!confirm('外部サイトを開きます。通信量が多くなる場合があります。続けますか？')){
-      e.preventDefault();
+
+  const closestAnchor = (t, selector) => {
+    let el = t;
+    if (el && el.nodeType === 3) el = el.parentElement; // TextNode対策
+    if (!el || el.nodeType !== 1) return null;
+    return (typeof el.closest === 'function') ? el.closest(selector) : null;
+  };
+
+  document.addEventListener('click', (e)=>{
+    const a = closestAnchor(e.target, 'a[data-external="true"]');
+    if(!a) return;
+    if(isSlow()){
+      if(!confirm('外部サイトを新しいタブで開きます。通信量が多くなる場合があります。続けますか？')){
+        e.preventDefault();
+      }
     }
-  },{passive:false});
+  }, {passive:false});
 })();
-/* 事前プリコネクト */
+
 (function(){
-  function preconnect(host){
-    if(!host||document.querySelector(`link[data-preconnect="${host}"]`))return;
-    const l1=document.createElement('link');l1.rel='preconnect';l1.href=host;l1.crossOrigin='';
-    const l2=document.createElement('link');l2.rel='dns-prefetch';l2.href=host;
-    l1.dataset.preconnect=host;document.head.append(l1,l2);
+  function preconnectOnce(host){
+    if(!host) return;
+    if(document.querySelector(`link[data-preconnect="${host}"]`)) return;
+    const l1=document.createElement('link'); l1.rel='preconnect'; l1.href=host; l1.crossOrigin='';
+    const l2=document.createElement('link'); l2.rel='dns-prefetch'; l2.href=host;
+    l1.setAttribute('data-preconnect', host);
+    document.head.append(l1,l2);
   }
-  ['mouseenter','touchstart','focus'].forEach(evt=>{
-    document.addEventListener(evt,e=>{
-      const a=e.target.closest('a[data-preconnect]');if(a)preconnect(a.dataset.preconnect);
-    },{passive:true,capture:true});
+
+  const closestAnchor = (t, selector) => {
+    let el = t;
+    if (el && el.nodeType === 3) el = el.parentElement;
+    if (!el || el.nodeType !== 1) return null;
+    return (typeof el.closest === 'function') ? el.closest(selector) : null;
+  };
+
+  ['mouseenter','touchstart','focus'].forEach(type=>{
+    document.addEventListener(type, (e)=>{
+      const a = closestAnchor(e.target, 'a[data-preconnect]');
+      if(!a) return;
+      preconnectOnce(a.getAttribute('data-preconnect'));
+    }, {passive:true, capture:true});
   });
 })();
 </script>
+
 </body>
 </html>

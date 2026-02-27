@@ -4,54 +4,134 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f3a9a0">
-  <title>回復期｜ささエール</title>
+  <title>回復期</title>
 
   <!-- ★ PWA（Manifest & Service-Worker） -->
   <link rel="manifest" href="/manifest.json">
   <script>
     if ('serviceWorker' in navigator)
-      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+      window.addEventListener('load', () =>
+        navigator.serviceWorker.register('/service-worker.js').catch(()=>{}));
   </script>
 
-  <!-- === 共通の芯 ========================================= -->
-  <link rel="stylesheet" href="/css/common.css">
-  <script src="/js/lib.js"   defer></script>
-  <script src="/js/store.js" defer></script>  <!-- ⭐クリップ／📝日記 -->
-  <!-- ===================================================== -->
+  <!-- ===== 共通の芯（全ページ共通） ===== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
 
-  <!-- ===== ページ固有 CSS ===== -->
+<link rel="stylesheet" href="/css/common.css">
+  <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+
   <style>
     html,body{height:100%}*,*::before,*::after{box-sizing:border-box}
-    body{margin:0;background:#f3a9a0;color:#333;font-family:"Noto Sans JP",system-ui,-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;font-size:16px;line-height:1.8}
-    .kp-wrapper{min-height:100%;padding:16px;padding-top:max(16px,env(safe-area-inset-top));padding-right:max(8px,env(safe-area-inset-right));padding-bottom:max(16px,env(safe-area-inset-bottom));padding-left:max(8px,env(safe-area-inset-left))}
+    body{
+      margin:0;background:#f3a9a0;color:#333;
+      font-family:"Noto Sans JP",system-ui,-apple-system,BlinkMacSystemFont,
+                   "Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+      font-size:16px;line-height:1.8
+    }
+    .kp-wrapper{
+      min-height:100svh;
+      padding:16px;
+      padding-top:max(16px,env(safe-area-inset-top));
+      padding-right:max(8px,env(safe-area-inset-right));
+      padding-bottom:max(16px,env(safe-area-inset-bottom));
+      padding-left:max(8px,env(safe-area-inset-left))
+    }
     .kp-card{max-width:430px;margin:0 auto;padding:16px 8px 18px;text-align:left}
-    .phase-heading{display:block;margin:4px auto 12px;width:max-content;background:#fffcc0;border:2px dashed #ddb;border-radius:30px;padding:.6rem 1.8rem;font-weight:700;font-size:1.6rem;line-height:1.2;text-align:center}
-    .label-yellow{display:inline-block;background:#ffd34d;border-radius:18px;padding:.35rem .8rem;font-weight:700;margin-bottom:.5rem}
-    .cream-panel{background:#fff3d6;border-radius:12px;padding:12px;display:grid;grid-template-columns:1fr 120px;gap:12px;align-items:start}
-    .panel-text{margin:0;line-height:1.8}
-    .panel-illu{width:120px;height:auto;border-radius:8px;justify-self:end}
-    @media(max-width:430px){.cream-panel{grid-template-columns:1fr}.panel-illu{width:60%;justify-self:center;margin-top:8px}}
-    .bubble-think{margin:.1rem 0}.think-svg{width:100%;height:auto;display:block}.think-svg .line{stroke-width:2}
-    .info-box{border-radius:10px;padding:10px 12px;margin:.6rem 0;line-height:1.8;text-align:left}
-    .info-box{background:#c9f1ee}.info-box.white{background:#fff}
+
+    .phase-heading{
+      display:block;margin:4px auto 12px;width:max-content;
+      background:#fffcc0;border:2px dashed #ddb;border-radius:30px;
+      padding:.6rem 1.8rem;font-weight:700;font-size:1.6rem;line-height:1.2;text-align:center
+    }
+    .label-yellow{
+      display:block;width:max-content;background:#ffd34d;border-radius:18px;
+      padding:.35rem .8rem;font-weight:700;margin:.2rem 0 .5rem 0
+    }
+    .cream-panel{
+  background:#fff3d6;
+  border-radius:12px;
+  padding:12px;
+
+  display:flex;          /* ★縦並び */
+  flex-direction:column;
+  gap:10px;
+}
+
+.panel-text{
+  margin:0;
+  line-height:1.8;
+}
+
+/* ★一枚目のイラストを下・中央寄せ */
+.cream-panel picture{
+  align-self:center;
+}
+
+/* ★後期と同じサイズ */
+.panel-illu{
+  width:min(175px, 46vw);
+  height:auto;
+  border-radius:10px;
+  display:block;
+}
+
+/* 極小端末だけ、少し大きめに */
+@media (max-width:360px){
+  .panel-illu{ width:68%; }
+}
+
+    .bubble-think{margin:.1rem 0}
+    /* bubble-stack/bubble-text は common.css に入れてある前提。
+       ただし “文字が出ない” を防ぐ保険だけ、このページにも付ける */
+    .bubble-stack{position:relative;width:100%}
+    .bubble-stack .think-svg{display:block;width:100%;height:auto;position:relative;z-index:1}
+    .bubble-stack .bubble-text{position:absolute;z-index:2;pointer-events:none}
+
+    .info-box{border-radius:10px;padding:10px 12px;margin:.6rem 0;line-height:1.8;text-align:left;background:#c9f1ee}
+    .info-box.white{background:#fff}
+
     .phase-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:.8rem}
-    .phase-btn{display:flex;align-items:center;justify-content:center;padding:1rem 0;border-radius:22px;background:#fff7b2;border:2px dashed #f1d662;color:#333;text-decoration:none;font-weight:700;box-shadow:0 2px 4px rgba(0,0,0,.12);writing-mode:vertical-rl;text-orientation:upright;font-size:clamp(.9rem,3.2vw,1.05rem)}
+    .phase-btn{
+      display:flex;align-items:center;justify-content:center;padding:1rem 0;
+      border-radius:22px;background:#fff7b2;border:2px dashed #f1d662;
+      color:#333;text-decoration:none;font-weight:700;box-shadow:0 2px 4px rgba(0,0,0,.12);
+      writing-mode:vertical-rl;text-orientation:upright;font-size:clamp(.9rem,3.2vw,1.05rem)
+    }
     .phase-btn span{line-height:1.1}
     @media(max-width:430px){.phase-btn{font-size:.9rem;padding:.9rem 0}}
-    .page-nav{display:flex;justify-content:center;margin-top:1rem}.nav-btn{color:#7e57c2;text-decoration:none;font-weight:700;padding:.7rem 0}
+
+    .page-nav{display:flex;justify-content:center;margin-top:1rem}
+    .nav-btn{color:#7e57c2;text-decoration:none;font-weight:700;padding:.7rem 0}
+
+/* ★回復期だけ：4行なので少し上へ */
+.bubble-text--up{
+  top:16% !important;     /* 20% → 16%（上へ） */
+  bottom:26% !important;  /* 22% → 26%（下余白を増やして上へ） */
+}
+@media (max-width:360px){
+  .bubble-text--up{
+    top:14% !important;
+    bottom:28% !important;
+  }
+}
   </style>
 </head>
 
 <body>
 <main class="kp-wrapper">
-  <!-- ⭐クリップ用 -->
   <div class="clip-name" data-clip="⭐ 回復期"></div>
 
   <article class="kp-card">
 
     <h1 class="phase-heading">回復期</h1>
 
-    <!-- ▼ 子どもの様子 -->
     <span class="label-yellow">子どもの様子</span>
     <section class="cream-panel">
       <p class="panel-text">
@@ -59,83 +139,92 @@
         ・信頼できる人との関わりを自分から求める<br>
         ・将来や学びについて考える言葉が出てくる
       </p>
-      <img class="panel-illu" src="https://lh3.googleusercontent.com/d/1A3r99b_q_sdyVqjrWWoGGageuoX0wPIB" alt="段階⑤">
+      <picture>
+  <source srcset="/images_webp/段階⑤.webp" type="image/webp">
+  <img class="panel-illu"
+       src="/images/段階⑤.png"
+       alt="段階⑤">
+</picture>
     </section>
 
-    <!-- ▼ 思考バルーン（SVG 完全版） -->
+    <!-- ▼ 思考バルーン（SVGは形だけ／文字はHTMLで重ねる） -->
     <section class="bubble-think">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 60 360 200" class="think-svg" role="img">
-        <defs>
-          <filter id="tshadow1" x="-25%" y="-30%" width="150%" height="160%">
-            <feDropShadow dx="0" dy="2" stdDeviation="1.9" flood-opacity=".18"/>
-          </filter>
-          <path id="mokuPath" class="line"
-            d="M74,208 C52,204,40,188,44,170
-               C24,164,16,144,28,130
-               C24,108,44,92,66,96
-               C74,76,98,68,118,76
-               C132,58,160,54,180,66
-               C200,54,230,60,242,80
-               C264,78,286,92,286,114
-               C304,120,312,140,300,156
-               C306,176,292,194,272,198
-               C260,212,232,214,216,206
-               C192,218,156,218,138,204
-               C120,212,92,214,74,208 Z"
-            fill="#fff" stroke="#333" vector-effect="non-scaling-stroke"/>
-          <clipPath id="clipMoku"><use href="#mokuPath"/></clipPath>
-        </defs>
+      <div class="bubble-stack" aria-label="思考バルーン">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 60 360 200" class="think-svg" role="img" aria-hidden="true">
+          <defs>
+            <filter id="tshadow1" x="-25%" y="-30%" width="150%" height="160%">
+              <feDropShadow dx="0" dy="2" stdDeviation="1.9" flood-opacity=".18"/>
+            </filter>
+            <path id="mokuPathDef" class="line"
+              d="M74,208 C52,204,40,188,44,170
+                 C24,164,16,144,28,130
+                 C24,108,44,92,66,96
+                 C74,76,98,68,118,76
+                 C132,58,160,54,180,66
+                 C200,54,230,60,242,80
+                 C264,78,286,92,286,114
+                 C304,120,312,140,300,156
+                 C306,176,292,194,272,198
+                 C260,212,232,214,216,206
+                 C192,218,156,218,138,204
+                 C120,212,92,214,74,208 Z"
+              fill="#fff" stroke="#333" vector-effect="non-scaling-stroke"/>
+          </defs>
 
-        <use href="#mokuPath" fill="#fff" stroke="#333" filter="url(#tshadow1)"/>
+          <use href="#mokuPathDef" fill="#fff" stroke="#333" filter="url(#tshadow1)"/>
+          <g transform="translate(0,18)">
+            <circle cx="270" cy="106" r="13" fill="#fff" stroke="#333" class="line"/>
+            <circle cx="295" cy="88"  r="9"  fill="#fff" stroke="#333" class="line"/>
+            <circle cx="312" cy="74"  r="6"  fill="#fff" stroke="#333" class="line"/>
+          </g>
+        </svg>
 
-        <g clip-path="url(#clipMoku)">
-          <text x="40" y="110" font-size="16" font-family="Noto Sans JP, sans-serif" fill="#333">
-            <tspan x="40" dy="0">「そろそろ外にも出てみようかな」</tspan>
-            <tspan x="40" dy="24">「自分のペースで進めば大丈夫」</tspan>
-          </text>
-        </g>
-
-        <g transform="translate(0,18)">
-          <circle cx="270" cy="106" r="13" fill="#fff" stroke="#333"/>
-          <circle cx="295" cy="88"  r="9"  fill="#fff" stroke="#333"/>
-          <circle cx="312" cy="74"  r="6"  fill="#fff" stroke="#333"/>
-        </g>
-      </svg>
+        <!-- ★指定の文言＋改行 -->
+       <div class="bubble-text bubble-text--up" aria-hidden="true">
+  <p>「もういちどやって<br>みようかな」</p>
+  <p>「ちょっとずつでいいから<br>進みたい」</p>
+</div>
+      </div>
     </section>
 
-    <!-- ▼ どんな状態？ -->
     <span class="label-yellow">どんな状態？</span>
     <section class="info-box">
       <p>
-        生活リズムが整い始め、「自分のペースで何かを始めたい」という意欲が芽生えます。<br>
-        再登校・フリースクール・学習塾など社会との再接続が始まる一方、心の奥にはまだ不安が残りがち。<br>
-        回復期はゴールではなく通過点です。子ども本人が「自分で選んで歩き出せた」と実感できることが長期的な安定につながります。
+        生活のリズムが整い始め、子どもが「自分のペースで何かを始めたい」という意欲を持って行動しはじめます。
+        再登校、フリースクール、学習塾など、社会とのつながりを再構築する動きが出てくる場合もあります。
+        子どもが安心して過ごせる場を考えましょう。<br>
+        この時期で注意すべきは、「回復したように見えるから」といって急に再登校や学業への本格復帰を求めてしまうことです。
+        表面上は元気でも、まだ心の奥には不安や迷いが残っていることが多く、焦らず本人の様子を見ながら進める必要があります。<br>
+        再登校はゴールではなく、あくまで通過点の一つ。
+        子ども自身が「自分で選んで歩き出せた」と実感できることが、長期的な安定につながります。
       </p>
     </section>
 
-    <!-- ▼ 関わり方のヒント -->
     <span class="label-yellow">関わり方のヒント</span>
     <section class="info-box white">
       <p>
-        <strong>選択肢を示し、最終決定は子どもに。</strong><br>
-        別室・段階的登校、教育支援センター、フリースクール、ICT学習など複数の道を提案しつつ、<br>
-        “できる／できない” を一緒に確認していきましょう。<br><br>
-        情報収集や相談機関の併用で、保護者自身の不安もケアすることが大切です。
+        少しずつ外へ気持ちが向けられるようになっても、先のことを「どうしたらいいかわからない」と思っているかもしれません。
+        外に出られるのか、学校に行けるのか。何ができて何ができないのか。
+        子どもには選択肢が少ないので、様子を見て情報提供や環境調整を提案することは大切です。
+        学校でもペースを見ながら調整することもできますし、別室登校や教育支援センターの利用、フリースクールの活用もできます。
+        ゴールは学校にとらわれず、子どもの将来のために道を拓くことも一つの選択肢です。
+        相談機関を利用することで、その選択肢は多岐にわたるようになります。
+        「行きつ戻りつ」の時期にもなるので、情報収集もかねて相談につながっていると心強いでしょう。
       </p>
     </section>
 
-    <!-- ▼ 段階ナビ -->
+    <!-- ▼ 段階リンク（Firebaseで生きる） -->
     <div class="phase-row">
-      <a class="phase-btn" href="?page=dankai1"><span>前兆期</span></a>
-      <a class="phase-btn" href="?page=dankai2"><span>初期</span></a>
-      <a class="phase-btn" href="?page=dankai3"><span>中期</span></a>
-      <a class="phase-btn" href="?page=dankai4"><span>後期</span></a>
-      <a class="phase-btn" href="?page=dankai5"><span>回復期</span></a>
+      <a class="phase-btn" href="/dankai1.html"><span>前兆期</span></a>
+      <a class="phase-btn" href="/dankai2.html"><span>初期</span></a>
+      <a class="phase-btn" href="/dankai3.html"><span>中期</span></a>
+      <a class="phase-btn" href="/dankai4.html"><span>後期</span></a>
+      <a class="phase-btn" href="/dankai5.html"><span>回復期</span></a>
     </div>
 
-    <!-- ▼ フッター -->
+    <!-- ▼ フッター（Firebaseで生きる） -->
     <nav class="page-nav">
-      <a href="?page=kodomo" class="nav-btn">＜ 子どもの心理</a>
+      <a href="/kodomo.html" class="nav-btn">＜ 子どもの心理</a>
     </nav>
 
   </article>

@@ -4,21 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#ffe6e6" />
-  <title>不登校はどの子にも起こりうること｜ささエール</title>
+  <title>不登校はどの子にも起こりうること</title>
 
   <!-- ★ PWA（Manifest & Service-Worker） -->
   <link rel="manifest" href="/manifest.json">
   <script>
     if ('serviceWorker' in navigator)
-      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+      window.addEventListener('load', () =>
+        navigator.serviceWorker.register('/service-worker.js').catch(()=>{}));
   </script>
 
-  <!-- ★ コア / 共通芯 -->
-  <link rel="stylesheet" href="/css/common.css">
+  <!-- ★ 共通芯 -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+  <script src="/js/common.js" defer></script>
   <script src="/js/lib.js" defer></script>
   <script src="/js/store.js" defer></script>
 
-  <!-- スタイル -->
   <style>
     body{
       margin:0;
@@ -26,6 +34,7 @@
       background:#ffe6e6;
       color:#333;
     }
+
     .kp-wrapper{
       background:#f29b8f;
       padding:2rem 1rem;
@@ -40,20 +49,26 @@
       flex-direction:column;
       box-sizing:border-box;
     }
+
+    /* ★見出し：はみ出し防止＆中央寄せ */
+    .kp-heading-row{ text-align:center; }
     .kp-heading{
       width:100%;
+      box-sizing:border-box;
       background:#fff;
       color:#333;
-      padding:.6rem 1.5rem;
+      padding:.6rem 1.2rem;          /* 少し控えめにしてはみ出しにくく */
       border-radius:30px;
       font-weight:bold;
       margin-bottom:2rem;
       font-size:1.3rem;
       box-shadow:0 2px 5px rgba(0,0,0,.1);
-      text-align:left;
+      text-align:center;             /* ★中央寄せ */
       line-height:1.5;
+      overflow-wrap:anywhere;        /* ★長文でも折り返す */
+      word-break:break-word;
     }
-    .right-line{display:block;text-align:right;}
+    .right-line{display:block;}
 
     .law-quote{
       background:#fff;
@@ -72,6 +87,7 @@
       margin-top:.1rem;
       text-align:right;
       overflow-wrap:anywhere;
+      word-break:break-word;
     }
 
     .comment-box{
@@ -102,26 +118,34 @@
 
 <body>
 <main class="kp-wrapper">
-  <h2 class="kp-heading">
-    🍀 不登校は<br><span class="right-line">どの子にも起こりうること</span>
-  </h2>
+  <div class="clip-name" data-clip="⭐ どの子にも起こりうること"></div>
+
+  <!-- 見出し（中央寄せ＆はみ出し防止） -->
+  <div class="kp-heading-row">
+    <h2 class="kp-heading">
+      🍀 不登校は<br><span class="right-line">どの子にも起こりうること</span>
+    </h2>
+  </div>
 
   <!-- 法律の抜粋１ -->
   <div class="law-quote">
-    <p>不登校は、取り巻く環境によっては
+    <p>
+      不登校は、取り巻く環境によっては
       <strong style="color:#e60039">どの児童生徒にも起こりうるもの</strong>
     </p>
   </div>
 
   <!-- 法律の抜粋２ -->
   <div class="law-quote">
-    <p>不登校とは、多様な要因・背景により、結果として不登校状態になっているということであり、
+    <p>
+      不登校とは、多様な要因・背景により、結果として不登校状態になっているということであり、
       <strong style="color:#e60039">その行為を「問題行動」として判断してはならない。</strong>
     </p>
   </div>
 
+  <!-- ★文字化け原因を除去して通常表記に -->
   <p class="refs">
-    H28.9　:contentReference[oaicite:0]{index=0}「不登校児童生徒への支援の在り方について」
+    H28.9　文部科学省「不登校児童生徒への支援の在り方について」
   </p>
 
   <!-- 解説 -->
@@ -129,15 +153,15 @@
     <p>
       国は、不登校を「どの児童生徒にも起こりうるもの」と位置づけています。不登校の背景は一つではなく、複数の要因が絡み合った結果であり、
       「問題行動」と断じてはならない、と明記しています。<br>
-      保護者は「大問題！」と焦る前に、子どもの内面で何が起こっているのかに目を向け、まずは気持ちを受け止めることが大切です。
-      詳細は「子どもの心理」ページでも解説していますので、寄り添い方のヒントとしてご覧ください。
+      「学校に行けない、行かない」となると、親は「大問題！」と慌ててしまいますが、
+      今、子どもたちに何が起こっているのか、子どもたちにとって何が苦しいのか、子どもの気持ちに寄り添って、一緒に考えることが大切です。「子どもの気持ちを受け入れること」、それが支援の第一歩です。「子どもの心理」のページで、子どもの気持ちを知り、寄り添い方、受け入れ方を一緒に考えてみましょう。
     </p>
   </div>
 
-  <!-- フッター（★内部遷移は ?page= に統一） -->
+  <!-- フッター（★Firebaseで生きるリンクへ） -->
   <nav class="page-nav">
-    <a href="?page=kuni"  class="nav-btn">＜ 戻る</a>
-    <a href="?page=kuni3" class="nav-btn">進む ＞</a>
+    <a href="/kuni.html"  class="nav-btn">＜ 戻る</a>
+    <a href="/kuni3.html" class="nav-btn">進む ＞</a>
   </nav>
 </main>
 </body>

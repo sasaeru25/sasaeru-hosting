@@ -4,15 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#f29b8f" />
-  <title>子どもの心理｜ささエール</title>
+  <title>子どもの心理</title>
 
-  <!-- === 共通の芯 ========================================= -->
-  <link rel="stylesheet" href="/css/common.css">
-  <script src="/js/lib.js"   defer></script>
-  <script src="/js/store.js" defer></script>  <!-- ⭐クリップ／📝日記 -->
-  <!-- ===================================================== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
 
-  <!-- ★ PWA -->
+<link rel="stylesheet" href="/css/common.css">
+  <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+
   <link rel="manifest" href="/manifest.json">
   <script>
     if ('serviceWorker' in navigator)
@@ -20,37 +25,43 @@
         navigator.serviceWorker.register('/service-worker.js').catch(()=>{}));
   </script>
 
-  <!-- ★ ページ専用スタイル -->
   <style>
     .kp-wrapper{background:#f29b8f;padding:1.5rem 1rem 2.5rem;max-width:360px;margin:auto;border-radius:4px}
     .kp-heading{background:#ffe6e6;color:#333;display:inline-block;padding:.4rem 1.8rem;border-radius:20px;margin-bottom:1rem}
-    .kp-lead{background:#fff3e0;padding:1rem;border-radius:6px;margin-bottom:1.4rem;font-size:.92rem;line-height:1.6;text-align:left}
+    .kp-heading-row{ text-align:center; }   /* ★見出し中央 */
+    .kp-lead{background:#fff3e0;padding:1rem;line-height:1.6;text-align:left;border-radius:6px;margin-bottom:1.4rem;font-size:.92rem}
     .kp-menu{display:flex;flex-direction:column;gap:.8rem}
-    .kp-btn{background:#fff;border:none;border-radius:30px;padding:.9rem 1rem;text-decoration:none;color:#333;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,.1)}
-    .back-link{display:inline-block;margin-top:2rem;text-decoration:none;color:#333;font-weight:700;background:#fff7b2;border:2px dashed #f1d662;border-radius:999px;padding:.6rem 1.2rem;box-shadow:0 2px 4px rgba(0,0,0,.10)}
+    .kp-btn{background:#fff;border:none;border-radius:30px;padding:.9rem 1rem;text-decoration:none;color:#333;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,.1);display:block;text-align:center}
+    .kp-back{margin-top:2rem;text-align:center;} /* ★戻る中央（色は触らない） */
   </style>
 </head>
 
 <body>
   <main class="kp-wrapper">
-    <h2 class="kp-heading">子どもの心理</h2>
+    <div class="clip-name" data-clip="⭐ 子どもの心理"></div>
+
+    <div class="kp-heading-row">
+      <h2 class="kp-heading">子どもの心理</h2>
+    </div>
 
     <p class="kp-lead">
       「学校に行きたくない」。急に子どもが言い出したら、
       「なぜ？！」「どうしたらいいの？！」と、混乱する保護者がほとんどだと思います。
-      学校に行けなくなる子どもの心理を知り、必要な支援を考えるための出発点として、
-      子どもたちの心の中を覗いてみましょう。
+      学校に行けなくなる子どもの心理、どうしてこの言葉を発したのか、
+      これから何が必要なのかを知ることで、保護者はもちろん、
+      子どもも方向性を定めて過ごすことができるのではないでしょうか。
+      子どもの心の回復のために、「学校に行けない」子どもたちの心の中を覗いてみましょう。
     </p>
 
     <div class="kp-menu">
-      <a class="kp-btn" href="?page=kodomo2">🍀 不登校とは</a>
-      <a class="kp-btn" href="?page=kodomo3">🍀 SOSのサイン</a>
-      <a class="kp-btn" href="?page=kodomo4">🍀 心のエネルギーとは</a>
-      <a class="kp-btn" href="?page=kodomo5">🍀 回復への道のり</a>
-      <a class="kp-btn" href="?page=kodomo6">🍀 エネルギーをためるポイント</a>
+      <a class="kp-btn" href="/kodomo2.html">🍀 不登校とは</a>
+      <a class="kp-btn" href="/kodomo3.html">🍀 SOSのサイン</a>
+      <a class="kp-btn" href="/kodomo4.html">🍀 心のエネルギーとは</a>
+      <a class="kp-btn" href="/kodomo5.html">🍀 回復への道のり</a>
+      <a class="kp-btn" href="/kodomo6.html">🍀 エネルギーをためるポイント</a>
     </div>
 
-    <p><a class="back-link" href="?page=home">← メニューに戻る</a></p>
+    <p class="kp-back"><a href="/home.html">← メニューに戻る</a></p>
   </main>
 </body>
 </html>

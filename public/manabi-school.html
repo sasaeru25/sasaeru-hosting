@@ -6,7 +6,15 @@
   <title>学校での工夫</title>
 
   <!-- ===== 芯（共通・必須）===== -->
-  <link rel="stylesheet" href="/css/common.css">
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+  <script defer src="/js/common.js"></script>
   <script defer src="/js/lib.js"></script>
   <script defer src="/js/store.js"></script>
 
@@ -33,13 +41,16 @@
   }
 
   /* ---------- 見出しバッジ ---------- */
-  .page-title{ text-align:center; margin:0 0 .9rem; }
-  .page-title .pill{
-    display:inline-flex; align-items:center; gap:.5rem;
-    background:#fff; padding:.55rem 1.2rem; border-radius:14px;
-    font-weight:700; box-shadow:0 2px 6px rgba(0,0,0,.08);
-  }
-  .page-title .pill .emoji{ font-size:1.15em }
+.page-title{ text-align:center; margin:0 0 .9rem; }
+.page-title .pill{
+  display:inline-flex; align-items:center; gap:.5rem;
+  background:#fff; padding:.55rem 1.2rem; border-radius:14px;
+  font-weight:700; box-shadow:0 2px 6px rgba(0,0,0,.08);
+
+  /* ★追加：トップ見出しを大きく（端末幅に追従） */
+  font-size: clamp(20px, 5.6vw, 28px);
+}
+.page-title .pill .emoji{ font-size:1.25em; }
 
   /* ---------- カード ---------- */
   .card{
@@ -51,19 +62,31 @@
   .card ul{ margin:.2rem 0 .8rem 1.2rem; padding:0; }
   .card li{ margin:.15rem 0; }
 
-  /* 挿し絵 */
-  .card .illu{
-    float:right; width:min(38%,160px); height:auto;
-    margin:.2rem 0 .2rem .75rem;
-    shape-outside:margin-box; -webkit-shape-outside:margin-box;
-  }
-  .card::after{ content:""; display:block; clear:both; }
+  /* 挿し絵（iPhone安定版） */
+/* 挿し絵（右寄せ＋文字折り返し：iPhone安定版） */
+.card .illu-wrap{
+  float:right;
+  width:clamp(110px, 34vw, 150px);
+  margin:.2rem -6px .6rem 1rem;   /* ★右に寄せ切る（-6px） */
+}
 
-  @media (max-width:340px){
-    .card .illu{
-      float:none; display:block; margin:.4rem auto; width:74%;
-    }
+.card .illu-wrap img{
+  width:100%;
+  height:auto;
+  border-radius:10px;
+  display:block;
+}
+
+/* クリアはそのまま */
+.card::after{ content:""; display:block; clear:both; }
+
+@media (max-width:360px){
+  .card .illu-wrap{
+    float:none;
+    width:74%;
+    margin:.4rem auto;
   }
+}
 
   /* ---------- フッターリンク ---------- */
   .page-nav{
@@ -72,6 +95,7 @@
   }
   .nav-btn{
     color:var(--accent); text-decoration:none; font-weight:700; font-size:1rem;
+    display:inline-block;
   }
   .nav-btn:hover{ text-decoration:underline; }
   .nav-btn:visited{ color:var(--accent); }
@@ -89,18 +113,23 @@
 
   <!-- ---------- 学校相談 ---------- -->
   <section class="card">
-    <img class="illu" src="https://lh3.googleusercontent.com/d/1vvrpy6yVHnZJqKGNe4L68WcgKfn3oZiG"
+  <h3>◆ 学校での相談</h3>
+
+  <picture class="illu-wrap">
+    <source srcset="/images_webp/学校相談.webp" type="image/webp">
+    <img src="/images/学校相談.png"
          alt="学校相談" loading="lazy" decoding="async">
-    <h3>◆ 学校での相談</h3>
-    <p>
-      学校では、担任の先生だけでなく、保健室の先生や、場合によっては他の先生などに
-      相談や手助けをお願いできる場合もあります。学校と情報共有しながら相談をしてみましょう。
-    </p>
-    <p>
-      また、学校を通して SC（スクールカウンセラー）や SSW（スクールソーシャルワーカー）に
-      相談することもできます。遠くに行かずに利用できるので気軽に聞いてみましょう。
-    </p>
-  </section>
+  </picture>
+
+  <p>
+    学校では、担任の先生だけでなく、保健室の先生や、場合によっては他の先生などに
+    相談や手助けをお願いできることもあります。学校と情報共有しながら相談をしてみましょう。
+  </p>
+  <p>
+    また、学校を通して SC（スクールカウンセラー）や SSW（スクールソーシャルワーカー）に
+    相談することもできます。遠くに行かずに利用できるので気軽に聞いてみましょう。
+  </p>
+</section>
 
   <!-- ---------- フレックス登校 ---------- -->
   <section class="card">
@@ -109,15 +138,15 @@
       フレックス登校とは、「登校時間」や「登校日数」「教室で過ごす時間」などを、
       子どもの状況に応じて柔軟に調整する登校スタイルのことです。
       従来の「毎日、朝から夕方まで通う」という形にとらわれず、
-      「今の自分にできる範囲」で学校との関わりを持つことを目的としています。
+      「今の自分にできる範囲」で学校との関わりをもつことを目的としています。
     </p>
     <p>＜たとえば…＞</p>
     <ul>
       <li>朝の会だけ参加して帰る</li>
       <li>午後から登校して授業を受ける</li>
-      <li>週に 1〜2 日だけ登校する</li>
+      <li>週に１〜２日だけ登校する</li>
       <li>保健室や別室で過ごす</li>
-      <li>先生と 1 対 1 で話すためだけに来る</li>
+      <li>先生と１対１で話すためだけに来る</li>
     </ul>
     <p>
       子ども自身が「これならできそう」と思えるところから、
@@ -127,26 +156,31 @@
 
   <!-- ---------- 保健室登校 ---------- -->
   <section class="card">
-    <img class="illu" src="https://lh3.googleusercontent.com/d/1IAvqJVZHbeX_fud14PaUXPalaObWBzR-" 
+  <h3>◆ 保健室登校</h3>
+
+  <picture class="illu-wrap">
+    <source srcset="/images_webp/保健室.webp" type="image/webp">
+    <img src="/images/保健室.png"
          alt="保健室" loading="lazy" decoding="async">
-    <h3>◆ 保健室登校</h3>
-    <p>
-      保健室登校とは、教室に入るのが難しい子どもが、学校の保健室で過ごす登校スタイルです。
-      保健室は静かで落ち着ける環境が整っており、養護教諭（保健の先生）が常駐しているため、
-      安心感があります。
-    </p>
-    <p>
-      活動内容は幅広く、学習を進めたり本を読んだり、体調を整えるために横になったりすることもできます。
-      「学校にいることに慣れる」「誰かと関わるきっかけを持つ」ための第一歩として、とても有効です。
-    </p>
-  </section>
+  </picture>
+
+  <p>
+    保健室登校とは、教室に入るのが難しい子どもが、学校の保健室で過ごす登校スタイルです。
+    保健室は静かで落ち着ける環境が整っており、養護教諭（保健の先生）が常駐しているため、
+    安心感があります。
+  </p>
+  <p>
+    活動内容は幅広く、学習を進めたり本を読んだり、体調を整えるために横になったりすることもできます。
+    「学校にいることに慣れる」「誰かと関わるきっかけをもつ」ための第一歩として、とても有効です。
+  </p>
+</section>
 
   <!-- ---------- 別室登校 ---------- -->
   <section class="card">
     <h3>◆ 別室登校</h3>
     <p>
       別室登校は、保健室ではなく、学校内の別の部屋（特別支援教室、空き教室など）で過ごす登校スタイルです。
-      ここでは、より個別的な学習支援が受けられたり、少人数で安心して過ごせたりする点が特徴です。
+      ここでは、より個別的な学習支援を受けたり、少人数で安心して過ごせたりする点が特徴です。
     </p>
     <p>
       教室の雰囲気や人間関係に不安を感じる子どもにとって、
@@ -154,10 +188,10 @@
     </p>
   </section>
 
-  <!-- ---------- ナビ ---------- -->
+  <!-- ---------- ナビ（★実ファイル直結） ---------- -->
   <nav class="page-nav" aria-label="ページナビ">
-    <a href="?page=kuni5"    class="nav-btn prev">＜ 戻る</a>
-    <a href="?page=center"   class="nav-btn next">進む ＞</a>
+    <a href="/kuni5.html" class="nav-btn prev">＜ 戻る</a>
+    <a href="/center2.html" class="nav-btn next">進む ＞</a>
   </nav>
 </main>
 </body>

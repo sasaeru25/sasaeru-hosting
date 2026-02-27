@@ -10,7 +10,14 @@
   <meta name="theme-color" content="#f29b8f">
 
   <!-- ★ コア / 共通芯（ほとんどのページで使う方針なら入れる） -->
-  <link rel="stylesheet" href="/css/common.css">
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
   <script src="/js/lib.js" defer></script>
   <script src="/js/store.js" defer></script>
   <script src="/js/common.js" defer></script>
@@ -126,9 +133,12 @@
 <body>
 <main class="wrap">
   <!-- バナー画像 -->
+  <picture>
+  <source srcset="/images_webp/学校との連携.webp" type="image/webp">
   <img class="banner-img"
-       src="https://lh3.googleusercontent.com/d/1jsXm5ovj3XxipaUZcZDSi85SxxFVQlYX"
+       src="/images/学校との連携.png"
        alt="学校との連携">
+</picture>
 
   <!-- 本文 -->
   <section class="card">
@@ -141,7 +151,7 @@
       そう考えて大丈夫です。
     </p>
     <p>
-      学校との連携には良さがありますが、毎朝の欠席連絡が負担になることもあります。
+      学校との連携にはよさがありますが、毎朝の欠席連絡が負担になることもあります。
       つらいときは、「登校できた日に電話する」「週◯回にまとめる」など、
       続けられる方法への変更をお願いしてみましょう。
       反対に、学校側から定期的に連絡をもらう形にして、受けた後のお子さんの反応
@@ -165,8 +175,8 @@
 
   <!-- フッター：内部遷移は ?page= に統一 -->
   <nav class="page-nav">
-    <a class="nav-btn" href="?page=home" target="_top">＜ メニューへ</a>
-  </nav>
+  <a class="nav-btn" href="/home.html">＜ メニューへ</a>
+</nav>
 </main>
 </body>
 </html>

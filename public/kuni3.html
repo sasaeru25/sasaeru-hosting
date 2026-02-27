@@ -4,26 +4,42 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#ffe6e6" />
-  <title>心の休息｜ささエール</title>
+  <title>心の休息</title>
 
   <!-- PWA（Manifest & Service-Worker） -->
   <link rel="manifest" href="/manifest.json">
   <script>
     if ('serviceWorker' in navigator)
-      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+      window.addEventListener('load', () =>
+        navigator.serviceWorker.register('/service-worker.js').catch(()=>{}));
   </script>
-<!-- ★ コア / 共通芯 -->
-<link rel="stylesheet" href="/css/common.css">
-<script src="/js/lib.js" defer></script>
-<script src="/js/store.js" defer></script>
 
+  <!-- ★ 共通芯 -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+  <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
 
   <!-- ===== スタイル全文 ===== -->
   <style>
     body{margin:0;font-family:"Noto Sans JP",system-ui,sans-serif;background:#ffe6e6;color:#333}
     .kp-wrapper{background:#f29b8f;max-width:430px;margin:auto;border-radius:8px;line-height:1.6;word-break:break-word;padding:2rem 1rem;padding-top:calc(2rem + env(safe-area-inset-top));padding-bottom:calc(1.5rem + env(safe-area-inset-bottom))}
-    .kp-heading{background:#fff;color:#333;display:inline-block;padding:.6rem 1.6rem;border-radius:30px;font-weight:bold;margin-bottom:2rem;font-size:1.3rem;box-shadow:0 2px 5px rgba(0,0,0,.1)}
-    .refs{font-size:.72rem;color:#666;line-height:1.4;margin-top:0;text-align:right;overflow-wrap:anywhere}
+
+    /* ★追加：見出しを中央寄せする行 */
+    .kp-heading-row{ text-align:center; }
+
+    .kp-heading{background:#fff;color:#333;display:inline-block;padding:.6rem 1.6rem;border-radius:30px;font-weight:bold;margin-bottom:2rem;font-size:1.3rem;box-shadow:0 2px 5px rgba(0,0,0,.1);text-align:center}
+
+    /* ★小さい文字を前面へ（重なった時の保険） */
+    .refs{font-size:.72rem;color:#666;line-height:1.4;margin-top:0;text-align:right;overflow-wrap:anywhere;position:relative;z-index:3}
+
     .quote-wrap{margin-bottom:1.2rem}
     .law-quote{background:#fff;border-radius:0;padding:1rem;margin-bottom:0;text-align:left;font-size:.98rem;line-height:1.6}
     .law-quote+.law-quote{margin-top:1.2rem}
@@ -41,7 +57,10 @@
 
 <body>
 <main class="kp-wrapper">
-  <h2 class="kp-heading">🍀 心の休息</h2>
+  <!-- ★見出し中央寄せ -->
+  <div class="kp-heading-row">
+    <h2 class="kp-heading">🍀 心の休息</h2>
+  </div>
 
   <!-- 白枠＋吹き出しセット１ -->
   <div class="quote-wrap">
@@ -79,11 +98,11 @@
     </p>
   </div>
 
-  <!-- フッター -->
+  <!-- フッター（★Firebaseで生きるリンクへ） -->
   <nav class="page-nav">
-  <a href="?page=kuni"  class="nav-btn">＜ 戻る</a>
-  <a href="?page=kuni4" class="nav-btn">進む ＞</a>
-</nav>
+    <a href="/kuni.html"  class="nav-btn">＜ 戻る</a>
+    <a href="/kuni4.html" class="nav-btn">進む ＞</a>
+  </nav>
 </main>
 </body>
 </html>

@@ -10,8 +10,15 @@
   <meta name="theme-color" content="#f29b8f">
 
   <!-- ★ コア / 共通芯 -->
-  <link rel="stylesheet" href="/css/common.css">
-  <script src="/js/lib.js"   defer></script>
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+  <script src="/js/lib.js" defer></script>
   <script src="/js/store.js" defer></script>
   <script src="/js/common.js" defer></script>
 
@@ -123,20 +130,21 @@
 <main class="wrap">
 
   <!-- バナー画像 -->
+  <picture>
+  <source srcset="/images_webp/学校との連携.webp" type="image/webp">
   <img class="banner-img"
-       src="https://lh3.googleusercontent.com/d/1jsXm5ovj3XxipaUZcZDSi85SxxFVQlYX"
+       src="/images/学校との連携.png"
        alt="学校との連携">
-
-  <!-- 本文 -->
+</picture>
+  <!-- 本文（★長い版：GASに合わせる） -->
   <section class="card">
     <p>
-      いまは子どもが学校を避けていても、保護者と担任が定期的に近況を交わしていること
-      そのものが、エネルギーがたまってきたとき動き出す鍵になります。負担のない方法
-      （メール・連絡アプリ・電話など）で、無理なくつながりを保つことを大事にしましょう。
+      今は子どもが学校を避けていても、保護者と担任が定期的に近況を交わしていることそのものが、
+      心のエネルギーがたまってきたときの動き出しのきっかけの鍵になります。負担のない方法（メール・連絡アプリ・電話など）で、
+      無理なくつながりを保つことを大事にしましょう。
     </p>
     <p>
-      学校からの関わりは、お子さんにとって刺激が大きい場合があります。だからこそ、
-      やり取りのあとは、
+      学校からの関わりは、お子さんにとって刺激が大きい場合があります。だからこそ、やり取りのあとは、
     </p>
     <ul>
       <li>「電話には出たくない様子」</li>
@@ -144,27 +152,28 @@
       <li>「ゲームの話題が出たら少し笑顔が見られた」</li>
     </ul>
     <p>
-      といった反応を短く伝えてください。先方もその情報をもとに関わりの量やタイミングを
-      調整できます。無理のないやり方で連携をとることが、この時期いちばんの力になります。
+      といった反応の変化をフィードバックしてください。先方側もその情報をもとに、関わりの量やタイミングを
+      増やしたり減らしたり調整できます。こうしたやり取りを遠慮なく言い合える関係づくりが、円滑な相談や、
+      再開のタイミングを逃さない助けになります。
     </p>
   </section>
 
-  <!-- そのまま使えるひと言 -->
+  <!-- そのまま使えるひと言（★長い版：GASに合わせる） -->
   <section class="note">
     <div class="note-head">
       <span class="bubble" aria-hidden="true"></span>
       そのまま使えるひと言
     </div>
     <ul>
-      <li>「毎朝の連絡が負担になっています。登校できる日のみや週◯回のまとめに変えられますか？」</li>
-      <li>「SCを保護者だけで利用したいです。予約方法と空いている日を教えてください。」</li>
-      <li>「連絡後の様子は私から短く報告します。次の関わりの強さを一緒に調整してください。」</li>
+      <li>「今は直接のやり取りが負担になることがあります。月1回・短時間で近況を共有させてください。」</li>
+      <li>「連絡後の反応を私から短く報告します。様子に合わせて、関わりの量やタイミングの調整をお願いできますか。」</li>
+      <li>「先日の電話ではゲームの話題に少し笑顔がありました。次回はそのあたりを手がかりに声かけをお願いします。」</li>
     </ul>
   </section>
 
-  <!-- フッター -->
+  <!-- フッター（★Firebase直リンクに修正） -->
   <nav class="page-nav">
-    <a class="nav-btn" href="?page=home">＜ メニューへ</a>
+    <a class="nav-btn" href="/home.html">＜ メニューへ</a>
   </nav>
 
 </main>

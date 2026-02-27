@@ -4,19 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#ffe6e6" />
-  <title>今の時代の不登校との向き合い方｜ささエール</title>
+  <title>今の時代の不登校との向き合い方</title>
 
   <!-- PWA（Manifest & Service-Worker） -->
   <link rel="manifest" href="/manifest.json" />
   <script>
     if ('serviceWorker' in navigator)
-      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+      window.addEventListener('load', () =>
+        navigator.serviceWorker.register('/service-worker.js').catch(()=>{}));
   </script>
-<!-- ★ コア / 共通芯 -->
-  <link rel="stylesheet" href="/css/common.css">
+
+  <!-- ★ コア / 共通芯 -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+  <script src="/js/common.js" defer></script>
   <script src="/js/lib.js" defer></script>
   <script src="/js/store.js" defer></script>
-
 
   <!-- スタイル（ページ用） -->
   <style>
@@ -40,6 +49,9 @@
       box-sizing:border-box;
     }
 
+    /* ★追加：見出しを中央寄せする行 */
+    .kp-heading-row{ text-align:center; }
+
     .kp-heading{
       background:#f0f0f0;
       padding:.7rem 1.5rem;
@@ -49,7 +61,7 @@
       margin-bottom:1.5rem;
       box-shadow:0 3px 6px rgba(0,0,0,.1);
       display:inline-block;
-      text-align:left;
+      text-align:center; /* ★中の改行も中央 */
       line-height:1.5;
     }
 
@@ -107,10 +119,13 @@
 
 <body>
 <main class="kp-wrapper">
-  <!-- 見出し -->
-  <h2 class="kp-heading">
-    今の時代の<br><span class="right-line">不登校との向き合い方</span>
-  </h2>
+
+  <!-- ★見出し中央寄せ -->
+  <div class="kp-heading-row">
+    <h2 class="kp-heading">
+      今の時代の<br><span class="right-line">不登校との向き合い方</span>
+    </h2>
+  </div>
 
   <!-- 本文 -->
   <div class="text-frame">
@@ -120,18 +135,19 @@
     </p>
   </div>
 
-  <!-- テーマ別リンクボタン -->
+  <!-- テーマ別リンクボタン（★Firebaseで生きるリンクへ） -->
   <div class="theme-btn-list">
-    <a class="theme-btn" href="?page=kuni2">🍀 不登校はどの子にも起こりうること</a>
-<a class="theme-btn" href="?page=kuni3">🍀 心の休息</a>
-<a class="theme-btn" href="?page=kuni4">🍀 多様な学びの場</a>
-<a class="theme-btn" href="?page=kuni5">🍀 学びの場情報</a>
+    <a class="theme-btn" href="/kuni2.html">🍀 不登校はどの子にも起こりうること</a>
+    <a class="theme-btn" href="/kuni3.html">🍀 心の休息</a>
+    <a class="theme-btn" href="/kuni4.html">🍀 多様な学びの場</a>
+    <a class="theme-btn" href="/kuni5.html">🍀 学びの場情報</a>
   </div>
 
-  <!-- フッター -->
+  <!-- フッター（★Firebaseで生きるリンクへ） -->
   <nav class="page-nav">
-  <a href="?page=kuni" class="nav-btn">＜ 戻る</a>
-</nav>
+    <a href="/kuni.html" class="nav-btn">＜ 戻る</a>
+  </nav>
+
 </main>
 </body>
 </html>

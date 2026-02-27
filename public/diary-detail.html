@@ -5,10 +5,21 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>記録の詳細</title>
 
-  <!-- 芯（共通・必須） -->
-  <link rel="stylesheet" href="/css/common.css">
-  <script defer src="/js/lib.js"></script>
-  <script defer src="/js/store.js"></script>
+  <!-- 芯（共通・推奨の並び） -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+  <script src="/js/common.js" defer></script>  <!-- SW登録（軽いやつ） -->
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+
+  <!-- 日記ページだけ追加 -->
+  <script src="/js/diary.js" defer></script>
 
   <meta name="theme-color" content="#FFF9F2">
 
@@ -59,7 +70,7 @@
 </head>
 
 <body>
-<main class="detail-page" aria-labelledby="detail-title">
+<main class="detail-page" aria-labelledby="detail-title" data-page="diary-detail">
   <div class="page-head"><h2 id="detail-title">🐤 記録の詳細 🐤</h2></div>
 
   <!-- 詳細カード -->
@@ -89,81 +100,16 @@
   </section>
 
   <nav class="bottom-links" aria-label="リンク">
-    <a href="?page=diary"      class="purple" id="lnk-top">← 記録トップ</a>
-    <a href="?page=diary-list" class="purple" id="lnk-list">一覧表示</a>
+    <!-- ★変更：GASの ?page= ではなく .html へ（見た目は同じ） -->
+    <a href="/diary.html"      class="purple" id="lnk-top">← 記録トップ</a>
+    <a href="/diary-list.html" class="purple" id="lnk-list">一覧表示</a>
   </nav>
 </main>
 
-<script>
-(async () => {
-  // 芯（store.js）が用意する想定
-  const loadRecords = window.loadRecords;
-  const saveRecords = window.saveRecords;
-
-  const params = new URL(location.href).searchParams;
-  const id = params.get('id');
-
-  const $card      = document.getElementById('card');
-  const $nf        = document.getElementById('notfound');
-  const $dateText  = document.getElementById('dateText');
-  const $timeText  = document.getElementById('timeText');
-  const $titleText = document.getElementById('titleText');
-  const $bodyText  = document.getElementById('bodyText');
-
-  // go() があれば統一、なければ location.href でフォールバック
-  const nav = (page, qs='') => {
-    if (typeof window.go === 'function') return window.go(page, qs);
-    location.href = `?page=${encodeURIComponent(page)}${qs ? `&${qs}` : ''}`;
-  };
-
-  document.getElementById('lnk-top').addEventListener('click', (e)=>{ e.preventDefault(); nav('diary'); });
-  document.getElementById('lnk-list').addEventListener('click',(e)=>{ e.preventDefault(); nav('diary-list'); });
-  document.getElementById('nf-top').onclick = ()=> nav('diary-list');
-
-  // ストア未準備なら「見つからない」扱いにしない（事故防止）
-  if (!loadRecords || !saveRecords){
-    $nf.hidden = false;
-    $nf.querySelector('div:nth-child(2)').textContent =
-      '読み込み準備中です。少し待ってから戻ってください（store.js が読み込めていない可能性があります）。';
-    return;
-  }
-
-  if (!id){
-    $nf.hidden = false;
-    return;
-  }
-
-  const all = await loadRecords();
-  const rec = all.find(r => String(r.id) === String(id));
-
-  if (!rec){
-    $nf.hidden = false;
-    return;
-  }
-
-  const ts  = rec.recordDate ?? rec.createdAt;
-  const d   = new Date(ts);
-  const pad = n => String(n).padStart(2,'0');
-  const ymd = `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
-  const hm  = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
-
-  $dateText.textContent  = rec.dateText || ymd;
-  $timeText.textContent  = `${ymd} ${hm}`;
-  $titleText.textContent = (rec.title && rec.title.trim()) ? rec.title.trim() : '（タイトルなし）';
-  $bodyText.textContent  = rec.content || '';
-
-  $card.hidden = false;
-
-  document.getElementById('btn-back').onclick = ()=> nav('diary-list');
-  document.getElementById('btn-edit').onclick = ()=> nav('diary-new', `edit=${encodeURIComponent(rec.id)}`);
-
-  document.getElementById('btn-del').onclick  = async()=>{
-    if (!confirm('この記録を削除しますか？')) return;
-    await saveRecords(all.filter(r => String(r.id) !== String(rec.id)));
-    nav('diary-list');
-  };
-})();
-</script>
+<!--
+  ★重要：ページ内ロジックは削除（完全端末保管は store.js のみ使用）
+  /js/diary.js 側で data-page="diary-detail" を見て初期化する
+-->
 
 </body>
 </html>

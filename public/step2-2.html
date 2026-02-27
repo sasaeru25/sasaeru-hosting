@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f29b8f">
-  <title>ステップ2-2｜ささエール</title>
+  <title>ステップ2-2</title>
 
   <!-- ★ PWA -->
   <link rel="manifest" href="/manifest.json">
@@ -16,11 +16,22 @@
     }
   </script>
 
-  <!-- ★ コア / 共通芯 -->
-  <link rel="stylesheet" href="/css/common.css">
-  <script src="/js/lib.js"   defer></script>
-  <script src="/js/store.js" defer></script>
+    <!-- ===== 共通の芯（全ページ共通） ===== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+
+  <!-- 共通JS（依存順：common → lib → store） -->
   <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+  <!-- ================================ -->
+
 
   <style>
     /* 共通 ----------------------------------------------------*/
@@ -31,23 +42,48 @@
     }
 
     /* ── 上段 ── */
-    .top-box{
-      background:#fef0cf;padding:1.2rem;border-radius:8px;
-      font-size:1rem;line-height:1.8;overflow:hidden;
-    }
-    .top-box img{
-      float:right;width:120px;height:auto;margin:0 0 0 1rem;border-radius:8px;
-      shape-outside:margin-box;
-    }
+   .top-box{
+  background:#fef0cf;
+  padding:1.2rem;
+  border-radius:8px;
+  font-size:1rem;
+  line-height:1.8;
 
-    /* ── 中段（波線フレーム）── */
-    .middle-box{
-      background:url("https://lh3.googleusercontent.com/d/1GhxIo1goauswQZWV0wLyg11aUFn6ytJs")
-        center/100% 100% no-repeat;
-      padding:4rem 1.5rem;font-size:.95rem;line-height:1.8;
-      border-radius:8px;box-sizing:border-box;
-    }
+  overflow:visible;           /* ★hiddenは外す（被りの元になりやすい） */
+}
 
+/* 画像ラッパ：右寄せ＋文字折り返し（shape-outside無し） */
+.top-box .illu-wrap{
+  float:right;
+  width:clamp(95px, 28vw, 120px);
+  margin:.2rem -4px .6rem 1rem;
+}
+.top-box .illu-wrap img{
+  width:100%;
+  height:auto;
+  border-radius:8px;
+  display:block;
+}
+
+/* floatの高さを拾う */
+.top-box::after{ content:""; display:block; clear:both; }
+
+   /* ── 中段（波線フレーム）── */
+.middle-box{
+  background-image: image-set(
+    url("/images_webp/もくもく枠.webp") type("image/webp"),
+    url("/images/もくもく枠.png") type("image/png")
+  );
+  background-position:center;
+  background-size:100% 100%;
+  background-repeat:no-repeat;
+
+  padding:4rem 1.5rem;
+  font-size:.95rem;
+  line-height:1.8;
+  border-radius:8px;
+  box-sizing:border-box;
+}
     /* ── フッターナビ ── */
     .page-nav{
       display:flex;justify-content:space-between;align-items:center;
@@ -58,10 +94,10 @@
 
     /* モバイル調整 */
     @media(max-width:360px){
-      .top-box{font-size:.95rem;}
-      .top-box img{width:95px;}
-      .middle-box{font-size:.9rem;padding:3.5rem 1rem;}
-    }
+  .top-box{font-size:.95rem;}
+  .top-box .illu-wrap{ width:95px; }  /* ★ここ */
+  .middle-box{font-size:.9rem;padding:3.5rem 1rem;}
+}
   </style>
 </head>
 
@@ -70,7 +106,10 @@
 
     <!-- 上段 -->
     <div class="top-box">
-      <img src="https://lh3.googleusercontent.com/d/1X-CUdKsjOqbebzw9StowzBx1KlaPr0ds" alt="悩む女性">
+     <picture class="illu-wrap">
+  <source srcset="/images_webp/悩む女性３.webp" type="image/webp">
+  <img src="/images/悩む女性３.png" alt="悩む女性３">
+</picture>
       本当に困っています！体の不調を訴えたり、学校に行かせようとしても頑なに嫌がって…。根負けして休む日も増えてきています。このまま不登校になっちゃうんじゃないかと不安でたまりません。<br>
       でもどうしたらいいかわからなくて…。
     </div>
@@ -89,9 +128,9 @@
 
     <!-- フッター -->
     <nav class="page-nav">
-      <a href="?page=step2"   class="nav-btn prev">＜ 戻る</a>
-      <a href="?page=step2-3" class="nav-btn next">進む ＞</a>
-    </nav>
+  <a href="/step2.html"    class="nav-btn prev">＜ 戻る</a>
+  <a href="/step2-3.html"  class="nav-btn next">進む ＞</a>
+</nav>
 
   </div>
 </body>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f29b8f">
-  <title>SOSのサイン｜ささエール</title>
+  <title>SOSのサイン</title>
 
   <!-- ★ PWA -->
   <link rel="manifest" href="/manifest.json">
@@ -15,11 +15,19 @@
       });
     }
   </script>
-<!-- ★ コア / 共通芯 -->
-<link rel="stylesheet" href="/css/common.css">
-<script src="/js/lib.js"   defer></script>
-<script src="/js/store.js" defer></script>
 
+  <!-- ===== 共通の芯（全ページ共通） ===== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+  <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
 
   <!-- ★ ページ専用スタイル（全文） -->
   <style>
@@ -28,75 +36,130 @@
       margin:0;
       font-family:"Noto Sans JP",sans-serif;
       line-height:1.6;
-      padding:1rem;
       background:#f29b8f;
+      /* ★重要：ここで padding を入れない（帯ズレ原因） */
     }
-    .kp-wrapper{max-width:430px;margin:auto;}
-    .kp-heading,
-    .kp-lead{text-align:left;}
+
+    /* ★他の kodomo 系と同じ “枠セット” に統一 */
+    .kp-wrapper{
+      background:#f29b8f;
+      padding:1.5rem 1rem 2.5rem;
+      max-width:430px;
+      margin:auto;
+      border-radius:4px;
+    }
+
+    .kp-heading-row{ text-align:center; }
+    .kp-heading{
+      background:#ffe6e6;
+      color:#333;
+      display:inline-block;
+      padding:.4rem 1.8rem;
+      border-radius:20px;
+      margin:0 0 1rem;
+      text-align:left;
+    }
+
+    .kp-lead{
+      background:#fff3e0;
+      padding:1rem;
+      border-radius:6px;
+      margin:0 0 1.4rem;
+      font-size:.92rem;
+      line-height:1.6;
+      text-align:left;
+    }
 
     /* ===== 白い枠 ===== */
     .sos-box{
-      background:#fff;border:2px solid #eee;border-radius:8px;
-      padding:1rem;margin-bottom:2rem;overflow:hidden;
+      background:#fff;
+      border:2px solid #eee;
+      border-radius:8px;
+      padding:1rem;
+      margin-bottom:2rem;
+      overflow:hidden;
     }
 
     /* ===== 画像レイアウト ===== */
     .float-img{
-      float:right;width:150px;height:auto;margin:0 0 1rem 1rem;
+      float:right;
+      width:150px;
+      height:auto;
+      margin:0 0 1rem 1rem;
     }
 
     /* ===== チェックリスト ===== */
-    .txt-col{list-style-type:"✔︎ ";padding-left:1.4em;margin:0;text-align:left;}
-    .txt-col li{text-align:left;}
+    .txt-col{
+      list-style-type:"✔︎ ";
+      padding-left:1.4em;
+      margin:0;
+      text-align:left;
+    }
+    .txt-col li{ text-align:left; }
 
     /* ===== フッターリンク ===== */
-    .page-nav{display:flex;justify-content:space-between;}
+    .page-nav{ display:flex; justify-content:space-between; }
     .nav-btn{
-      padding:.6rem 1.4rem;background:#f29b8f;color:#6b2e95;
-      text-decoration:none;border-radius:4px;font-weight:600;
+      padding:.6rem 1.4rem;
+      background:#f29b8f;
+      color:#6b2e95;
+      text-decoration:none;
+      border-radius:4px;
+      font-weight:600;
     }
 
     @media(max-width:420px){
       .float-img{
-        float:none;display:block;width:min(70%,220px);margin:0 auto 1rem;
+        float:none;
+        display:block;
+        width:min(70%,220px);
+        margin:0 auto 1rem;
       }
     }
   </style>
 </head>
 
 <body>
-<main class="kp-wrapper">
+  <main class="kp-wrapper">
+    <div class="clip-name" data-clip="⭐ SOSのサイン"></div>
+
+    <div class="kp-heading-row">
   <h2 class="kp-heading">🍀 SOSのサイン</h2>
+</div>
 
-  <p class="kp-lead">
-    「学校に行けない！」となる前に、子どもたちのつらさの現れとして、様々なSOSのサインが出ることがあります。それぞれが、子どもの不安や緊張が高まるとよく見られる行動です。身体に現れるものや、不安やつらさから心の面に現れるものもあります。
-  </p>
-
-  <!-- 白い枠で囲んだブロック -->
-  <section class="sos-box">
-    <img src="https://lh3.googleusercontent.com/d/1iX8_RcFGSwoRNlBLdGw1gQnIEXar1yFq"
-         alt="腹痛" class="float-img">
-
-    <ul class="txt-col">
-      <li>腹痛</li><li>頭痛</li><li>発熱</li><li>不眠</li><li>食欲不振</li>
-      <li>情緒不安定 <small>(イライラ、過度に甘える、すぐ泣く)</small></li>
-      <li>自分の部屋から出てこない</li><li>宿題ができなくなる</li>
-      <li>提出物を出さなくなる</li><li>忘れ物が多くなる</li>
-      <li>成績が急に下がる</li><li>集中力がなくなる</li>
-    </ul>
-
-    <p style="text-align:left;margin-top:1rem;">
-      <img src="https://lh3.googleusercontent.com/d/1ISm_fGaFzPrnfpQGVCtnW8ffdIYm6Chr=w600-h0"
-           alt="書類" width="200">
+    <!-- リード（枠つきに戻す） -->
+    <p class="kp-lead">
+      「学校に行けない！」となる前に、子どもたちのつらさの現れとして、様々なSOSのサインが出ることがあります。それぞれが、子どもの不安や緊張が高まるとよく見られる行動です。身体に現れるものや、不安やつらさから心の面に現れるものもあります。
     </p>
-  </section>
 
-  <!-- フッターリンク -->
-  <nav class="page-nav">
-    <a href="/kodomo.html"  class="nav-btn prev">＜ 子どもの心理</a>
-    <a href="/kodomo4.html" class="nav-btn next">進む ＞</a>
-  </nav>
-</main>
+    <!-- 白い枠で囲んだブロック -->
+    <section class="sos-box">
+      <picture>
+    <source srcset="/images_webp/腹痛.webp" type="image/webp">
+  <img src="/images/腹痛.png" alt="腹痛" class="float-img" loading="lazy" decoding="async">
+</picture>
+
+      <ul class="txt-col">
+        <li>腹痛</li><li>頭痛</li><li>発熱</li><li>不眠</li><li>食欲不振</li>
+        <li>情緒不安定 <small>(イライラ、過度に甘える、すぐ泣く)</small></li>
+        <li>自分の部屋から出てこない</li><li>宿題ができなくなる</li>
+        <li>提出物を出さなくなる</li><li>忘れ物が多くなる</li>
+        <li>成績が急に下がる</li><li>集中力がなくなる</li>
+      </ul>
+
+      <p style="text-align:left;margin-top:1rem;">
+      <picture>
+  <source srcset="/images_webp/書類.webp" type="image/webp">
+  <img src="/images/書類.png" alt="書類" width="200" loading="lazy" decoding="async">
+</picture>
+      </p>
+    </section>
+
+    <!-- フッターリンク（動作OKなのでそのまま） -->
+    <nav class="page-nav">
+      <a href="/kodomo.html"  class="nav-btn prev">＜ 子どもの心理</a>
+      <a href="/kodomo4.html" class="nav-btn next">進む ＞</a>
+    </nav>
+  </main>
 </body>
 </html>

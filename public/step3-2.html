@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f29b8f">
-  <title>ステップ3-2｜ささエール</title>
+  <title>ステップ3-2</title>
 
   <!-- ★ PWA -->
   <link rel="manifest" href="/manifest.json">
@@ -16,11 +16,19 @@
     }
   </script>
 
-  <!-- ★ コア / 共通芯（クリップ対応） -->
-  <link rel="stylesheet" href="/css/common.css">
-  <script src="/js/lib.js"   defer></script>
-  <script src="/js/store.js" defer></script>
+  <!-- ===== 共通の芯（全ページ共通） ===== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
   <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+  <!-- ================================ -->
 
   <style>
     /* ===== ベース ===== */
@@ -31,38 +39,66 @@
     }
 
     /* ── 上段 ── */
-    .top-box{
-      background:#fef0cf;padding:1.2rem;border-radius:8px;
-      font-size:1rem;line-height:1.85;overflow:hidden;box-sizing:border-box;
-    }
-    .top-box img{
-      float:right;width:120px;height:auto;margin:0 0 0 1rem;border-radius:8px;
-      shape-outside:margin-box;
-    }
+.top-box{
+  background:#fef0cf;
+  padding:1.2rem;
+  border-radius:8px;
+  font-size:1rem;
+  line-height:1.85;
+  box-sizing:border-box;
+
+  overflow:visible;              /* ★hiddenやめる */
+}
+
+/* 画像ラッパ：右寄せ＋文字折り返し（iPhone安定） */
+.top-box .illu-wrap{
+  float:right;
+  width:clamp(95px, 28vw, 120px);
+  margin:.2rem -4px .6rem 1rem;  /* ★右寄せ気味 */
+}
+.top-box .illu-wrap img{
+  width:100%;
+  height:auto;
+  border-radius:8px;
+  display:block;
+}
+
+/* floatの高さを拾う */
+.top-box::after{ content:""; display:block; clear:both; }
 
     /* ── 中段 ── */
     .middle-box{
-      background:url("https://lh3.googleusercontent.com/d/1GhxIo1goauswQZWV0wLyg11aUFn6ytJs")
-        center/100% 100% no-repeat;
-      padding:4rem 1.5rem;font-size:.95rem;line-height:1.8;
-      border-radius:8px;box-sizing:border-box;
-    }
+  background-image: image-set(
+    url("/images_webp/もくもく枠.webp") type("image/webp"),
+    url("/images/もくもく枠.png") type("image/png")
+  );
+  background-position:center;
+  background-size:100% 100%;
+  background-repeat:no-repeat;
 
-    /* ── フッター nav ── */
+  padding:4rem 1.5rem;font-size:.95rem;line-height:1.8;
+  border-radius:8px;box-sizing:border-box;
+}
+
+    /* ── フッター nav（左右に離す） ── */
     .page-nav{
-      display:flex;justify-content:center;gap:2.2rem;
-      padding:2rem 0 1rem;font-weight:700;font-size:1rem;
+      display:flex;
+      justify-content:space-between;   /* ← 左右に配置 */
+      align-items:center;
+      gap:1rem;
+      padding:2rem 0 1rem;
+      font-weight:700;font-size:1rem;
     }
     .nav-btn{color:#4d2bb6;text-decoration:none;}
     .nav-btn:visited{color:#4d2bb6;}
 
     /* ── モバイル調整 ── */
-    @media(max-width:360px){
-      .top-box{font-size:.95rem;}
-      .top-box img{width:95px;}
-      .middle-box{font-size:.9rem;padding:3.5rem 1rem;}
-      .nav-btn{font-size:.9rem;}
-    }
+   @media(max-width:360px){
+  .top-box{font-size:.95rem;}
+  .top-box .illu-wrap{ width:95px; }
+  .middle-box{font-size:.9rem;padding:3.5rem 1rem;}
+  .nav-btn{font-size:.9rem;}
+}
   </style>
 </head>
 
@@ -71,8 +107,11 @@
 
     <!-- 上段 -->
     <div class="top-box">
-      <img src="https://lh3.googleusercontent.com/d/135E9nToIDvdSmxdTWl_XNbwRQJGnnykO" alt="悩む女性">
-      不登校に悩んでいます…。学校に行けず、家にいるのですが、昼夜逆転して生活リズムも崩れています。家族との会話も減って、へやにこもってばかり…。<br>
+    <picture class="illu-wrap">
+    <source srcset="/images_webp/悩む女性２.webp" type="image/webp">
+    <img src="/images/悩む女性２.png" alt="悩む女性２">
+　　</picture>
+      不登校に悩んでいます…。学校に行けず、家にいるのですが、昼夜逆転して生活リズムも崩れています。家族との会話も減って、部屋にこもってばかり…。<br>
       イライラして家族に当たり散らすこともあります。このままずっと続くのか、どうしたらいいのか、相談できる人もいなく、本当に困っています…。
     </div>
 
@@ -88,10 +127,10 @@
       子どもの状況もマイナスに見える面が増えてきて、先の見通しも立たず、つらい時期だと思います。子どもを見守り支えながら、保護者の皆さんのメンタルケアも大切にしてください。ぜひ相談機関を利用して、今のこと、今後のことを相談してみましょう。
     </div>
 
-    <!-- フッター -->
+    <!-- フッター（Firebase 直リンク + 左右に離す） -->
     <nav class="page-nav">
-      <a href="?page=step3"   class="nav-btn prev">＜ 戻る</a>
-      <a href="?page=step3-3" class="nav-btn next">進む ＞</a>
+      <a href="/step3.html"    class="nav-btn prev">＜ 戻る</a>
+      <a href="/step3-3.html"  class="nav-btn next">進む ＞</a>
     </nav>
 
   </main>

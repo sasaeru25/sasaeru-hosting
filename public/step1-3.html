@@ -16,11 +16,22 @@
     }
   </script>
 
-  <!-- ★ コア / 共通芯 -->
-  <link rel="stylesheet" href="/css/common.css">
-  <script src="/js/lib.js"   defer></script>
-  <script src="/js/store.js" defer></script>
+    <!-- ===== 共通の芯（全ページ共通） ===== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+
+  <!-- 共通JS（依存順：common → lib → store） -->
   <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+  <!-- ================================ -->
+
 
   <style>
     body{
@@ -38,21 +49,41 @@
       text-align:center;font-size:1.4rem;font-weight:bold;color:#333;margin-top:1rem;
     }
 
-    /* 上下段を折り返しレイアウトに対応 */
-    .content-box{
-      display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;
-      background:#fef0cf;padding:1.5rem;border-radius:4px;
-    }
-    .content-box img{
-      width:120px;height:auto;flex-shrink:0;max-width:100%;
-    }
-    .content-box ul,.content-box p{
-      flex:1 1 200px;min-width:0;line-height:1.8;
-    }
+    /* content-box：iPhone安定（float回り込み） */
+.content-box{
+  background:#fef0cf;
+  padding:1.5rem;
+  border-radius:4px;
+  line-height:1.8;
+}
 
-    @media(max-width:360px){
-      .content-box img{width:90px;}
-    }
+/* 画像を右に回して、文字を折り返す */
+.content-box .illu-wrap{
+  float:right;
+  width:clamp(90px, 28vw, 120px);
+  margin:.2rem -4px .6rem 1rem;   /* ★右寄せ強め（不要なら -4px→0） */
+}
+.content-box .illu-wrap img{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+/* ul/pの余白を整えて“被り感”を減らす */
+.content-box ul{ margin:.2rem 0 .8rem 1.2rem; padding:0; }
+.content-box p{ margin:.4rem 0 .8rem; }
+
+/* floatの高さを拾う */
+.content-box::after{ content:""; display:block; clear:both; }
+
+/* 小さいスマホだけ：画像を下に回して中央寄せ（任意だけど安心） */
+@media(max-width:360px){
+  .content-box .illu-wrap{
+    float:none;
+    width:70%;
+    margin:.2rem auto .8rem;
+  }
+}
 
     /* フッター */
     .page-nav{
@@ -70,7 +101,10 @@
     <div class="banner">子どもの様子</div>
 
     <div class="content-box">
-      <img src="https://lh3.googleusercontent.com/d/1CrozN48YtFyKKhI38iqSQOMiCpzkXpeM" alt="食欲がない子ども">
+      <picture class="illu-wrap">
+  <source srcset="/images_webp/食欲ない子ども.webp" type="image/webp">
+  <img src="/images/食欲ない子ども.png" alt="食欲ない子ども">
+</picture>
       <ul>
         <li><strong>学校に行き渋るようになる</strong></li>
         <li><strong>腹痛や頭痛が増える</strong></li>
@@ -97,9 +131,9 @@
 
     <!-- フッター -->
     <nav class="page-nav">
-      <a href="?page=step1-2" class="nav-btn prev">＜ 戻る</a>
-      <a href="?page=step1-4" class="nav-btn next">進む ＞</a>
-    </nav>
+  <a href="/step1-2.html" class="nav-btn prev">＜ 戻る</a>
+  <a href="/step1-4.html" class="nav-btn next">進む ＞</a>
+</nav>
 
   </div>
 </body>

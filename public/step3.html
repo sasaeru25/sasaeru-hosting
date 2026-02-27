@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f29b8f">
-  <title>ステップ3 表紙｜ささエール</title>
+  <title>ステップ3 表紙</title>
 
   <!-- ★ PWA -->
   <link rel="manifest" href="/manifest.json">
@@ -17,7 +17,14 @@
   </script>
 
   <!-- ★ コア / 共通芯（クリップ対応） -->
-  <link rel="stylesheet" href="/css/common.css">
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
   <script src="/js/lib.js"   defer></script>
   <script src="/js/store.js" defer></script>
   <script src="/js/common.js" defer></script>
@@ -64,8 +71,10 @@
 
     <div class="layer-container">
       <div class="cream-bg"></div>
-      <img src="https://lh3.googleusercontent.com/d/1ZpPcvPqIzooWWSgKTW9yZTc3fBaA5oEx"
-           alt="レース枠" class="lace-overlay">
+     <picture class="lace-overlay">
+  <source srcset="/images_webp/レース枠.webp" type="image/webp">
+  <img src="/images/レース枠.png" alt="レース枠" class="lace-overlay">
+</picture>
       <div class="text-overlay">
         子どもの不登校に<br>
         寄り添う<br>
@@ -74,9 +83,9 @@
     </div>
 
     <nav class="page-nav">
-      <a href="?page=home"    class="nav-btn prev">＜ 戻る</a>
-      <a href="?page=step3-2" class="nav-btn next">進む ＞</a>
-    </nav>
+  <a href="/home.html"    class="nav-btn prev">＜ 戻る</a>
+  <a href="/step3-2.html" class="nav-btn next">進む ＞</a>
+</nav>
 
   </main>
 </body>

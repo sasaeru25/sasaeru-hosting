@@ -4,77 +4,222 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f3a9a0">
-  <title>初期｜ささエール</title>
+  <title>初期</title>
 
-  <!-- ★ PWA（Manifest & Service-Worker） -->
+  <!-- ★ PWA -->
   <link rel="manifest" href="/manifest.json">
   <script>
     if ('serviceWorker' in navigator)
-      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+      window.addEventListener('load', () =>
+        navigator.serviceWorker.register('/service-worker.js').catch(()=>{}));
   </script>
 
-  <!-- === 共通の芯 ========================================= -->
-  <link rel="stylesheet" href="/css/common.css">
-  <script src="/js/lib.js"   defer></script>
-  <script src="/js/store.js" defer></script>  <!-- ⭐クリップ／📝日記 -->
-  <!-- ===================================================== -->
+  <!-- ===== 共通の芯（全ページ共通） ===== -->
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
 
-  <!-- ===== ページ固有 CSS ===== -->
+<link rel="stylesheet" href="/css/common.css">
+  <script src="/js/common.js" defer></script>
+  <script src="/js/lib.js" defer></script>
+  <script src="/js/store.js" defer></script>
+
   <style>
-    html,body{height:100%}*,*::before,*::after{box-sizing:border-box}
-    body{margin:0;background:#f3a9a0;color:#333;font-family:"Noto Sans JP",system-ui,-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;font-size:16px;line-height:1.8}
-    .kp-wrapper{min-height:100%;padding:16px;padding-top:max(16px,env(safe-area-inset-top));padding-right:max(8px,env(safe-area-inset-right));padding-bottom:max(16px,env(safe-area-inset-bottom));padding-left:max(8px,env(safe-area-inset-left))}
-    .kp-card{max-width:430px;margin:0 auto;padding:16px 8px 18px;text-align:left}
-    .phase-heading{display:block;margin:4px auto 12px;width:max-content;background:#fffcc0;border:2px dashed #ddb;border-radius:30px;padding:.6rem 1.8rem;font-weight:700;font-size:1.6rem;line-height:1.2;text-align:center}
-    .label-yellow{display:inline-block;background:#ffd34d;border-radius:18px;padding:.35rem .8rem;font-weight:700;margin-bottom:.5rem}
-    .cream-panel{background:#fff3d6;border-radius:12px;padding:12px;margin-bottom:.08rem;display:grid;grid-template-columns:1fr 120px;gap:12px;align-items:start}
-    .panel-text{margin:0;line-height:1.8}
-    .panel-illu{width:140px;height:auto;border-radius:8px;justify-self:end}
-    @media(max-width:430px){.cream-panel{grid-template-columns:1fr}.panel-illu{width:60%;justify-self:center;margin-top:8px}}
+    /* ===== 共通ベース（前兆期と同一） ===== */
+    html, body { height: 100%; }
+    *, *::before, *::after { box-sizing: border-box; }
 
-    /* ▼▼▼ ここから：吹き出し「ズレない」安定版 ▼▼▼ */
-    .bubble-think{margin:.18rem 0 .35rem}
-    .think-wrap{
-      position:relative;
-      width:100%;
-    }
-    .think-svg{
-      display:block;
-      width:100%;
-      height:auto;
-    }
-    .think-svg .line{stroke-width:2;vector-effect:non-scaling-stroke}
-
-    /* 文字はHTMLで重ねる（端末差でズレない） */
-    .think-text{
-      position:absolute;
-      inset:0;
-      /* 吹き出しの内側に収める余白（ここをいじると見た目が変わる） */
-      padding:18% 20% 18% 14%;
-      display:flex;
-      align-items:flex-start;
-      justify-content:flex-start;
-      pointer-events:none;
+    body{
+      margin:0;
+      background:#f3a9a0;
       color:#333;
       font-family:"Noto Sans JP",system-ui,-apple-system,BlinkMacSystemFont,
-                   "Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+                  "Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
       font-size:16px;
-      line-height:1.45;
+      line-height:1.8;
     }
-    .think-text p{margin:0}
-    /* ちょい小さい端末は文字だけ少し小さく */
-    @media(max-width:360px){
-      .think-text{font-size:15px}
-    }
-    /* ▲▲▲ ここまで：吹き出し安定版 ▲▲▲ */
 
-    .info-box{border-radius:10px;padding:10px 12px;margin:.6rem 0;line-height:1.8;text-align:left}
-    .info-box.mint{background:#c9f1ee}.info-box.white{background:#ffffff}
-    .phase-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:.8rem}
-    .phase-btn{display:flex;align-items:center;justify-content:center;padding:1rem 0;border-radius:22px;background:#fff7b2;border:2px dashed #f1d662;color:#333;text-decoration:none;box-shadow:0 2px 4px rgba(0,0,0,.12);font-weight:700;writing-mode:vertical-rl;text-orientation:upright;font-size:clamp(.9rem,3.2vw,1.05rem)}
-    .phase-btn span{line-height:1.1}
-    @media(max-width:430px){.phase-btn{font-size:.9rem;padding:.9rem 0}}
-    .page-nav{display:flex;justify-content:center;gap:10px;margin-top:1rem}.nav-btn{color:#7e57c2;text-decoration:none;font-weight:700;padding:.7rem 0}
+    .kp-wrapper{
+      min-height:100svh; /* ★下が切れない */
+      background:#f3a9a0;
+      padding:16px;
+      padding-top:max(16px, env(safe-area-inset-top));
+      padding-right:max(8px, env(safe-area-inset-right));
+      padding-bottom:max(16px, env(safe-area-inset-bottom));
+      padding-left:max(8px, env(safe-area-inset-left));
+    }
+
+    .kp-card{
+      width:100%;
+      max-width:430px;
+      margin:0 auto;
+      padding:16px 8px 18px;
+      text-align:left;
+    }
+
+    .phase-heading{
+      display:block;
+      margin:4px auto 12px;
+      width:max-content;
+      background:#fffcc0;
+      border:2px dashed #ddb;
+      border-radius:30px;
+      padding:.6rem 1.8rem;
+      font-weight:700;
+      font-size:1.6rem;
+      line-height:1.2;
+      text-align:center;
+    }
+
+    .label-yellow{
+      display:block;
+      width:max-content;
+      background:#ffd34d;
+      color:#333;
+      border-radius:18px;
+      padding:.35rem .8rem;
+      font-weight:700;
+      margin:.2rem 0 .5rem 0;
+    }
+
+    .cream-panel{
+  background:#fff3d6;
+  border-radius:12px;
+  padding:12px;
+  margin-bottom:.4rem;
+  display:grid;
+  grid-template-columns:1fr auto; /* ★右側autoで安定 */
+  gap:14px;
+  align-items:start;
+  justify-items:start;
+}
+
+.panel-text{
+  margin:0;
+  line-height:1.8;
+  min-width:0;               /* ★折り返し安定（重要） */
+}
+
+.cream-panel picture{ justify-self:end; }
+
+/* 画像（前兆期と同じくらい） */
+.panel-illu{
+  width:min(155px, 40vw); /* ★140→155 / 36vw→40vw */
+  height:auto;
+  border-radius:10px;
+  justify-self:end;
+  align-self:start;
+  display:block;
+}
+
+/* ★極小端末だけ縦積み（430→360） */
+@media (max-width:360px){
+  .cream-panel{ grid-template-columns:1fr; }
+  .panel-illu{
+    width:55%;
+    justify-self:center;
+    margin-top:6px;
+  }
+}
+
+    /* ===== 情報ボックス ===== */
+    .info-box{
+      border-radius:10px;
+      padding:10px 12px;
+      margin:.6rem 0;
+      line-height:1.8;
+      text-align:left;
+    }
+    .info-box.mint{ background:#c9f1ee; }
+    .info-box.white{ background:#ffffff; }
+
+    /* ===== フェーズ切替 ===== */
+    .phase-row{
+      display:grid;
+      grid-template-columns:repeat(5, minmax(0, 1fr));
+      column-gap:10px;
+      row-gap:10px;
+      margin-top:.8rem;
+    }
+
+    .phase-btn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:1rem 0;
+      border-radius:22px;
+      background:#fff7b2;
+      border:2px dashed #f1d662;
+      color:#333;
+      text-decoration:none;
+      box-shadow:0 2px 4px rgba(0,0,0,.12);
+      font-weight:700;
+      writing-mode:vertical-rl;
+      text-orientation:upright;
+      font-size:clamp(.9rem,3.2vw,1.05rem);
+    }
+    .phase-btn span{ display:block; line-height:1.1; }
+
+    @media (max-width:430px){
+      .phase-btn{ font-size:.9rem; padding:.9rem 0; }
+    }
+
+    .page-nav{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      margin-top:1rem;
+    }
+    .page-nav .nav-btn{
+      color:#7e57c2;
+      text-decoration:none;
+      font-weight:700;
+      padding:.7rem 0;
+    }
+
+    /* =========================================================
+       ★吹き出し文字が出ない対策：このページだけ強制で前面表示
+       （common.css が古い/未反映でも確実に文字を出す）
+       ========================================================= */
+    .bubble-think{ margin:.18rem 0 .35rem; }
+
+    .bubble-stack{ position:relative; width:100%; }
+    .bubble-stack .think-svg{ display:block; width:100%; height:auto; position:relative; z-index:1; }
+
+    .bubble-stack .bubble-text{
+      position:absolute;
+      z-index:2;           /* ←SVGより前へ */
+      pointer-events:none;
+
+      /* ここは common.css の最終値（下寄り対策済）に合わせる */
+      left:10%;
+      right:22%;
+      top:20%;
+      bottom:22%;
+
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:.35rem;
+
+      text-align:center;
+      font-size:clamp(13px, 3.6vw, 16px);
+      line-height:1.35;
+      color:#333;
+      font-family:"Noto Sans JP", system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+    }
+    .bubble-text p{ margin:0; }
+
+    @media (max-width:360px){
+      .bubble-stack .bubble-text{
+        right:26%;
+        top:18%;
+        bottom:24%;
+      }
+    }
   </style>
 </head>
 
@@ -83,27 +228,34 @@
   <div class="clip-name" data-clip="⭐ 初期"></div>
 
   <article class="kp-card">
+
     <h1 class="phase-heading">初期</h1>
 
     <span class="label-yellow">子どもの様子</span>
     <section class="cream-panel">
       <p class="panel-text">
-        ・身体の不調や食欲低下<br>
-        ・朝が起きられない／眠れない<br>
+        ・身体の不調や食欲低下がある<br>
+        ・朝が起きられない<br>
+        ・眠れない<br>
         ・イライラや情緒不安定が目立つ
       </p>
-      <img class="panel-illu" src="https://lh3.googleusercontent.com/d/1-10gtCH2qctE79m9Ud19ysyHaCZjlF0A" alt="段階②">
+     <picture>
+  <source srcset="/images_webp/段階②.webp" type="image/webp">
+  <img class="panel-illu"
+       src="/images/段階②.png"
+       alt="段階②">
+</picture>
     </section>
 
-    <!-- ▼ 思考バルーン（ズレない安定版：SVGは形だけ／文字はHTMLで重ねる） -->
+    <!-- ▼ 思考バルーン：SVGは形だけ／文字はHTML重ね（端末差最小） -->
     <section class="bubble-think">
-      <div class="think-wrap" aria-label="思考バルーン">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 60 360 220" class="think-svg" role="img" aria-hidden="true">
+      <div class="bubble-stack" aria-label="思考バルーン">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 60 360 180" class="think-svg" role="img" aria-hidden="true">
           <defs>
             <filter id="tshadow1" x="-25%" y="-30%" width="150%" height="160%">
               <feDropShadow dx="0" dy="2" stdDeviation="1.9" flood-opacity=".18"/>
             </filter>
-            <path id="mokuPath" class="line"
+            <path id="mokuPathDef" class="line"
               d="M74,208 C52,204,40,188,44,170
                  C24,164,16,144,28,130
                  C24,108,44,92,66,96
@@ -119,8 +271,7 @@
               fill="#fff" stroke="#333" vector-effect="non-scaling-stroke"/>
           </defs>
 
-          <use href="#mokuPath" fill="#fff" stroke="#333" filter="url(#tshadow1)"/>
-
+          <use href="#mokuPathDef" fill="#fff" stroke="#333" filter="url(#tshadow1)"/>
           <g transform="translate(0,18)">
             <circle cx="270" cy="106" r="13" fill="#fff" stroke="#333" class="line"/>
             <circle cx="295" cy="88"  r="9"  fill="#fff" stroke="#333" class="line"/>
@@ -128,12 +279,10 @@
           </g>
         </svg>
 
-        <div class="think-text" aria-hidden="true">
-          <p>
-            「行かなきゃいけないのは<br>
-            分かってるけど、ムリ…」<br>
-            「どうしてこんなにつらいの？」
-          </p>
+        <div class="bubble-text" aria-hidden="true">
+          <p>「行かなきゃいけないのは」</p>
+          <p>「分かってるけど、ムリ…」</p>
+          <p>「どうしてこんなにつらいの？」</p>
         </div>
       </div>
     </section>
@@ -142,4 +291,44 @@
     <section class="info-box mint">
       <p>
         いよいよ登校が難しくなり、子どもは学校に行こうとするたびに強いストレス反応を起こすようになります。体の不調や朝起きられない状態が続き、感情が不安定になります。登校を促す家族に対して攻撃的な態度をとったり、泣いたり怒ったりすることもあります。<br>
-        この時期の子どもは「行きたいのに行けない」という強い葛藤を
+        この時期の子どもは、「行きたいのに行けない」という強い葛藤を抱えており、自分を責めて苦しんでいます。外から見れば“サボっている”ように見えるかもしれませんが、本人の中では「もう無理」「怖い」「どうして自分はできないんだろう」という自己否定が渦巻いています。<br>
+        保護者自身も「行かせたい」「受け入れたい」の両方の気持ちがゆれ動く時期ではありますが、学校に行くことが全てではないと親が柔軟に捉えること、まずは子どもの心の安全を守ることが重要な段階です。
+      </p>
+    </section>
+
+    <span class="label-yellow">関わり方のヒント</span>
+    <section class="info-box white">
+  <picture>
+  <source srcset="/images_webp/語る親子１.webp" type="image/webp">
+  <img
+    src="/images/語る親子１.png"
+    alt="語る親子１"
+    style="float:right;width:140px;margin:0 0 1rem 1rem;"
+    loading="lazy"
+    decoding="async">
+</picture>
+      <p>
+        子どもが一番苦悩する時期です。子どものつらい気持ちに寄り添って、共感を伝えてあげてください。「知らなかった」「気づかなくてごめんね」。学校に行くのがいいことなのは本人が一番感じています。それでも行けないのはなぜか。エネルギー切れの状態です。<br>
+        エネルギーが回復するには、休息が必要なこともあります。少し休んで落ち着けば頑張れることや、保護者が共感して受け入れてくれることが力になることもあります。エネルギーが切れてしまった子供に必要なのは、安心できる環境と理解をしてくれる存在です。<br>
+        もちろん保護者も不安だらけです。不安な時は、相談できる場所を利用しながら考えることも一つの方法です。親子のつながりを大切にしながら、子どもが安心できる支援を考えていきましょう。
+      </p>
+      <div style="clear:both;"></div>
+    </section>
+
+    <!-- ▼ 段階リンク（Firebaseで生きる） -->
+    <div class="phase-row">
+      <a class="phase-btn" href="/dankai1.html"><span>前兆期</span></a>
+      <a class="phase-btn" href="/dankai2.html"><span>初期</span></a>
+      <a class="phase-btn" href="/dankai3.html"><span>中期</span></a>
+      <a class="phase-btn" href="/dankai4.html"><span>後期</span></a>
+      <a class="phase-btn" href="/dankai5.html"><span>回復期</span></a>
+    </div>
+
+    <nav class="page-nav">
+      <a href="/kodomo.html" class="nav-btn">＜ 子どもの心理</a>
+    </nav>
+
+  </article>
+</main>
+</body>
+</html>

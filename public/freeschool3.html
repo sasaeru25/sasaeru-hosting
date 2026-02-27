@@ -5,6 +5,19 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>フリースクール等</title>
 
+<!-- ===== 芯（Firebase側の共通）===== -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f3a9a0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
+
+<link rel="stylesheet" href="/css/common.css">
+<script defer src="/js/common.js"></script>
+<script defer src="/js/lib.js"></script>
+<script defer src="/js/store.js"></script>
+
 <style>
 /* ===== ベース ===== */
 :root{
@@ -25,6 +38,11 @@ body{margin:0;background:var(--mint);font-family:"Noto Sans JP",system-ui,sans-s
 }
 .badge img{width:1.4em;vertical-align:-.2em;margin-right:.2em}
 
+/* ▼▼▼ 追加：トップ見出しを中央寄せ ▼▼▼ */
+.badge-wrap{ text-align:center; }
+.badge-wrap .badge{ margin-left:auto; margin-right:auto; }
+/* ▲▲▲ 追加ここまで ▲▲▲ */
+
 /* ===== 説明文 ===== */
 .desc{
   background:#fff;padding:1.4rem .9rem;line-height:1.7;
@@ -35,6 +53,17 @@ body{margin:0;background:var(--mint);font-family:"Noto Sans JP",system-ui,sans-s
 /* ===== フィルタ ===== */
 #filterWrap{font-size:1rem;margin-bottom:1rem;}
 #selRegion{font-size:1rem;padding:.35rem .6rem;}
+
+/* ▼▼▼ 追加：検索欄（市町村：＋select）を中央寄せ ▼▼▼ */
+#filterWrap{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:.5rem;
+  flex-wrap:wrap;
+  text-align:center;
+}
+/* ▲▲▲ 追加ここまで ▲▲▲ */
 
 /* ===== 表 ===== */
 #tblWrap{overflow:visible;}
@@ -92,9 +121,12 @@ a.fac-link::after{content:"↗";font-size:.85em;margin-left:.25em;}
 <main class="wrapper">
   <div class="clip-name" data-clip="⭐ フリースクール等"></div>
 
-  <h1 class="badge">
-    <img src="https://twemoji.maxcdn.com/v/latest/svg/1f347.svg" alt="">フリースクール等
-  </h1>
+  <!-- 見出し：中央寄せ -->
+  <div class="badge-wrap">
+    <h1 class="badge">
+      <img src="https://twemoji.maxcdn.com/v/latest/svg/1f347.svg" alt="">フリースクール等
+    </h1>
+  </div>
 
   <div class="desc">
     民間施設等でも、学習支援や体験活動などを行っています。<br>
@@ -103,23 +135,30 @@ a.fac-link::after{content:"↗";font-size:.85em;margin-left:.25em;}
     お住まいの<strong>市町村</strong>を選択して近隣の施設だけを見ることもできます。
   </div>
 
-  <!-- フィルタ -->
+  <!-- フィルタ：中央寄せ -->
   <div id="filterWrap">
-    市町村：
+    <span>市町村：</span>
     <select id="selRegion"><option value="ALL">すべて</option></select>
   </div>
 
   <!-- 表 -->
   <div id="tblWrap">読み込み中…</div>
+
+  <!-- 戻るはsoudankikan2へ -->
+  <nav class="page-nav" aria-label="ページナビ">
+    <a class="nav-btn prev" href="/soudankikan2.html">＜ 戻る</a>
+    <a class="nav-btn next" href="/home.html">メニュー ＞</a>
+  </nav>
 </main>
 
-<nav class="page-nav" aria-label="ページナビ">
-  <button type="button" class="nav-btn prev" onclick="go('soudankikan')">＜ 戻る</button>
-  <button type="button" class="nav-btn next" onclick="go('home')">メニュー ＞</button>
-</nav>
-
 <script>
+/* ============================================================
+   Firebase配信ページ（静的HTML）→ fetchでGAS WebApp(JSON)を読む
+   ※ google.script.run は Firebase では動かないため使用しない
+   ============================================================ */
+
 /* ===== 設定 ===== */
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbx4krcccAyVZZA99PJ_-7pCH29O0evjwkRYUQNk4sYWLkv9wAoALUzlVMmADVL2URvGwA/exec';
 const CFG = { sheetName:'フリースクール等', filterCol:2 };
 
 /* ===== util ===== */
@@ -146,12 +185,23 @@ const showError = (where, err) => {
      </div>`;
 };
 
-/* ===== プルダウン ===== */
-function loadRegions(){
-  google.script.run
-    .withSuccessHandler(initRegions)
-    .withFailureHandler(err => showError('地域一覧取得に失敗', err))
-    .getRegionsDynamic(CFG.sheetName, CFG.filterCol);
+/* ===== API(fetch) ===== */
+async function api(params = {}){
+  const url = new URL(ENDPOINT);
+  Object.entries(params).forEach(([k,v]) => url.searchParams.set(k, v));
+  const res = await fetch(url, { cache:'no-store' });
+  if(!res.ok) throw new Error(\`HTTP \${res.status}\`);
+  return res.json();
+}
+
+/* ===== プルダウン（fetch） ===== */
+async function loadRegions(){
+  try{
+    const list = await api({ mode:'regions', sheet:CFG.sheetName, col:CFG.filterCol });
+    initRegions(list || []);
+  }catch(e){
+    showError('地域一覧取得に失敗', e);
+  }
 }
 
 function initRegions(list){
@@ -164,13 +214,15 @@ function initRegions(list){
   loadTable('ALL');
 }
 
-/* ===== 表データ ===== */
-function loadTable(region){
+/* ===== 表データ（fetch） ===== */
+async function loadTable(region){
   document.getElementById('tblWrap').textContent = '読み込み中…';
-  google.script.run
-    .withSuccessHandler(drawTable)
-    .withFailureHandler(err => showError('表データ取得に失敗', err))
-    .getTableDynamic(CFG.sheetName, CFG.filterCol, region);
+  try{
+    const data = await api({ mode:'table', sheet:CFG.sheetName, col:CFG.filterCol, region });
+    drawTable(data);
+  }catch(e){
+    showError('表データ取得に失敗', e);
+  }
 }
 
 function drawTable({ head = [], rows = [] } = {}){
@@ -181,10 +233,13 @@ function drawTable({ head = [], rows = [] } = {}){
   }
 
   const norm = s => String(s ?? '').trim();
-  const nameIdx = head.findIndex(h => /名称|施設名|名前/i.test(norm(h))) || 0;
-  const urlIdx  = head.findIndex(h => /(url|ホームページ|hp|サイト|リンク)/i.test(norm(h)));
-  const prIdx   = head.findIndex(h => /(pr|紹介|内容|特徴|備考|コメント)/i.test(norm(h)));
-  const visIdx  = head.map((_, i) => i).filter(i => i !== urlIdx);
+  const pick = (idx, fallback) => (idx >= 0 ? idx : fallback);
+
+  const nameIdx = pick(head.findIndex(h => /名称|施設名|名前/i.test(norm(h))), 0);
+  const urlIdx  = pick(head.findIndex(h => /(url|ホームページ|hp|サイト|リンク)/i.test(norm(h))), -1);
+  const prIdx   = pick(head.findIndex(h => /(pr|紹介|内容|特徴|備考|コメント)/i.test(norm(h))), -1);
+
+  const visIdx = head.map((_, i) => i).filter(i => i !== urlIdx);
 
   const colgroup = '<colgroup>' + visIdx.map(i =>
       i === prIdx   ? '<col style="min-width:28ch;width:36ch;">'
